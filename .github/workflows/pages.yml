@@ -1,0 +1,77 @@
+name: Deploy web explorer (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "web/**"
+      - "scripts/calibration_check.py"
+      - "scripts/calibration_lib.py"
+      - "scripts/path_frequency.py"
+      - "scripts/export_sample_runs.py"
+      - "scripts/export_dag.py"
+      - "config/**"
+      - "src/**"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install package
+        run: pip install -e ".[dev]"
+
+      - name: Regenerate bundled demo data
+        run: |
+          python scripts/calibration_check.py -n 200 --seed 42 \
+            --output web/data/calibration_summary.json
+          python scripts/path_frequency.py -n 200 --seed 42 \
+            --output web/data/path_frequency.json
+          python scripts/export_sample_runs.py -n 200 --seed 42 \
+            --output web/data/sample_runs.json
+          python scripts/export_dag.py
+
+      - name: Build Pages artifact
+        run: |
+          mkdir -p _site/web
+          cp -r web/* _site/web/
+          touch _site/.nojekyll
+          cat > _site/index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+            <head>
+              <meta charset="UTF-8" />
+              <meta http-equiv="refresh" content="0; url=web/" />
+              <title>AI Futures Sim</title>
+            </head>
+            <body>
+              <p><a href="web/">AI Futures Sim — web explorer</a></p>
+            </body>
+          </html>
+          EOF
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - uses: actions/deploy-pages@v4
+        id: deployment

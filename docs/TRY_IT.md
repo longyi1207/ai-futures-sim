@@ -80,7 +80,7 @@ python scripts/export_sample_runs.py -n 800 --seed 42 --output web/data/sample_r
 python scripts/export_dag.py
 
 cd web && python -m http.server 8787
-# http://localhost:8787 — loads bundled demo data or your fresh JSON
+# http://localhost:8787 — or https://longyi1207.github.io/ai-futures-sim/web/
 ```
 
 The explorer shows:

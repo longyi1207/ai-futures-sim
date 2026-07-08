@@ -101,24 +101,18 @@ In `events.yaml`, `schedule.p_cumulative` = P(event fires **at least once** in `
 
 ---
 
-## Web explorer
-
-```bash
-# Generate JSON first (see Quick start), then:
-cd web && python -m http.server 8787
-# Open http://localhost:8787 — load outputs/runs/calibration_summary.json
-```
-
----
-
 ## Web explorer (outcomes & paths)
 
+**Live:** https://longyi1207.github.io/ai-futures-sim/web/
+
+Outcome donut, spine course timeline, path buckets, terminal×spine flows, and sample run timelines. Bundled demo data in `web/data/`.
+
 ```bash
+# Local
 cd web && python -m http.server 8787
-# Open http://localhost:8787 — outcome donut, spine course, path buckets, sample run timelines
 ```
 
-Bundled demo data in `web/data/`. Regenerate after config edits — see [`docs/TRY_IT.md`](docs/TRY_IT.md).
+Regenerate after config edits — see [`docs/TRY_IT.md`](docs/TRY_IT.md).
 
 ## Modify the model yourself
 
