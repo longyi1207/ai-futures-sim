@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Branching timeline export</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body { padding: 1.25rem; max-width: 1100px; margin: 0 auto; }
+      header h1 { margin: 0 0 0.25rem; font-size: 1.35rem; }
+      header p { margin: 0 0 1rem; color: var(--muted); font-size: 0.9rem; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>Branching paths to AI futures</h1>
+      <p>Joint Monte Carlo · 600 runs · seed 42 · ribbon width = share of worlds</p>
+    </header>
+    <section class="card card-wide" id="branching-timeline">
+      <div id="branching-viz"></div>
+    </section>
+    <script src="branching.js"></script>
+    <script>
+      fetch("data/branching_timeline.json")
+        .then((r) => r.json())
+        .then((data) => {
+          renderBranchingTimeline(document.getElementById("branching-viz"), data);
+          document.body.dataset.ready = "1";
+        });
+    </script>
+  </body>
+</html>

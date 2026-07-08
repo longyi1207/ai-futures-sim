@@ -78,6 +78,7 @@ python scripts/calibration_check.py -n 600 --seed 42 --output outputs/runs/calib
 python scripts/path_frequency.py -n 600 --seed 42 --output outputs/runs/path_frequency.json
 python scripts/export_sample_runs.py -n 800 --seed 42 --output web/data/sample_runs.json
 python scripts/export_dag.py
+python scripts/export_branching_timeline.py -n 600 --seed 42 --output web/data/branching_timeline.json
 
 cd web && python -m http.server 8787
 # http://localhost:8787 — or https://longyi1207.github.io/ai-futures-sim/web/

@@ -186,11 +186,47 @@ function renderSampleRuns(samples) {
   }).join("");
 }
 
-function renderDashboard({ calibration, pathFrequency, sampleRuns }) {
+function renderEventImpact(data) {
+  const el = document.getElementById("event-impact-table");
+  if (!data?.events?.length) {
+    el.innerHTML = "<p class='muted'>Run <code>python scripts/event_impact.py</code></p>";
+    return;
+  }
+  const fmtLift = (v) => {
+    const s = (v >= 0 ? "+" : "") + (100 * v).toFixed(1) + "pp";
+    const cls = v > 0.02 ? "pos" : v < -0.02 ? "neg" : "muted-cell";
+    return `<span class="${cls}">${s}</span>`;
+  };
+  const rows = data.events.slice(0, 18).map((row) => {
+    const short = row.event.replace(/^ev_/, "");
+    return `<tr>
+      <td title="${row.event}">${short}</td>
+      <td class="muted-cell">${pct(row.p_fire)}</td>
+      <td>${fmtLift(row.lift.doom)}</td>
+      <td>${fmtLift(row.lift.utopia)}</td>
+      <td>${fmtLift(row.lift.friction)}</td>
+      <td class="muted-cell">${pct(row.p_region_given.doom)} / ${pct(row.p_region_given.utopia)}</td>
+    </tr>`;
+  }).join("");
+  el.innerHTML = `<table class="impact-table">
+    <thead><tr>
+      <th>Event</th><th>P(fire)</th><th>Δ doom</th><th>Δ utopia</th><th>Δ friction</th>
+      <th>P(doom|X) / P(utopia|X)</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table>
+  <p class="section-hint" style="margin-top:0.75rem">Sorted by impact score. Baseline: doom ${pct(data.meta.baseline_regions.doom)} · utopia ${pct(data.meta.baseline_regions.utopia)}</p>`;
+}
+
+function renderDashboard({ calibration, pathFrequency, sampleRuns, branchingTimeline, eventImpact }) {
   document.getElementById("app").hidden = false;
   const regions = calibration?.regions || {};
   if (Object.keys(regions).length) renderRegions(regions);
   renderMeta(calibration, pathFrequency);
+  if (branchingTimeline) {
+    renderBranchingTimeline(document.getElementById("branching-viz"), branchingTimeline);
+  }
+  if (eventImpact) renderEventImpact(eventImpact);
   renderSpineCourse(calibration);
   renderPaths(calibration, pathFrequency);
   renderTerminalFlow(pathFrequency);
@@ -205,12 +241,14 @@ async function loadJson(url) {
 }
 
 async function loadBundledDemo() {
-  const [calibration, pathFrequency, sampleRuns] = await Promise.all([
+  const [calibration, pathFrequency, sampleRuns, branchingTimeline, eventImpact] = await Promise.all([
     loadJson("data/calibration_summary.json"),
     loadJson("data/path_frequency.json"),
     loadJson("data/sample_runs.json").catch(() => ({ runs: [] })),
+    loadJson("data/branching_timeline.json").catch(() => null),
+    loadJson("data/event_impact.json").catch(() => null),
   ]);
-  renderDashboard({ calibration, pathFrequency, sampleRuns });
+  renderDashboard({ calibration, pathFrequency, sampleRuns, branchingTimeline, eventImpact });
 }
 
 document.getElementById("file").addEventListener("change", async (e) => {

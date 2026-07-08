@@ -37,6 +37,18 @@
         <div class="card" id="meta"></div>
       </section>
 
+      <section class="card card-wide" id="branching-timeline">
+        <h2>Branching paths to futures</h2>
+        <p class="section-hint">Sankey view from joint MC runs — ribbon width = share of worlds, not independent scenario weights.</p>
+        <div id="branching-viz"></div>
+      </section>
+
+      <section class="card card-wide" id="event-impact">
+        <h2>Event impact on outcomes</h2>
+        <p class="section-hint">P(region | event) lift vs P(region | ¬event) — association from joint MC, not causal proof.</p>
+        <div id="event-impact-table"></div>
+      </section>
+
       <section class="card card-wide" id="spine-course">
         <h2>Capability spine course (median fire dates)</h2>
         <p class="section-hint">How far the world climbs the AI-2027 ladder by deadline — stochastic per run, aggregated here.</p>
@@ -61,6 +73,7 @@
       <p>Reproduce: <code>python scripts/calibration_check.py -n 600 --seed 42</code> · <code>python scripts/export_sample_runs.py</code></p>
     </footer>
 
+    <script src="branching.js"></script>
     <script src="app.js"></script>
   </body>
 </html>

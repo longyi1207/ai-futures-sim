@@ -1,0 +1,2034 @@
+{
+  "meta": {
+    "runs": 1200,
+    "seed": 42,
+    "baseline_regions": {
+      "doom": 0.1567,
+      "utopia": 0.1258,
+      "friction": 0.6608,
+      "severe": 0.0567
+    },
+    "note": "lift = P(region|event) - P(region|not event); causal not guaranteed"
+  },
+  "top_doom_lift": [
+    {
+      "event": "ev_c10_internal_concern",
+      "p_fire": 0.1683,
+      "n_with": 202,
+      "n_without": 998,
+      "p_region_given": {
+        "doom": 0.9059,
+        "utopia": 0.0297,
+        "friction": 0.0248,
+        "severe": 0.0396
+      },
+      "p_region_not_given": {
+        "doom": 0.005,
+        "utopia": 0.1453,
+        "friction": 0.7896,
+        "severe": 0.0601
+      },
+      "lift": {
+        "doom": 0.9009,
+        "utopia": -0.1156,
+        "friction": -0.7648,
+        "severe": -0.0205
+      },
+      "lift_vs_baseline": {
+        "doom": 0.7493,
+        "utopia": -0.0961,
+        "friction": -0.6361,
+        "severe": -0.0171
+      },
+      "impact_score": 0.9009
+    },
+    {
+      "event": "ev_concern_no_leak",
+      "p_fire": 0.0217,
+      "n_with": 26,
+      "n_without": 1174,
+      "p_region_given": {
+        "doom": 0.9615,
+        "utopia": 0.0,
+        "friction": 0.0,
+        "severe": 0.0385
+      },
+      "p_region_not_given": {
+        "doom": 0.1388,
+        "utopia": 0.1286,
+        "friction": 0.6755,
+        "severe": 0.0571
+      },
+      "lift": {
+        "doom": 0.8227,
+        "utopia": -0.1286,
+        "friction": -0.6755,
+        "severe": -0.0186
+      },
+      "lift_vs_baseline": {
+        "doom": 0.8049,
+        "utopia": -0.1258,
+        "friction": -0.6608,
+        "severe": -0.0182
+      },
+      "impact_score": 0.8227
+    },
+    {
+      "event": "ev_deceptive_deploy_at_scale",
+      "p_fire": 0.0267,
+      "n_with": 32,
+      "n_without": 1168,
+      "p_region_given": {
+        "doom": 0.9375,
+        "utopia": 0.0,
+        "friction": 0.0,
+        "severe": 0.0625
+      },
+      "p_region_not_given": {
+        "doom": 0.1353,
+        "utopia": 0.1293,
+        "friction": 0.6789,
+        "severe": 0.0565
+      },
+      "lift": {
+        "doom": 0.8022,
+        "utopia": -0.1293,
+        "friction": -0.6789,
+        "severe": 0.006
+      },
+      "lift_vs_baseline": {
+        "doom": 0.7808,
+        "utopia": -0.1258,
+        "friction": -0.6608,
+        "severe": 0.0058
+      },
+      "impact_score": 0.8022
+    },
+    {
+      "event": "ev_embodied_rsi_first",
+      "p_fire": 0.0208,
+      "n_with": 25,
+      "n_without": 1175,
+      "p_region_given": {
+        "doom": 0.32,
+        "utopia": 0.16,
+        "friction": 0.52,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1532,
+        "utopia": 0.1251,
+        "friction": 0.6638,
+        "severe": 0.0579
+      },
+      "lift": {
+        "doom": 0.1668,
+        "utopia": 0.0349,
+        "friction": -0.1438,
+        "severe": -0.0579
+      },
+      "lift_vs_baseline": {
+        "doom": 0.1633,
+        "utopia": 0.0342,
+        "friction": -0.1408,
+        "severe": -0.0567
+      },
+      "impact_score": 0.1668
+    },
+    {
+      "event": "ev_bio_nearmiss_hidden",
+      "p_fire": 0.1142,
+      "n_with": 137,
+      "n_without": 1063,
+      "p_region_given": {
+        "doom": 0.2263,
+        "utopia": 0.1314,
+        "friction": 0.5912,
+        "severe": 0.0511
+      },
+      "p_region_not_given": {
+        "doom": 0.1477,
+        "utopia": 0.1251,
+        "friction": 0.6698,
+        "severe": 0.0574
+      },
+      "lift": {
+        "doom": 0.0786,
+        "utopia": 0.0063,
+        "friction": -0.0786,
+        "severe": -0.0063
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0696,
+        "utopia": 0.0056,
+        "friction": -0.0696,
+        "severe": -0.0056
+      },
+      "impact_score": 0.0786
+    },
+    {
+      "event": "ev_weight_theft",
+      "p_fire": 0.1967,
+      "n_with": 236,
+      "n_without": 964,
+      "p_region_given": {
+        "doom": 0.2076,
+        "utopia": 0.1441,
+        "friction": 0.5805,
+        "severe": 0.0678
+      },
+      "p_region_not_given": {
+        "doom": 0.1442,
+        "utopia": 0.1214,
+        "friction": 0.6805,
+        "severe": 0.0539
+      },
+      "lift": {
+        "doom": 0.0634,
+        "utopia": 0.0227,
+        "friction": -0.1,
+        "severe": 0.0139
+      },
+      "lift_vs_baseline": {
+        "doom": 0.051,
+        "utopia": 0.0182,
+        "friction": -0.0803,
+        "severe": 0.0111
+      },
+      "impact_score": 0.0634
+    },
+    {
+      "event": "ev_humanoid_scale_deploy",
+      "p_fire": 0.2458,
+      "n_with": 295,
+      "n_without": 905,
+      "p_region_given": {
+        "doom": 0.2034,
+        "utopia": 0.1356,
+        "friction": 0.6169,
+        "severe": 0.0441
+      },
+      "p_region_not_given": {
+        "doom": 0.1414,
+        "utopia": 0.1227,
+        "friction": 0.6751,
+        "severe": 0.0608
+      },
+      "lift": {
+        "doom": 0.062,
+        "utopia": 0.0129,
+        "friction": -0.0582,
+        "severe": -0.0167
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0467,
+        "utopia": 0.0098,
+        "friction": -0.0439,
+        "severe": -0.0126
+      },
+      "impact_score": 0.062
+    },
+    {
+      "event": "ev_no_shutdown_asi_threshold",
+      "p_fire": 0.3,
+      "n_with": 360,
+      "n_without": 840,
+      "p_region_given": {
+        "doom": 0.2,
+        "utopia": 0.0278,
+        "friction": 0.7389,
+        "severe": 0.0333
+      },
+      "p_region_not_given": {
+        "doom": 0.1381,
+        "utopia": 0.1679,
+        "friction": 0.6274,
+        "severe": 0.0667
+      },
+      "lift": {
+        "doom": 0.0619,
+        "utopia": -0.1401,
+        "friction": 0.1115,
+        "severe": -0.0333
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0433,
+        "utopia": -0.0981,
+        "friction": 0.0781,
+        "severe": -0.0233
+      },
+      "impact_score": 0.1401
+    },
+    {
+      "event": "ev_tier3_path_open",
+      "p_fire": 0.0908,
+      "n_with": 109,
+      "n_without": 1091,
+      "p_region_given": {
+        "doom": 0.2018,
+        "utopia": 0.1468,
+        "friction": 0.5963,
+        "severe": 0.055
+      },
+      "p_region_not_given": {
+        "doom": 0.1522,
+        "utopia": 0.1237,
+        "friction": 0.6673,
+        "severe": 0.0568
+      },
+      "lift": {
+        "doom": 0.0497,
+        "utopia": 0.023,
+        "friction": -0.0709,
+        "severe": -0.0018
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0452,
+        "utopia": 0.021,
+        "friction": -0.0645,
+        "severe": -0.0016
+      },
+      "impact_score": 0.0497
+    },
+    {
+      "event": "ev_corp_safety_hollowing",
+      "p_fire": 0.5167,
+      "n_with": 620,
+      "n_without": 580,
+      "p_region_given": {
+        "doom": 0.179,
+        "utopia": 0.0371,
+        "friction": 0.7339,
+        "severe": 0.05
+      },
+      "p_region_not_given": {
+        "doom": 0.1328,
+        "utopia": 0.2207,
+        "friction": 0.5828,
+        "severe": 0.0638
+      },
+      "lift": {
+        "doom": 0.0463,
+        "utopia": -0.1836,
+        "friction": 0.1511,
+        "severe": -0.0138
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0224,
+        "utopia": -0.0887,
+        "friction": 0.073,
+        "severe": -0.0067
+      },
+      "impact_score": 0.1836
+    }
+  ],
+  "top_utopia_lift": [
+    {
+      "event": "ev_align_prod_catch",
+      "p_fire": 0.0208,
+      "n_with": 25,
+      "n_without": 1175,
+      "p_region_given": {
+        "doom": 0.0,
+        "utopia": 0.72,
+        "friction": 0.24,
+        "severe": 0.04
+      },
+      "p_region_not_given": {
+        "doom": 0.16,
+        "utopia": 0.1132,
+        "friction": 0.6698,
+        "severe": 0.057
+      },
+      "lift": {
+        "doom": -0.16,
+        "utopia": 0.6068,
+        "friction": -0.4298,
+        "severe": -0.017
+      },
+      "lift_vs_baseline": {
+        "doom": -0.1567,
+        "utopia": 0.5942,
+        "friction": -0.4208,
+        "severe": -0.0167
+      },
+      "impact_score": 0.6068
+    },
+    {
+      "event": "ev_swf_enacted",
+      "p_fire": 0.045,
+      "n_with": 54,
+      "n_without": 1146,
+      "p_region_given": {
+        "doom": 0.1667,
+        "utopia": 0.4074,
+        "friction": 0.4074,
+        "severe": 0.0185
+      },
+      "p_region_not_given": {
+        "doom": 0.1562,
+        "utopia": 0.1126,
+        "friction": 0.6728,
+        "severe": 0.0585
+      },
+      "lift": {
+        "doom": 0.0105,
+        "utopia": 0.2948,
+        "friction": -0.2654,
+        "severe": -0.0399
+      },
+      "lift_vs_baseline": {
+        "doom": 0.01,
+        "utopia": 0.2816,
+        "friction": -0.2534,
+        "severe": -0.0381
+      },
+      "impact_score": 0.2948
+    },
+    {
+      "event": "ev_prod_interp_halt",
+      "p_fire": 0.1225,
+      "n_with": 147,
+      "n_without": 1053,
+      "p_region_given": {
+        "doom": 0.0544,
+        "utopia": 0.3061,
+        "friction": 0.6054,
+        "severe": 0.034
+      },
+      "p_region_not_given": {
+        "doom": 0.1709,
+        "utopia": 0.1007,
+        "friction": 0.6686,
+        "severe": 0.0598
+      },
+      "lift": {
+        "doom": -0.1165,
+        "utopia": 0.2055,
+        "friction": -0.0631,
+        "severe": -0.0258
+      },
+      "lift_vs_baseline": {
+        "doom": -0.1022,
+        "utopia": 0.1803,
+        "friction": -0.0554,
+        "severe": -0.0227
+      },
+      "impact_score": 0.2055
+    },
+    {
+      "event": "ev_longevity_trial_breakthrough",
+      "p_fire": 0.1225,
+      "n_with": 147,
+      "n_without": 1053,
+      "p_region_given": {
+        "doom": 0.1156,
+        "utopia": 0.2721,
+        "friction": 0.6122,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1624,
+        "utopia": 0.1054,
+        "friction": 0.6676,
+        "severe": 0.0646
+      },
+      "lift": {
+        "doom": -0.0467,
+        "utopia": 0.1667,
+        "friction": -0.0554,
+        "severe": -0.0646
+      },
+      "lift_vs_baseline": {
+        "doom": -0.041,
+        "utopia": 0.1463,
+        "friction": -0.0486,
+        "severe": -0.0567
+      },
+      "impact_score": 0.1667
+    },
+    {
+      "event": "ev_bmia_pass",
+      "p_fire": 0.415,
+      "n_with": 498,
+      "n_without": 702,
+      "p_region_given": {
+        "doom": 0.1647,
+        "utopia": 0.2028,
+        "friction": 0.5823,
+        "severe": 0.0502
+      },
+      "p_region_not_given": {
+        "doom": 0.151,
+        "utopia": 0.0712,
+        "friction": 0.7165,
+        "severe": 0.0613
+      },
+      "lift": {
+        "doom": 0.0137,
+        "utopia": 0.1316,
+        "friction": -0.1342,
+        "severe": -0.0111
+      },
+      "lift_vs_baseline": {
+        "doom": 0.008,
+        "utopia": 0.077,
+        "friction": -0.0785,
+        "severe": -0.0065
+      },
+      "impact_score": 0.1316
+    },
+    {
+      "event": "ev_beneficial_ai_treaty",
+      "p_fire": 0.0608,
+      "n_with": 73,
+      "n_without": 1127,
+      "p_region_given": {
+        "doom": 0.137,
+        "utopia": 0.2466,
+        "friction": 0.589,
+        "severe": 0.0274
+      },
+      "p_region_not_given": {
+        "doom": 0.1579,
+        "utopia": 0.118,
+        "friction": 0.6655,
+        "severe": 0.0586
+      },
+      "lift": {
+        "doom": -0.021,
+        "utopia": 0.1286,
+        "friction": -0.0764,
+        "severe": -0.0312
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0197,
+        "utopia": 0.1207,
+        "friction": -0.0718,
+        "severe": -0.0293
+      },
+      "impact_score": 0.1286
+    },
+    {
+      "event": "ev_meaning_pilot_success",
+      "p_fire": 0.1092,
+      "n_with": 131,
+      "n_without": 1069,
+      "p_region_given": {
+        "doom": 0.1527,
+        "utopia": 0.2366,
+        "friction": 0.5954,
+        "severe": 0.0153
+      },
+      "p_region_not_given": {
+        "doom": 0.1572,
+        "utopia": 0.1123,
+        "friction": 0.6688,
+        "severe": 0.0617
+      },
+      "lift": {
+        "doom": -0.0045,
+        "utopia": 0.1244,
+        "friction": -0.0734,
+        "severe": -0.0465
+      },
+      "lift_vs_baseline": {
+        "doom": -0.004,
+        "utopia": 0.1108,
+        "friction": -0.0654,
+        "severe": -0.0414
+      },
+      "impact_score": 0.1244
+    },
+    {
+      "event": "ev_admin_flip_2029",
+      "p_fire": 0.4642,
+      "n_with": 557,
+      "n_without": 643,
+      "p_region_given": {
+        "doom": 0.1759,
+        "utopia": 0.1759,
+        "friction": 0.5943,
+        "severe": 0.0539
+      },
+      "p_region_not_given": {
+        "doom": 0.14,
+        "utopia": 0.0824,
+        "friction": 0.7185,
+        "severe": 0.0591
+      },
+      "lift": {
+        "doom": 0.036,
+        "utopia": 0.0935,
+        "friction": -0.1243,
+        "severe": -0.0052
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0193,
+        "utopia": 0.0501,
+        "friction": -0.0666,
+        "severe": -0.0028
+      },
+      "impact_score": 0.0935
+    },
+    {
+      "event": "ev_science_win_legible",
+      "p_fire": 0.2125,
+      "n_with": 255,
+      "n_without": 945,
+      "p_region_given": {
+        "doom": 0.1412,
+        "utopia": 0.1804,
+        "friction": 0.6353,
+        "severe": 0.0431
+      },
+      "p_region_not_given": {
+        "doom": 0.1608,
+        "utopia": 0.1111,
+        "friction": 0.6677,
+        "severe": 0.0603
+      },
+      "lift": {
+        "doom": -0.0197,
+        "utopia": 0.0693,
+        "friction": -0.0324,
+        "severe": -0.0172
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0155,
+        "utopia": 0.0546,
+        "friction": -0.0255,
+        "severe": -0.0135
+      },
+      "impact_score": 0.0693
+    },
+    {
+      "event": "ev_nuclear_ai_crosscut",
+      "p_fire": 0.0517,
+      "n_with": 62,
+      "n_without": 1138,
+      "p_region_given": {
+        "doom": 0.129,
+        "utopia": 0.1774,
+        "friction": 0.6935,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1582,
+        "utopia": 0.123,
+        "friction": 0.6591,
+        "severe": 0.0598
+      },
+      "lift": {
+        "doom": -0.0291,
+        "utopia": 0.0544,
+        "friction": 0.0345,
+        "severe": -0.0598
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0276,
+        "utopia": 0.0516,
+        "friction": 0.0327,
+        "severe": -0.0567
+      },
+      "impact_score": 0.0598
+    }
+  ],
+  "events": [
+    {
+      "event": "ev_cyber_cascade",
+      "p_fire": 0.0617,
+      "n_with": 74,
+      "n_without": 1126,
+      "p_region_given": {
+        "doom": 0.027,
+        "utopia": 0.0,
+        "friction": 0.0541,
+        "severe": 0.9189
+      },
+      "p_region_not_given": {
+        "doom": 0.1652,
+        "utopia": 0.1341,
+        "friction": 0.7007,
+        "severe": 0.0
+      },
+      "lift": {
+        "doom": -0.1382,
+        "utopia": -0.1341,
+        "friction": -0.6467,
+        "severe": 0.9189
+      },
+      "lift_vs_baseline": {
+        "doom": -0.1296,
+        "utopia": -0.1258,
+        "friction": -0.6068,
+        "severe": 0.8623
+      },
+      "impact_score": 0.9189
+    },
+    {
+      "event": "ev_c10_internal_concern",
+      "p_fire": 0.1683,
+      "n_with": 202,
+      "n_without": 998,
+      "p_region_given": {
+        "doom": 0.9059,
+        "utopia": 0.0297,
+        "friction": 0.0248,
+        "severe": 0.0396
+      },
+      "p_region_not_given": {
+        "doom": 0.005,
+        "utopia": 0.1453,
+        "friction": 0.7896,
+        "severe": 0.0601
+      },
+      "lift": {
+        "doom": 0.9009,
+        "utopia": -0.1156,
+        "friction": -0.7648,
+        "severe": -0.0205
+      },
+      "lift_vs_baseline": {
+        "doom": 0.7493,
+        "utopia": -0.0961,
+        "friction": -0.6361,
+        "severe": -0.0171
+      },
+      "impact_score": 0.9009
+    },
+    {
+      "event": "ev_concern_no_leak",
+      "p_fire": 0.0217,
+      "n_with": 26,
+      "n_without": 1174,
+      "p_region_given": {
+        "doom": 0.9615,
+        "utopia": 0.0,
+        "friction": 0.0,
+        "severe": 0.0385
+      },
+      "p_region_not_given": {
+        "doom": 0.1388,
+        "utopia": 0.1286,
+        "friction": 0.6755,
+        "severe": 0.0571
+      },
+      "lift": {
+        "doom": 0.8227,
+        "utopia": -0.1286,
+        "friction": -0.6755,
+        "severe": -0.0186
+      },
+      "lift_vs_baseline": {
+        "doom": 0.8049,
+        "utopia": -0.1258,
+        "friction": -0.6608,
+        "severe": -0.0182
+      },
+      "impact_score": 0.8227
+    },
+    {
+      "event": "ev_deceptive_deploy_at_scale",
+      "p_fire": 0.0267,
+      "n_with": 32,
+      "n_without": 1168,
+      "p_region_given": {
+        "doom": 0.9375,
+        "utopia": 0.0,
+        "friction": 0.0,
+        "severe": 0.0625
+      },
+      "p_region_not_given": {
+        "doom": 0.1353,
+        "utopia": 0.1293,
+        "friction": 0.6789,
+        "severe": 0.0565
+      },
+      "lift": {
+        "doom": 0.8022,
+        "utopia": -0.1293,
+        "friction": -0.6789,
+        "severe": 0.006
+      },
+      "lift_vs_baseline": {
+        "doom": 0.7808,
+        "utopia": -0.1258,
+        "friction": -0.6608,
+        "severe": 0.0058
+      },
+      "impact_score": 0.8022
+    },
+    {
+      "event": "ev_align_prod_catch",
+      "p_fire": 0.0208,
+      "n_with": 25,
+      "n_without": 1175,
+      "p_region_given": {
+        "doom": 0.0,
+        "utopia": 0.72,
+        "friction": 0.24,
+        "severe": 0.04
+      },
+      "p_region_not_given": {
+        "doom": 0.16,
+        "utopia": 0.1132,
+        "friction": 0.6698,
+        "severe": 0.057
+      },
+      "lift": {
+        "doom": -0.16,
+        "utopia": 0.6068,
+        "friction": -0.4298,
+        "severe": -0.017
+      },
+      "lift_vs_baseline": {
+        "doom": -0.1567,
+        "utopia": 0.5942,
+        "friction": -0.4208,
+        "severe": -0.0167
+      },
+      "impact_score": 0.6068
+    },
+    {
+      "event": "ev_swf_enacted",
+      "p_fire": 0.045,
+      "n_with": 54,
+      "n_without": 1146,
+      "p_region_given": {
+        "doom": 0.1667,
+        "utopia": 0.4074,
+        "friction": 0.4074,
+        "severe": 0.0185
+      },
+      "p_region_not_given": {
+        "doom": 0.1562,
+        "utopia": 0.1126,
+        "friction": 0.6728,
+        "severe": 0.0585
+      },
+      "lift": {
+        "doom": 0.0105,
+        "utopia": 0.2948,
+        "friction": -0.2654,
+        "severe": -0.0399
+      },
+      "lift_vs_baseline": {
+        "doom": 0.01,
+        "utopia": 0.2816,
+        "friction": -0.2534,
+        "severe": -0.0381
+      },
+      "impact_score": 0.2948
+    },
+    {
+      "event": "ev_prod_interp_halt",
+      "p_fire": 0.1225,
+      "n_with": 147,
+      "n_without": 1053,
+      "p_region_given": {
+        "doom": 0.0544,
+        "utopia": 0.3061,
+        "friction": 0.6054,
+        "severe": 0.034
+      },
+      "p_region_not_given": {
+        "doom": 0.1709,
+        "utopia": 0.1007,
+        "friction": 0.6686,
+        "severe": 0.0598
+      },
+      "lift": {
+        "doom": -0.1165,
+        "utopia": 0.2055,
+        "friction": -0.0631,
+        "severe": -0.0258
+      },
+      "lift_vs_baseline": {
+        "doom": -0.1022,
+        "utopia": 0.1803,
+        "friction": -0.0554,
+        "severe": -0.0227
+      },
+      "impact_score": 0.2055
+    },
+    {
+      "event": "ev_corp_safety_hollowing",
+      "p_fire": 0.5167,
+      "n_with": 620,
+      "n_without": 580,
+      "p_region_given": {
+        "doom": 0.179,
+        "utopia": 0.0371,
+        "friction": 0.7339,
+        "severe": 0.05
+      },
+      "p_region_not_given": {
+        "doom": 0.1328,
+        "utopia": 0.2207,
+        "friction": 0.5828,
+        "severe": 0.0638
+      },
+      "lift": {
+        "doom": 0.0463,
+        "utopia": -0.1836,
+        "friction": 0.1511,
+        "severe": -0.0138
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0224,
+        "utopia": -0.0887,
+        "friction": 0.073,
+        "severe": -0.0067
+      },
+      "impact_score": 0.1836
+    },
+    {
+      "event": "ev_embodied_rsi_first",
+      "p_fire": 0.0208,
+      "n_with": 25,
+      "n_without": 1175,
+      "p_region_given": {
+        "doom": 0.32,
+        "utopia": 0.16,
+        "friction": 0.52,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1532,
+        "utopia": 0.1251,
+        "friction": 0.6638,
+        "severe": 0.0579
+      },
+      "lift": {
+        "doom": 0.1668,
+        "utopia": 0.0349,
+        "friction": -0.1438,
+        "severe": -0.0579
+      },
+      "lift_vs_baseline": {
+        "doom": 0.1633,
+        "utopia": 0.0342,
+        "friction": -0.1408,
+        "severe": -0.0567
+      },
+      "impact_score": 0.1668
+    },
+    {
+      "event": "ev_longevity_trial_breakthrough",
+      "p_fire": 0.1225,
+      "n_with": 147,
+      "n_without": 1053,
+      "p_region_given": {
+        "doom": 0.1156,
+        "utopia": 0.2721,
+        "friction": 0.6122,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1624,
+        "utopia": 0.1054,
+        "friction": 0.6676,
+        "severe": 0.0646
+      },
+      "lift": {
+        "doom": -0.0467,
+        "utopia": 0.1667,
+        "friction": -0.0554,
+        "severe": -0.0646
+      },
+      "lift_vs_baseline": {
+        "doom": -0.041,
+        "utopia": 0.1463,
+        "friction": -0.0486,
+        "severe": -0.0567
+      },
+      "impact_score": 0.1667
+    },
+    {
+      "event": "ev_us_paralysis_s2",
+      "p_fire": 0.5525,
+      "n_with": 663,
+      "n_without": 537,
+      "p_region_given": {
+        "doom": 0.1071,
+        "utopia": 0.0573,
+        "friction": 0.7828,
+        "severe": 0.0528
+      },
+      "p_region_not_given": {
+        "doom": 0.2179,
+        "utopia": 0.2104,
+        "friction": 0.5102,
+        "severe": 0.0615
+      },
+      "lift": {
+        "doom": -0.1108,
+        "utopia": -0.1531,
+        "friction": 0.2726,
+        "severe": -0.0087
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0496,
+        "utopia": -0.0685,
+        "friction": 0.122,
+        "severe": -0.0039
+      },
+      "impact_score": 0.1531
+    },
+    {
+      "event": "ev_no_shutdown_asi_threshold",
+      "p_fire": 0.3,
+      "n_with": 360,
+      "n_without": 840,
+      "p_region_given": {
+        "doom": 0.2,
+        "utopia": 0.0278,
+        "friction": 0.7389,
+        "severe": 0.0333
+      },
+      "p_region_not_given": {
+        "doom": 0.1381,
+        "utopia": 0.1679,
+        "friction": 0.6274,
+        "severe": 0.0667
+      },
+      "lift": {
+        "doom": 0.0619,
+        "utopia": -0.1401,
+        "friction": 0.1115,
+        "severe": -0.0333
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0433,
+        "utopia": -0.0981,
+        "friction": 0.0781,
+        "severe": -0.0233
+      },
+      "impact_score": 0.1401
+    },
+    {
+      "event": "ev_bmia_pass",
+      "p_fire": 0.415,
+      "n_with": 498,
+      "n_without": 702,
+      "p_region_given": {
+        "doom": 0.1647,
+        "utopia": 0.2028,
+        "friction": 0.5823,
+        "severe": 0.0502
+      },
+      "p_region_not_given": {
+        "doom": 0.151,
+        "utopia": 0.0712,
+        "friction": 0.7165,
+        "severe": 0.0613
+      },
+      "lift": {
+        "doom": 0.0137,
+        "utopia": 0.1316,
+        "friction": -0.1342,
+        "severe": -0.0111
+      },
+      "lift_vs_baseline": {
+        "doom": 0.008,
+        "utopia": 0.077,
+        "friction": -0.0785,
+        "severe": -0.0065
+      },
+      "impact_score": 0.1316
+    },
+    {
+      "event": "ev_beneficial_ai_treaty",
+      "p_fire": 0.0608,
+      "n_with": 73,
+      "n_without": 1127,
+      "p_region_given": {
+        "doom": 0.137,
+        "utopia": 0.2466,
+        "friction": 0.589,
+        "severe": 0.0274
+      },
+      "p_region_not_given": {
+        "doom": 0.1579,
+        "utopia": 0.118,
+        "friction": 0.6655,
+        "severe": 0.0586
+      },
+      "lift": {
+        "doom": -0.021,
+        "utopia": 0.1286,
+        "friction": -0.0764,
+        "severe": -0.0312
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0197,
+        "utopia": 0.1207,
+        "friction": -0.0718,
+        "severe": -0.0293
+      },
+      "impact_score": 0.1286
+    },
+    {
+      "event": "ev_meaning_pilot_success",
+      "p_fire": 0.1092,
+      "n_with": 131,
+      "n_without": 1069,
+      "p_region_given": {
+        "doom": 0.1527,
+        "utopia": 0.2366,
+        "friction": 0.5954,
+        "severe": 0.0153
+      },
+      "p_region_not_given": {
+        "doom": 0.1572,
+        "utopia": 0.1123,
+        "friction": 0.6688,
+        "severe": 0.0617
+      },
+      "lift": {
+        "doom": -0.0045,
+        "utopia": 0.1244,
+        "friction": -0.0734,
+        "severe": -0.0465
+      },
+      "lift_vs_baseline": {
+        "doom": -0.004,
+        "utopia": 0.1108,
+        "friction": -0.0654,
+        "severe": -0.0414
+      },
+      "impact_score": 0.1244
+    },
+    {
+      "event": "ev_admin_flip_2029",
+      "p_fire": 0.4642,
+      "n_with": 557,
+      "n_without": 643,
+      "p_region_given": {
+        "doom": 0.1759,
+        "utopia": 0.1759,
+        "friction": 0.5943,
+        "severe": 0.0539
+      },
+      "p_region_not_given": {
+        "doom": 0.14,
+        "utopia": 0.0824,
+        "friction": 0.7185,
+        "severe": 0.0591
+      },
+      "lift": {
+        "doom": 0.036,
+        "utopia": 0.0935,
+        "friction": -0.1243,
+        "severe": -0.0052
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0193,
+        "utopia": 0.0501,
+        "friction": -0.0666,
+        "severe": -0.0028
+      },
+      "impact_score": 0.0935
+    },
+    {
+      "event": "ev_bio_nearmiss_hidden",
+      "p_fire": 0.1142,
+      "n_with": 137,
+      "n_without": 1063,
+      "p_region_given": {
+        "doom": 0.2263,
+        "utopia": 0.1314,
+        "friction": 0.5912,
+        "severe": 0.0511
+      },
+      "p_region_not_given": {
+        "doom": 0.1477,
+        "utopia": 0.1251,
+        "friction": 0.6698,
+        "severe": 0.0574
+      },
+      "lift": {
+        "doom": 0.0786,
+        "utopia": 0.0063,
+        "friction": -0.0786,
+        "severe": -0.0063
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0696,
+        "utopia": 0.0056,
+        "friction": -0.0696,
+        "severe": -0.0056
+      },
+      "impact_score": 0.0786
+    },
+    {
+      "event": "ev_bio_tier1_live",
+      "p_fire": 0.905,
+      "n_with": 1086,
+      "n_without": 114,
+      "p_region_given": {
+        "doom": 0.1556,
+        "utopia": 0.1188,
+        "friction": 0.6667,
+        "severe": 0.0589
+      },
+      "p_region_not_given": {
+        "doom": 0.1667,
+        "utopia": 0.193,
+        "friction": 0.6053,
+        "severe": 0.0351
+      },
+      "lift": {
+        "doom": -0.011,
+        "utopia": -0.0742,
+        "friction": 0.0614,
+        "severe": 0.0238
+      },
+      "lift_vs_baseline": {
+        "doom": -0.001,
+        "utopia": -0.007,
+        "friction": 0.0058,
+        "severe": 0.0023
+      },
+      "impact_score": 0.0742
+    },
+    {
+      "event": "ev_science_win_legible",
+      "p_fire": 0.2125,
+      "n_with": 255,
+      "n_without": 945,
+      "p_region_given": {
+        "doom": 0.1412,
+        "utopia": 0.1804,
+        "friction": 0.6353,
+        "severe": 0.0431
+      },
+      "p_region_not_given": {
+        "doom": 0.1608,
+        "utopia": 0.1111,
+        "friction": 0.6677,
+        "severe": 0.0603
+      },
+      "lift": {
+        "doom": -0.0197,
+        "utopia": 0.0693,
+        "friction": -0.0324,
+        "severe": -0.0172
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0155,
+        "utopia": 0.0546,
+        "friction": -0.0255,
+        "severe": -0.0135
+      },
+      "impact_score": 0.0693
+    },
+    {
+      "event": "ev_bio_public_scare",
+      "p_fire": 0.1025,
+      "n_with": 123,
+      "n_without": 1077,
+      "p_region_given": {
+        "doom": 0.1951,
+        "utopia": 0.1545,
+        "friction": 0.5366,
+        "severe": 0.1138
+      },
+      "p_region_not_given": {
+        "doom": 0.1523,
+        "utopia": 0.1226,
+        "friction": 0.675,
+        "severe": 0.0501
+      },
+      "lift": {
+        "doom": 0.0428,
+        "utopia": 0.0319,
+        "friction": -0.1384,
+        "severe": 0.0637
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0385,
+        "utopia": 0.0286,
+        "friction": -0.1242,
+        "severe": 0.0572
+      },
+      "impact_score": 0.0637
+    },
+    {
+      "event": "ev_weight_theft",
+      "p_fire": 0.1967,
+      "n_with": 236,
+      "n_without": 964,
+      "p_region_given": {
+        "doom": 0.2076,
+        "utopia": 0.1441,
+        "friction": 0.5805,
+        "severe": 0.0678
+      },
+      "p_region_not_given": {
+        "doom": 0.1442,
+        "utopia": 0.1214,
+        "friction": 0.6805,
+        "severe": 0.0539
+      },
+      "lift": {
+        "doom": 0.0634,
+        "utopia": 0.0227,
+        "friction": -0.1,
+        "severe": 0.0139
+      },
+      "lift_vs_baseline": {
+        "doom": 0.051,
+        "utopia": 0.0182,
+        "friction": -0.0803,
+        "severe": 0.0111
+      },
+      "impact_score": 0.0634
+    },
+    {
+      "event": "ev_humanoid_scale_deploy",
+      "p_fire": 0.2458,
+      "n_with": 295,
+      "n_without": 905,
+      "p_region_given": {
+        "doom": 0.2034,
+        "utopia": 0.1356,
+        "friction": 0.6169,
+        "severe": 0.0441
+      },
+      "p_region_not_given": {
+        "doom": 0.1414,
+        "utopia": 0.1227,
+        "friction": 0.6751,
+        "severe": 0.0608
+      },
+      "lift": {
+        "doom": 0.062,
+        "utopia": 0.0129,
+        "friction": -0.0582,
+        "severe": -0.0167
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0467,
+        "utopia": 0.0098,
+        "friction": -0.0439,
+        "severe": -0.0126
+      },
+      "impact_score": 0.062
+    },
+    {
+      "event": "ev_space_lift_cheap",
+      "p_fire": 0.0642,
+      "n_with": 77,
+      "n_without": 1123,
+      "p_region_given": {
+        "doom": 0.1558,
+        "utopia": 0.1558,
+        "friction": 0.6883,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1567,
+        "utopia": 0.1238,
+        "friction": 0.6589,
+        "severe": 0.0606
+      },
+      "lift": {
+        "doom": -0.0009,
+        "utopia": 0.0321,
+        "friction": 0.0294,
+        "severe": -0.0606
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0008,
+        "utopia": 0.03,
+        "friction": 0.0275,
+        "severe": -0.0567
+      },
+      "impact_score": 0.0606
+    },
+    {
+      "event": "ev_nuclear_ai_crosscut",
+      "p_fire": 0.0517,
+      "n_with": 62,
+      "n_without": 1138,
+      "p_region_given": {
+        "doom": 0.129,
+        "utopia": 0.1774,
+        "friction": 0.6935,
+        "severe": 0.0
+      },
+      "p_region_not_given": {
+        "doom": 0.1582,
+        "utopia": 0.123,
+        "friction": 0.6591,
+        "severe": 0.0598
+      },
+      "lift": {
+        "doom": -0.0291,
+        "utopia": 0.0544,
+        "friction": 0.0345,
+        "severe": -0.0598
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0276,
+        "utopia": 0.0516,
+        "friction": 0.0327,
+        "severe": -0.0567
+      },
+      "impact_score": 0.0598
+    },
+    {
+      "event": "ev_open_weights_tamper_response",
+      "p_fire": 0.1675,
+      "n_with": 201,
+      "n_without": 999,
+      "p_region_given": {
+        "doom": 0.1144,
+        "utopia": 0.1244,
+        "friction": 0.6965,
+        "severe": 0.0647
+      },
+      "p_region_not_given": {
+        "doom": 0.1652,
+        "utopia": 0.1261,
+        "friction": 0.6537,
+        "severe": 0.0551
+      },
+      "lift": {
+        "doom": -0.0507,
+        "utopia": -0.0017,
+        "friction": 0.0429,
+        "severe": 0.0096
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0422,
+        "utopia": -0.0015,
+        "friction": 0.0357,
+        "severe": 0.008
+      },
+      "impact_score": 0.0507
+    },
+    {
+      "event": "ev_tier3_path_open",
+      "p_fire": 0.0908,
+      "n_with": 109,
+      "n_without": 1091,
+      "p_region_given": {
+        "doom": 0.2018,
+        "utopia": 0.1468,
+        "friction": 0.5963,
+        "severe": 0.055
+      },
+      "p_region_not_given": {
+        "doom": 0.1522,
+        "utopia": 0.1237,
+        "friction": 0.6673,
+        "severe": 0.0568
+      },
+      "lift": {
+        "doom": 0.0497,
+        "utopia": 0.023,
+        "friction": -0.0709,
+        "severe": -0.0018
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0452,
+        "utopia": 0.021,
+        "friction": -0.0645,
+        "severe": -0.0016
+      },
+      "impact_score": 0.0497
+    },
+    {
+      "event": "ev_gaia_preemption",
+      "p_fire": 0.4792,
+      "n_with": 575,
+      "n_without": 625,
+      "p_region_given": {
+        "doom": 0.1374,
+        "utopia": 0.1009,
+        "friction": 0.7078,
+        "severe": 0.0539
+      },
+      "p_region_not_given": {
+        "doom": 0.1744,
+        "utopia": 0.1488,
+        "friction": 0.6176,
+        "severe": 0.0592
+      },
+      "lift": {
+        "doom": -0.037,
+        "utopia": -0.0479,
+        "friction": 0.0902,
+        "severe": -0.0053
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0193,
+        "utopia": -0.025,
+        "friction": 0.047,
+        "severe": -0.0028
+      },
+      "impact_score": 0.0479
+    },
+    {
+      "event": "ev_china_cdz_mobilization",
+      "p_fire": 0.6642,
+      "n_with": 797,
+      "n_without": 403,
+      "p_region_given": {
+        "doom": 0.1506,
+        "utopia": 0.1104,
+        "friction": 0.6901,
+        "severe": 0.0489
+      },
+      "p_region_not_given": {
+        "doom": 0.1687,
+        "utopia": 0.1563,
+        "friction": 0.603,
+        "severe": 0.072
+      },
+      "lift": {
+        "doom": -0.0182,
+        "utopia": -0.0459,
+        "friction": 0.0871,
+        "severe": -0.023
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0061,
+        "utopia": -0.0154,
+        "friction": 0.0293,
+        "severe": -0.0077
+      },
+      "impact_score": 0.0459
+    },
+    {
+      "event": "ev_race_acceleration",
+      "p_fire": 0.2108,
+      "n_with": 253,
+      "n_without": 947,
+      "p_region_given": {
+        "doom": 0.17,
+        "utopia": 0.1621,
+        "friction": 0.6047,
+        "severe": 0.0632
+      },
+      "p_region_not_given": {
+        "doom": 0.1531,
+        "utopia": 0.1162,
+        "friction": 0.6758,
+        "severe": 0.0549
+      },
+      "lift": {
+        "doom": 0.0168,
+        "utopia": 0.0459,
+        "friction": -0.0711,
+        "severe": 0.0083
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0133,
+        "utopia": 0.0362,
+        "friction": -0.0561,
+        "severe": 0.0066
+      },
+      "impact_score": 0.0459
+    },
+    {
+      "event": "ev_open_weights_equilibrium",
+      "p_fire": 0.4708,
+      "n_with": 565,
+      "n_without": 635,
+      "p_region_given": {
+        "doom": 0.1805,
+        "utopia": 0.1434,
+        "friction": 0.6336,
+        "severe": 0.0425
+      },
+      "p_region_not_given": {
+        "doom": 0.1354,
+        "utopia": 0.1102,
+        "friction": 0.685,
+        "severe": 0.0693
+      },
+      "lift": {
+        "doom": 0.0451,
+        "utopia": 0.0331,
+        "friction": -0.0514,
+        "severe": -0.0268
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0239,
+        "utopia": 0.0175,
+        "friction": -0.0272,
+        "severe": -0.0142
+      },
+      "impact_score": 0.0451
+    },
+    {
+      "event": "ev_eu_gpai_binds",
+      "p_fire": 0.0792,
+      "n_with": 95,
+      "n_without": 1105,
+      "p_region_given": {
+        "doom": 0.1158,
+        "utopia": 0.1053,
+        "friction": 0.7263,
+        "severe": 0.0526
+      },
+      "p_region_not_given": {
+        "doom": 0.1602,
+        "utopia": 0.1276,
+        "friction": 0.6552,
+        "severe": 0.057
+      },
+      "lift": {
+        "doom": -0.0444,
+        "utopia": -0.0223,
+        "friction": 0.0711,
+        "severe": -0.0044
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0409,
+        "utopia": -0.0206,
+        "friction": 0.0655,
+        "severe": -0.004
+      },
+      "impact_score": 0.0444
+    },
+    {
+      "event": "ev_state_ai_patchwork",
+      "p_fire": 0.5775,
+      "n_with": 693,
+      "n_without": 507,
+      "p_region_given": {
+        "doom": 0.1746,
+        "utopia": 0.1443,
+        "friction": 0.6234,
+        "severe": 0.0577
+      },
+      "p_region_not_given": {
+        "doom": 0.1321,
+        "utopia": 0.1006,
+        "friction": 0.712,
+        "severe": 0.0552
+      },
+      "lift": {
+        "doom": 0.0425,
+        "utopia": 0.0437,
+        "friction": -0.0887,
+        "severe": 0.0025
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0179,
+        "utopia": 0.0185,
+        "friction": -0.0375,
+        "severe": 0.0011
+      },
+      "impact_score": 0.0437
+    },
+    {
+      "event": "ev_multilateral_screening_pilot",
+      "p_fire": 0.1117,
+      "n_with": 134,
+      "n_without": 1066,
+      "p_region_given": {
+        "doom": 0.1194,
+        "utopia": 0.1642,
+        "friction": 0.6716,
+        "severe": 0.0448
+      },
+      "p_region_not_given": {
+        "doom": 0.1614,
+        "utopia": 0.121,
+        "friction": 0.6595,
+        "severe": 0.0582
+      },
+      "lift": {
+        "doom": -0.0419,
+        "utopia": 0.0432,
+        "friction": 0.0122,
+        "severe": -0.0134
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0373,
+        "utopia": 0.0383,
+        "friction": 0.0108,
+        "severe": -0.0119
+      },
+      "impact_score": 0.0432
+    },
+    {
+      "event": "ev_no_pause_2028",
+      "p_fire": 0.8817,
+      "n_with": 1058,
+      "n_without": 142,
+      "p_region_given": {
+        "doom": 0.1522,
+        "utopia": 0.1295,
+        "friction": 0.6626,
+        "severe": 0.0558
+      },
+      "p_region_not_given": {
+        "doom": 0.1901,
+        "utopia": 0.0986,
+        "friction": 0.6479,
+        "severe": 0.0634
+      },
+      "lift": {
+        "doom": -0.038,
+        "utopia": 0.0309,
+        "friction": 0.0147,
+        "severe": -0.0076
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0045,
+        "utopia": 0.0037,
+        "friction": 0.0017,
+        "severe": -0.0009
+      },
+      "impact_score": 0.038
+    },
+    {
+      "event": "ev_laws_mass_deploy",
+      "p_fire": 0.32,
+      "n_with": 384,
+      "n_without": 816,
+      "p_region_given": {
+        "doom": 0.1823,
+        "utopia": 0.1094,
+        "friction": 0.6589,
+        "severe": 0.0495
+      },
+      "p_region_not_given": {
+        "doom": 0.1446,
+        "utopia": 0.1336,
+        "friction": 0.6618,
+        "severe": 0.06
+      },
+      "lift": {
+        "doom": 0.0377,
+        "utopia": -0.0242,
+        "friction": -0.0029,
+        "severe": -0.0106
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0256,
+        "utopia": -0.0165,
+        "friction": -0.002,
+        "severe": -0.0072
+      },
+      "impact_score": 0.0377
+    },
+    {
+      "event": "ev_rsi_cloud_dominant",
+      "p_fire": 0.4208,
+      "n_with": 505,
+      "n_without": 695,
+      "p_region_given": {
+        "doom": 0.1703,
+        "utopia": 0.1465,
+        "friction": 0.6257,
+        "severe": 0.0574
+      },
+      "p_region_not_given": {
+        "doom": 0.1468,
+        "utopia": 0.1108,
+        "friction": 0.6863,
+        "severe": 0.0561
+      },
+      "lift": {
+        "doom": 0.0235,
+        "utopia": 0.0357,
+        "friction": -0.0606,
+        "severe": 0.0013
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0136,
+        "utopia": 0.0207,
+        "friction": -0.0351,
+        "severe": 0.0008
+      },
+      "impact_score": 0.0357
+    },
+    {
+      "event": "ev_energy_data_cap_bite",
+      "p_fire": 0.2825,
+      "n_with": 339,
+      "n_without": 861,
+      "p_region_given": {
+        "doom": 0.1534,
+        "utopia": 0.1475,
+        "friction": 0.6431,
+        "severe": 0.056
+      },
+      "p_region_not_given": {
+        "doom": 0.158,
+        "utopia": 0.1173,
+        "friction": 0.6678,
+        "severe": 0.0569
+      },
+      "lift": {
+        "doom": -0.0046,
+        "utopia": 0.0302,
+        "friction": -0.0248,
+        "severe": -0.0009
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0033,
+        "utopia": 0.0217,
+        "friction": -0.0178,
+        "severe": -0.0006
+      },
+      "impact_score": 0.0302
+    },
+    {
+      "event": "ev_fed_edu_reskilling",
+      "p_fire": 0.18,
+      "n_with": 216,
+      "n_without": 984,
+      "p_region_given": {
+        "doom": 0.1435,
+        "utopia": 0.1481,
+        "friction": 0.6528,
+        "severe": 0.0556
+      },
+      "p_region_not_given": {
+        "doom": 0.1596,
+        "utopia": 0.1209,
+        "friction": 0.6626,
+        "severe": 0.0569
+      },
+      "lift": {
+        "doom": -0.016,
+        "utopia": 0.0272,
+        "friction": -0.0098,
+        "severe": -0.0014
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0131,
+        "utopia": 0.0223,
+        "friction": -0.0081,
+        "severe": -0.0011
+      },
+      "impact_score": 0.0272
+    },
+    {
+      "event": "ev_compute_triopoly_lock",
+      "p_fire": 0.8208,
+      "n_with": 985,
+      "n_without": 215,
+      "p_region_given": {
+        "doom": 0.1614,
+        "utopia": 0.1218,
+        "friction": 0.6599,
+        "severe": 0.0569
+      },
+      "p_region_not_given": {
+        "doom": 0.1349,
+        "utopia": 0.1442,
+        "friction": 0.6651,
+        "severe": 0.0558
+      },
+      "lift": {
+        "doom": 0.0265,
+        "utopia": -0.0224,
+        "friction": -0.0052,
+        "severe": 0.001
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0048,
+        "utopia": -0.004,
+        "friction": -0.0009,
+        "severe": 0.0002
+      },
+      "impact_score": 0.0265
+    },
+    {
+      "event": "ev_bio_tier2_live",
+      "p_fire": 0.4842,
+      "n_with": 581,
+      "n_without": 619,
+      "p_region_given": {
+        "doom": 0.1618,
+        "utopia": 0.1394,
+        "friction": 0.642,
+        "severe": 0.0568
+      },
+      "p_region_not_given": {
+        "doom": 0.1519,
+        "utopia": 0.1131,
+        "friction": 0.6785,
+        "severe": 0.0565
+      },
+      "lift": {
+        "doom": 0.0099,
+        "utopia": 0.0263,
+        "friction": -0.0365,
+        "severe": 0.0003
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0051,
+        "utopia": 0.0136,
+        "friction": -0.0188,
+        "severe": 0.0001
+      },
+      "impact_score": 0.0263
+    },
+    {
+      "event": "ev_bmia_enforcement_weak",
+      "p_fire": 0.185,
+      "n_with": 222,
+      "n_without": 978,
+      "p_region_given": {
+        "doom": 0.1667,
+        "utopia": 0.1081,
+        "friction": 0.6577,
+        "severe": 0.0676
+      },
+      "p_region_not_given": {
+        "doom": 0.1544,
+        "utopia": 0.1299,
+        "friction": 0.6616,
+        "severe": 0.0542
+      },
+      "lift": {
+        "doom": 0.0123,
+        "utopia": -0.0217,
+        "friction": -0.0039,
+        "severe": 0.0134
+      },
+      "lift_vs_baseline": {
+        "doom": 0.01,
+        "utopia": -0.0177,
+        "friction": -0.0032,
+        "severe": 0.0109
+      },
+      "impact_score": 0.0217
+    },
+    {
+      "event": "ev_gulf_compute_sovereignty",
+      "p_fire": 0.3483,
+      "n_with": 418,
+      "n_without": 782,
+      "p_region_given": {
+        "doom": 0.1699,
+        "utopia": 0.1316,
+        "friction": 0.634,
+        "severe": 0.0646
+      },
+      "p_region_not_given": {
+        "doom": 0.1496,
+        "utopia": 0.1228,
+        "friction": 0.6752,
+        "severe": 0.0524
+      },
+      "lift": {
+        "doom": 0.0202,
+        "utopia": 0.0088,
+        "friction": -0.0412,
+        "severe": 0.0122
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0132,
+        "utopia": 0.0057,
+        "friction": -0.0269,
+        "severe": 0.0079
+      },
+      "impact_score": 0.0202
+    },
+    {
+      "event": "ev_singleton_lab_dominance",
+      "p_fire": 0.0725,
+      "n_with": 87,
+      "n_without": 1113,
+      "p_region_given": {
+        "doom": 0.1379,
+        "utopia": 0.1149,
+        "friction": 0.6782,
+        "severe": 0.069
+      },
+      "p_region_not_given": {
+        "doom": 0.1581,
+        "utopia": 0.1267,
+        "friction": 0.6595,
+        "severe": 0.0557
+      },
+      "lift": {
+        "doom": -0.0202,
+        "utopia": -0.0117,
+        "friction": 0.0187,
+        "severe": 0.0133
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0187,
+        "utopia": -0.0109,
+        "friction": 0.0173,
+        "severe": 0.0123
+      },
+      "impact_score": 0.0202
+    },
+    {
+      "event": "ev_federal_pause_attempt_fails",
+      "p_fire": 0.3375,
+      "n_with": 405,
+      "n_without": 795,
+      "p_region_given": {
+        "doom": 0.1481,
+        "utopia": 0.1309,
+        "friction": 0.6568,
+        "severe": 0.0642
+      },
+      "p_region_not_given": {
+        "doom": 0.161,
+        "utopia": 0.1233,
+        "friction": 0.6629,
+        "severe": 0.0528
+      },
+      "lift": {
+        "doom": -0.0129,
+        "utopia": 0.0076,
+        "friction": -0.0061,
+        "severe": 0.0114
+      },
+      "lift_vs_baseline": {
+        "doom": -0.0085,
+        "utopia": 0.005,
+        "friction": -0.004,
+        "severe": 0.0075
+      },
+      "impact_score": 0.0129
+    },
+    {
+      "event": "ev_india_sovereign_ai_stack",
+      "p_fire": 0.4025,
+      "n_with": 483,
+      "n_without": 717,
+      "p_region_given": {
+        "doom": 0.1615,
+        "utopia": 0.1263,
+        "friction": 0.6584,
+        "severe": 0.0538
+      },
+      "p_region_not_given": {
+        "doom": 0.1534,
+        "utopia": 0.1255,
+        "friction": 0.6625,
+        "severe": 0.0586
+      },
+      "lift": {
+        "doom": 0.0081,
+        "utopia": 0.0008,
+        "friction": -0.0041,
+        "severe": -0.0047
+      },
+      "lift_vs_baseline": {
+        "doom": 0.0048,
+        "utopia": 0.0005,
+        "friction": -0.0024,
+        "severe": -0.0028
+      },
+      "impact_score": 0.0081
+    }
+  ]
+}

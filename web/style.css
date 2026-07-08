@@ -215,3 +215,90 @@ th { color: var(--muted); font-weight: 500; width: 42%; }
 .run-course li.spine { border-color: var(--spine); }
 .run-course li.event { border-color: #5c8df6; }
 .run-course .when { color: var(--muted); margin-right: 0.35rem; }
+
+/* Branching timeline */
+.bt-svg { display: block; margin: 0.5rem 0 1rem; }
+.bt-col-year { fill: var(--text); font-size: 13px; font-weight: 600; }
+.bt-col-label { fill: var(--muted); font-size: 11px; }
+.bt-node-label { fill: var(--text); font-size: 11px; font-weight: 500; }
+.bt-node-pct { fill: var(--accent); font-size: 10px; }
+.bt-footer {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+}
+@media (max-width: 700px) {
+  .bt-footer { grid-template-columns: 1fr; }
+}
+.bt-footer h3 {
+  margin: 0 0 0.5rem;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--muted);
+}
+.bt-top-paths ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.82rem;
+}
+.bt-top-paths li { margin: 0.35rem 0; }
+.bt-path-region {
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.35rem;
+  border-radius: 3px;
+  margin-right: 0.35rem;
+}
+.bt-path-region.doom { background: rgba(242,139,130,0.15); color: var(--doom); }
+.bt-path-region.utopia { background: rgba(129,201,149,0.15); color: var(--utopia); }
+.bt-path-region.friction { background: rgba(253,214,99,0.12); color: var(--friction); }
+.bt-path-region.severe { background: rgba(197,138,249,0.15); color: var(--severe); }
+.bt-bucket {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.82rem;
+  margin: 0.3rem 0;
+  color: var(--muted);
+}
+.bt-bucket span:last-child { color: var(--accent); }
+
+.bt-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  margin: 0.5rem 0 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.bt-legend-title {
+  font-weight: 600;
+  color: var(--text);
+  margin-right: 0.25rem;
+}
+.swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  margin-right: 0.25rem;
+  vertical-align: middle;
+}
+.swatch-spine { background: #7baaf7; }
+.swatch-gov { background: #e76f51; }
+.swatch-c10 { background: #c58af9; }
+.swatch-friction { background: var(--friction); }
+.swatch-doom { background: var(--doom); }
+.swatch-utopia { background: var(--utopia); }
+.swatch-severe { background: var(--severe); }
+
+/* Event impact table */
+.impact-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.impact-table th, .impact-table td { padding: 0.35rem 0.5rem; text-align: left; border-bottom: 1px solid var(--border); }
+.impact-table th { color: var(--muted); font-weight: 500; }
+.impact-table .pos { color: var(--doom); }
+.impact-table .neg { color: var(--utopia); }
+.impact-table .muted-cell { color: var(--muted); }
