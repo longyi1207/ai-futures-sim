@@ -79,9 +79,14 @@ python scripts/path_frequency.py -n 600 --seed 42 --output outputs/runs/path_fre
 python scripts/export_sample_runs.py -n 800 --seed 42 --output web/data/sample_runs.json
 python scripts/export_dag.py
 python scripts/export_branching_timeline.py -n 600 --seed 42 --output web/data/branching_timeline.json
+python scripts/export_branching_timeline.py -n 600 --seed 42 --lang zh --output web/data/branching_timeline_zh.json
 
 cd web && python -m http.server 8787
 # http://localhost:8787 — or https://longyi1207.github.io/ai-futures-sim/web/
+# PNG export (server must be running on PORT, default 8799):
+# node scripts/export_branching_png.mjs
+# node scripts/export_branching_png.mjs --lang zh
+python scripts/export_story_paths.py --runs 1 10 24 --output web/data/story_paths_detail.json
 ```
 
 The explorer shows:
