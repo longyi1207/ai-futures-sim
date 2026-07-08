@@ -1,0 +1,148 @@
+# State variables → event hazard multipliers (Tier 1 + Tier 2).
+# See docs/SOCIETY_HAZARDS.md
+
+# --- Tier 1: labor / ghost GDP ---
+employment_stress:
+  reference: 0.12
+  mode: excess
+  events:
+    ev_c4_labor_shock: { scale: 0.42 }
+    ev_labor_hearings_peak: { scale: 0.36 }
+    ev_fed_edu_reskilling: { scale: 0.28 }
+
+ghost_gdp_index:
+  reference: 0.15
+  mode: excess
+  events:
+    ev_c4_labor_shock: { scale: 0.35 }
+    ev_labor_hearings_peak: { scale: 0.32 }
+    ev_laws_mass_deploy: { scale: 0.18 }
+
+# --- Tier 1: salience / pause / whistle ---
+public_xrisk_salience:
+  reference: 0.18
+  mode: excess
+  events:
+    ev_bmia_pass: { scale: 0.32 }
+    ev_federal_pause_succeeds: { scale: 0.28 }
+    ev_federal_pause_attempt_fails: { scale: 0.22 }
+    ev_no_pause_2028: { scale: -0.20 }
+    ev_c10_internal_concern: { scale: 0.26 }
+    ev_whistle_memo: { scale: 0.30 }
+    ev_whistle_dump: { scale: 0.24 }
+    ev_bio_public_scare: { scale: 0.25 }
+
+# --- Tier 1: deployment race ---
+deployment_pressure:
+  reference: 0.32
+  mode: excess
+  events:
+    ev_race_acceleration: { scale: 0.34 }
+    ev_weight_theft: { scale: 0.28 }
+    ev_deceptive_deploy_at_scale: { scale: 0.30 }
+    ev_open_weights_equilibrium: { scale: 0.22 }
+    ev_china_cdz_mobilization: { scale: 0.20 }
+
+# --- Tier 1: deception / alignment scare ---
+deception_risk:
+  reference: 0.12
+  mode: excess
+  events:
+    ev_c10_internal_concern: { scale: 0.40 }
+    ev_whistle_memo: { scale: 0.32 }
+    ev_whistle_dump: { scale: 0.28 }
+    ev_deploy_incident: { scale: 0.26 }
+    ev_deceptive_deploy_at_scale: { scale: 0.35 }
+
+# --- Tier 1: bio ---
+bio_risk_pressure:
+  reference: 0.05
+  mode: excess
+  events:
+    ev_tier3_path_open: { scale: 0.45 }
+    ev_bio_public_scare: { scale: 0.38 }
+    ev_tier3_release_attempt: { scale: 0.32 }
+
+# --- Tier 1: open weights security ---
+open_weights_regime:
+  reference: 0.45
+  mode: excess
+  events:
+    ev_weight_theft: { scale: 0.24 }
+    ev_open_weights_equilibrium: { scale: 0.36 }
+    ev_open_weights_tamper_response: { scale: 0.28 }
+
+# --- Tier 1: governance (high → policy; low → paralysis) ---
+governance_capacity:
+  - reference: 0.52
+    mode: excess
+    events:
+      ev_bmia_pass: { scale: 0.38 }
+      ev_multilateral_screening_pilot: { scale: 0.30 }
+      ev_beneficial_ai_treaty: { scale: 0.26 }
+      ev_fed_edu_reskilling: { scale: 0.22 }
+      ev_us_paralysis_s2: { scale: -0.45 }
+  - reference: 0.52
+    mode: deficit
+    events:
+      ev_us_paralysis_s2: { scale: 0.42 }
+
+# --- Tier 1 (prior): inequality / autonomy ---
+inequality_index:
+  reference: 0.54
+  mode: excess
+  events:
+    ev_c4_labor_shock: { scale: 0.38 }
+    ev_labor_hearings_peak: { scale: 0.30 }
+    ev_laws_mass_deploy: { scale: 0.32 }
+    ev_swf_enacted: { scale: 0.24 }
+    ev_compute_triopoly_lock: { scale: 0.16 }
+
+human_autonomy_index:
+  reference: 0.88
+  mode: deficit
+  events:
+    ev_deceptive_deploy_at_scale: { scale: 0.48 }
+    ev_no_shutdown_asi_threshold: { scale: 0.42 }
+    ev_extinction_misalign_catastrophe: { scale: 0.36 }
+    ev_deploy_incident: { scale: 0.28 }
+    ev_concern_no_leak: { scale: 0.18 }
+    ev_meaning_pilot_success: { scale: -0.35 }
+    ev_align_prod_catch: { scale: -0.28 }
+
+# --- Tier 2: meaning / utopia ---
+meaning_institution_health:
+  reference: 0.48
+  mode: excess
+  events:
+    ev_meaning_pilot_success: { scale: 0.40 }
+    ev_swf_enacted: { scale: 0.28 }
+    ev_beneficial_ai_treaty: { scale: 0.24 }
+    ev_fed_edu_reskilling: { scale: 0.18 }
+
+# --- Tier 2: geopolitics / compute ---
+china_frontier_parity:
+  reference: 0.25
+  mode: excess
+  events:
+    ev_china_cdz_mobilization: { scale: 0.36 }
+    ev_weight_theft: { scale: 0.26 }
+    ev_race_acceleration: { scale: 0.22 }
+
+compute_concentration:
+  reference: 0.68
+  mode: excess
+  events:
+    ev_singleton_lab_dominance: { scale: 0.34 }
+    ev_compute_triopoly_lock: { scale: 0.28 }
+    ev_energy_data_cap_bite: { scale: 0.20 }
+
+# --- Tier 2: institutional trust ---
+alignment_trust:
+  reference: 0.55
+  mode: excess
+  events:
+    ev_prod_interp_halt: { scale: 0.32 }
+    ev_beneficial_ai_treaty: { scale: 0.26 }
+    ev_align_prod_catch: { scale: 0.24 }
+    ev_deceptive_deploy_at_scale: { scale: -0.38 }

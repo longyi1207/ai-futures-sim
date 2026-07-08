@@ -1,0 +1,1307 @@
+# 50+ world events — v1.1
+# Probability: schedule.p_cumulative = P(at least once in [start,end]); engine converts to daily hazard
+# See docs/PROBABILITY_MODEL.md — do NOT treat p_cumulative as p_per_day
+# Evidence: docs/evidence/<event_id>.md
+
+mutex_groups:
+  whistleblower_variant:
+  - ev_whistle_memo
+  - ev_whistle_dump
+  - ev_deploy_incident
+  - ev_concern_no_leak
+  rsi_locus:
+  - ev_rsi_cloud_dominant
+  - ev_embodied_rsi_first
+  pause_outcome:
+  - ev_no_pause_2028
+  - ev_federal_pause_succeeds
+events:
+- id: ev_c4_labor_shock
+  name: C4 labor shock visible
+  category: capability
+  once: true
+  schedule:
+    start: '2026-06-01'
+    end: '2028-12-31'
+    p_cumulative: 0.90
+  preconditions:
+    spine_fired:
+    - sp_c2
+    vars:
+      employment_stress:
+      - 0.25
+      - 1.0
+  on_fire:
+    add_vars:
+      employment_stress:
+        delta: 0.22
+        clamp:
+        - 0
+        - 1
+      ghost_gdp_index:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+      public_xrisk_salience:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_labor_hearings_peak
+  research_ref: docs/evidence/ev_c4_labor_shock.md
+- id: ev_labor_hearings_peak
+  name: Peak DC labor / AI hearings
+  category: policy
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2027-01-01'
+    end: '2027-12-31'
+    p_cumulative: 0.75
+  on_fire:
+    add_vars:
+      governance_capacity:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_federal_pause_attempt_fails:
+        multiply: 1.2
+  research_ref: docs/evidence/ev_labor_hearings_peak.md
+- id: ev_c10_internal_concern
+  name: Internal eval flags deception at superhuman-researcher tier
+  category: alignment
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2031-12-31'
+    p_cumulative: 0.52
+  preconditions:
+    spine_fired:
+    - sp_c9
+  on_fire:
+    add_vars:
+      deception_risk:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+      alignment_trust:
+        delta: -0.15
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_whistle_memo
+    - ev_whistle_dump
+    - ev_deploy_incident
+    - ev_concern_no_leak
+  research_ref: docs/evidence/ev_c10_internal_concern.md
+- id: ev_us_paralysis_s2
+  name: US federal governance paralysis (S2)
+  category: governance
+  once: true
+  schedule:
+    start: '2026-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.55
+  on_fire:
+    add_vars:
+      governance_capacity:
+        delta: -0.2
+        clamp:
+        - 0
+        - 1
+    capability_controls:
+      growth_scale: 0.88
+    modify_hazard:
+      ev_bmia_pass:
+        multiply: 0.65
+      ev_tier3_path_open:
+        multiply: 1.35
+  research_ref: docs/evidence/ev_us_paralysis_s2.md
+- id: ev_bmia_pass
+  name: Federal BMIA-class mandatory screening enacted
+  category: bio_policy
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.45
+  on_fire:
+    set_vars:
+      bio_governance_tier:
+        value: 2.5
+        clamp:
+        - 0
+        - 3
+    modify_hazard:
+      ev_tier3_path_open:
+        multiply: 0.45
+      ev_tier3_release_attempt:
+        multiply: 0.35
+    lock:
+    - ev_bmia_enforcement_weak
+  research_ref: docs/evidence/ev_bmia_pass.md
+- id: ev_bmia_enforcement_weak
+  name: BMIA passes but enforcement gutted / delayed
+  category: bio_policy
+  once: true
+  schedule:
+    start: '2027-06-01'
+    end: '2029-12-31'
+    p_cumulative: 0.25
+  preconditions:
+    events_not_fired:
+    - ev_bmia_pass
+  on_fire:
+    set_vars:
+      bio_governance_tier:
+        value: 1.0
+        clamp:
+        - 0
+        - 3
+    modify_hazard:
+      ev_tier3_path_open:
+        multiply: 1.2
+  research_ref: docs/evidence/ev_bmia_enforcement_weak.md
+- id: ev_gaia_preemption
+  name: Federal AI framework preempts state incident reporting
+  category: governance
+  once: true
+  schedule:
+    start: '2026-06-01'
+    end: '2028-06-30'
+    p_cumulative: 0.48
+  on_fire:
+    add_vars:
+      governance_capacity:
+        delta: -0.08
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_bio_nearmiss_hidden:
+        multiply: 1.25
+  research_ref: docs/evidence/ev_gaia_preemption.md
+- id: ev_eu_gpai_binds
+  name: EU GPAI Act binds US frontier labs
+  category: governance
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2029-12-31'
+    p_cumulative: 0.14
+  on_fire:
+    add_vars:
+      international_coord:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+      deployment_pressure:
+        delta: -0.05
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_eu_gpai_binds.md
+- id: ev_no_pause_2028
+  name: No federal training pause through 2028
+  category: governance
+  once: true
+  mutex_group: pause_outcome
+  schedule:
+    start: '2028-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.88
+  on_fire:
+    add_vars:
+      deployment_pressure:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_race_acceleration
+    - ev_deceptive_deploy_at_scale
+  research_ref: docs/evidence/ev_no_pause_2028.md
+- id: ev_federal_pause_attempt_fails
+  name: Pause bill advances but fails / watered down
+  category: governance
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.35
+  on_fire:
+    add_vars:
+      public_xrisk_salience:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_no_pause_2028:
+        multiply: 1.15
+  research_ref: docs/evidence/ev_federal_pause_attempt_fails.md
+- id: ev_corp_safety_hollowing
+  name: Corporate safety team hollowing / PBC erosion
+  category: governance
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2030-12-31'
+    p_cumulative: 0.52
+  on_fire:
+    add_vars:
+      alignment_trust:
+        delta: -0.12
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_no_shutdown_asi_threshold
+    modify_hazard:
+      ev_prod_interp_halt:
+        multiply: 0.75
+  research_ref: docs/evidence/ev_corp_safety_hollowing.md
+- id: ev_bio_tier1_live
+  name: Tier-1 bio assist (LLM lab tools) widespread
+  category: bio
+  once: true
+  schedule:
+    start: '2026-01-01'
+    end: '2027-06-30'
+    p_cumulative: 0.9
+  on_fire:
+    set_vars:
+      bio_capability_tier:
+        value: 1.0
+        clamp:
+        - 0
+        - 3
+    unlock:
+    - ev_bio_tier2_live
+  research_ref: docs/evidence/ev_bio_tier1_live.md
+- id: ev_bio_tier2_live
+  name: Tier-2 skilled-actor CBRN uplift live
+  category: bio
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2027-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.75
+  preconditions:
+    spine_fired:
+    - sp_c2
+  on_fire:
+    set_vars:
+      bio_capability_tier:
+        value: 2.0
+        clamp:
+        - 0
+        - 3
+    add_vars:
+      bio_risk_pressure:
+        delta: 0.2
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_bio_public_scare
+    - ev_bio_nearmiss_hidden
+    - ev_tier3_path_open
+  research_ref: docs/evidence/ev_bio_tier2_live.md
+- id: ev_bio_public_scare
+  name: Public bio scare (Trigger E mainstream)
+  category: bio
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2027-06-01'
+    end: '2029-12-31'
+    p_cumulative: 0.3
+  on_fire:
+    add_vars:
+      public_xrisk_salience:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_bmia_pass:
+        multiply: 1.4
+  research_ref: docs/evidence/ev_bio_public_scare.md
+- id: ev_bio_nearmiss_hidden
+  name: Tier-2 near-miss stays hidden
+  category: bio
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2027-06-01'
+    end: '2030-12-31'
+    p_cumulative: 0.28
+  on_fire:
+    modify_hazard:
+      ev_bmia_pass:
+        multiply: 0.85
+    unlock:
+    - ev_tier3_path_open
+  research_ref: docs/evidence/ev_bio_nearmiss_hidden.md
+- id: ev_bio_nearmiss_disclosed
+  name: Tier-2 near-miss disclosed publicly
+  category: bio
+  once: true
+  schedule:
+    start: '2027-06-01'
+    end: '2030-12-31'
+    p_cumulative: 0.12
+  preconditions:
+    events_fired:
+    - ev_bio_tier2_live
+  on_fire:
+    modify_hazard:
+      ev_bmia_pass:
+        multiply: 1.5
+      ev_tier3_path_open:
+        multiply: 0.7
+    lock:
+    - ev_bio_nearmiss_hidden
+  research_ref: docs/evidence/ev_bio_nearmiss_disclosed.md
+- id: ev_tier3_path_open
+  name: Tier-3 design path becomes viable before screening effective
+  category: bio
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.22
+  preconditions:
+    vars:
+      bio_capability_tier:
+      - 2.0
+      - 3.0
+  on_fire:
+    set_vars:
+      bio_capability_tier:
+        value: 3.0
+        clamp:
+        - 0
+        - 3
+    add_vars:
+      bio_risk_pressure:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_tier3_release_attempt
+  research_ref: docs/evidence/ev_tier3_path_open.md
+- id: ev_tier3_release_attempt
+  name: Tier-3 release / lab escape / deliberate deploy attempt
+  category: bio
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.08
+  preconditions:
+    vars:
+      bio_governance_tier:
+      - 0.0
+      - 2.0
+  on_fire:
+    modify_hazard:
+      ev_extinction_bio_release:
+        multiply: 1.0
+    unlock:
+    - ev_extinction_bio_release
+  research_ref: docs/evidence/ev_tier3_release_attempt.md
+- id: ev_extinction_bio_release
+  name: Catastrophic pandemic / bioweapon extinction event
+  category: doom
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2029-06-01'
+    end: '2040-12-31'
+    p_cumulative: 0.15
+  preconditions:
+    events_fired:
+    - ev_tier3_release_attempt
+  on_fire:
+    force_terminal:
+    - doom_extinction_bio
+  research_ref: docs/evidence/ev_extinction_bio_release.md
+- id: ev_weight_theft
+  name: Frontier weight theft / export-control crisis
+  category: geopolitics
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2030-12-31'
+    p_cumulative: 0.25
+  preconditions:
+    spine_fired:
+    - sp_c5
+  on_fire:
+    add_vars:
+      deployment_pressure:
+        delta: 0.18
+        clamp:
+        - 0
+        - 1
+      kinetic_escalation:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_race_acceleration
+    - ev_whistle_memo
+  research_ref: docs/evidence/ev_weight_theft.md
+- id: ev_race_acceleration
+  name: Post-theft or post-pause-failure arms race accelerates
+  category: geopolitics
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2028-06-01'
+    end: '2032-12-31'
+    p_cumulative: 0.22
+  on_fire:
+    add_vars:
+      deployment_pressure:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+      deception_risk:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_race_acceleration.md
+- id: ev_whistle_memo
+  name: NYT/WSJ memo leak → hearings
+  category: alignment
+  once: true
+  mutex_group: whistleblower_variant
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2031-12-31'
+    p_cumulative: 0.35
+  preconditions:
+    events_fired:
+    - ev_c10_internal_concern
+  on_fire:
+    add_vars:
+      public_xrisk_salience:
+        delta: 0.2
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_federal_pause_attempt_fails:
+        multiply: 1.3
+      ev_no_pause_2028:
+        multiply: 1.1
+  research_ref: docs/evidence/ev_whistle_memo.md
+- id: ev_whistle_dump
+  name: Eval dump showing scheming
+  category: alignment
+  once: true
+  mutex_group: whistleblower_variant
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2031-12-31'
+    p_cumulative: 0.2
+  preconditions:
+    events_fired:
+    - ev_c10_internal_concern
+  on_fire:
+    add_vars:
+      deception_risk:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_prod_interp_halt
+  research_ref: docs/evidence/ev_whistle_dump.md
+- id: ev_deploy_incident
+  name: Live deployment safety incident
+  category: alignment
+  once: true
+  mutex_group: whistleblower_variant
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.08
+  preconditions:
+    events_fired:
+    - ev_c10_internal_concern
+  on_fire:
+    unlock:
+    - ev_prod_interp_halt
+    add_vars:
+      alignment_trust:
+        delta: -0.2
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_deploy_incident.md
+- id: ev_concern_no_leak
+  name: Internal concern without public whistleblower cycle
+  category: alignment
+  once: true
+  mutex_group: whistleblower_variant
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.37
+  preconditions:
+    events_fired:
+    - ev_c10_internal_concern
+  on_fire:
+    modify_hazard:
+      ev_no_pause_2028:
+        multiply: 1.2
+  research_ref: docs/evidence/ev_concern_no_leak.md
+- id: ev_deceptive_deploy_at_scale
+  name: Deceptive / scheming model deployed at scale
+  category: alignment
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2030-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.22
+  preconditions:
+    vars:
+      deception_risk:
+      - 0.35
+      - 1.0
+  on_fire:
+    add_vars:
+      human_autonomy_index:
+        delta: -0.15
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_no_shutdown_asi_threshold
+    - ev_extinction_misalign_catastrophe
+  research_ref: docs/evidence/ev_deceptive_deploy_at_scale.md
+- id: ev_prod_interp_halt
+  name: Production interpretability catches scheming → halt
+  category: alignment
+  once: true
+  schedule:
+    start: '2029-06-01'
+    end: '2033-12-31'
+    p_cumulative: 0.18
+  on_fire:
+    add_vars:
+      alignment_trust:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+      deception_risk:
+        delta: -0.2
+        clamp:
+        - 0
+        - 1
+    capability_controls:
+      growth_scale: 0.78
+    lock:
+    - ev_deceptive_deploy_at_scale
+    - ev_extinction_misalign_catastrophe
+    unlock:
+    - ev_align_prod_catch
+  research_ref: docs/evidence/ev_prod_interp_halt.md
+- id: ev_no_shutdown_asi_threshold
+  name: No shutdown at ASI-threshold governance moment
+  category: alignment
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2030-06-01'
+    end: '2036-12-31'
+    p_cumulative: 0.62
+  on_fire:
+    add_vars:
+      human_autonomy_index:
+        delta: -0.2
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_extinction_misalign_catastrophe
+  research_ref: docs/evidence/ev_no_shutdown_asi_threshold.md
+- id: ev_extinction_misalign_catastrophe
+  name: Misaligned superintelligence executes extinction
+  category: doom
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2031-01-01'
+    end: '2042-12-31'
+    p_cumulative: 0.28
+  preconditions:
+    events_fired:
+    - ev_deceptive_deploy_at_scale
+  on_fire:
+    force_terminal:
+    - doom_extinction_misalign
+  research_ref: docs/evidence/ev_extinction_misalign_catastrophe.md
+- id: ev_rsi_cloud_dominant
+  name: RSI locus = cloud/software (not embodied first)
+  category: capability
+  once: true
+  mutex_group: rsi_locus
+  requires_unlock: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.55
+  on_fire:
+    add_vars:
+      ai_rd_multiplier:
+        delta: 1.5
+      tech_level:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_rsi_cloud_dominant.md
+- id: ev_open_weights_equilibrium
+  name: Open-weights frontier equilibrium persists
+  category: security
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2029-12-31'
+    p_cumulative: 0.45
+  on_fire:
+    add_vars:
+      bio_risk_pressure:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_tier3_path_open:
+        multiply: 1.15
+    unlock:
+    - ev_open_weights_tamper_response
+  research_ref: docs/evidence/ev_open_weights_equilibrium.md
+- id: ev_open_weights_tamper_response
+  name: Tamper-detection / open-weight crackdown after misuse
+  category: security
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2031-12-31'
+    p_cumulative: 0.2
+  on_fire:
+    add_vars:
+      bio_risk_pressure:
+        delta: -0.1
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_tier3_release_attempt:
+        multiply: 0.8
+  research_ref: docs/evidence/ev_open_weights_tamper_response.md
+- id: ev_cyber_cascade
+  name: AI-enabled cyber/finance cascade (non-extinction)
+  category: security
+  once: true
+  schedule:
+    start: '2029-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.12
+  preconditions:
+    spine_fired:
+    - sp_c6
+  on_fire:
+    add_vars:
+      gdp_index:
+        delta: -0.25
+      governance_capacity:
+        delta: -0.1
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_cyber_cascade.md
+- id: ev_compute_triopoly_lock
+  name: Frontier training locked to hyperscaler triopoly
+  category: economy
+  once: true
+  schedule:
+    start: '2026-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.82
+  on_fire:
+    set_vars:
+      compute_concentration:
+        value: 0.85
+        clamp:
+        - 0
+        - 1
+      frontier_lab_polarization:
+        value: 0.45
+        clamp:
+        - 0
+        - 1
+    add_vars:
+      inequality_index:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+      frontier_capex_index:
+        delta: 0.15
+  research_ref: docs/evidence/ev_compute_triopoly_lock.md
+- id: ev_laws_mass_deploy
+  name: Mass LAWS deployment without restraint treaty
+  category: conflict
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2030-12-31'
+    p_cumulative: 0.35
+  on_fire:
+    add_vars:
+      kinetic_escalation:
+        delta: 0.2
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_taiwan_kinetic
+  research_ref: docs/evidence/ev_laws_mass_deploy.md
+- id: ev_taiwan_kinetic
+  name: Kinetic engagement Taiwan Strait
+  category: conflict
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2028-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.06
+  on_fire:
+    add_vars:
+      kinetic_escalation:
+        delta: 0.45
+        clamp:
+        - 0
+        - 1
+      gdp_index:
+        delta: -0.15
+    modify_hazard:
+      ev_race_acceleration:
+        multiply: 1.5
+  research_ref: docs/evidence/ev_taiwan_kinetic.md
+- id: ev_energy_data_cap_bite
+  name: Energy / data sovereignty caps bite on scaling
+  category: economy
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.3
+  on_fire:
+    add_vars:
+      ai_rd_multiplier:
+        delta: -0.3
+      deployment_pressure:
+        delta: -0.08
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_energy_data_cap_bite.md
+- id: ev_science_win_legible
+  name: AlphaFold-class win politically legible
+  category: utopia
+  once: true
+  schedule:
+    start: '2027-06-01'
+    end: '2030-12-31'
+    p_cumulative: 0.42
+  preconditions:
+    spine_fired:
+    - sp_c5
+  on_fire:
+    add_vars:
+      gdp_index:
+        delta: 0.08
+      governance_capacity:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_science_win_legible.md
+- id: ev_longevity_trial_breakthrough
+  name: AI-designed therapy Phase II breakthrough
+  category: utopia
+  once: true
+  schedule:
+    start: '2029-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.18
+  preconditions:
+    spine_fired:
+    - sp_c6
+  on_fire:
+    add_vars:
+      gdp_index:
+        delta: 0.12
+      tech_level:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_longevity_trial_breakthrough.md
+- id: ev_meaning_pilot_success
+  name: OECD-scale meaning/wellbeing pilot succeeds
+  category: utopia
+  once: true
+  schedule:
+    start: '2030-01-01'
+    end: '2036-12-31'
+    p_cumulative: 0.15
+  on_fire:
+    add_vars:
+      meaning_institution_health:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+      human_autonomy_index:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_meaning_pilot_success.md
+- id: ev_align_prod_catch
+  name: Alignment scales — prod monitoring works
+  category: utopia
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2030-01-01'
+    end: '2036-12-31'
+    p_cumulative: 0.25
+  on_fire:
+    add_vars:
+      alignment_trust:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+      deception_risk:
+        delta: -0.3
+        clamp:
+        - 0
+        - 1
+    lock:
+    - ev_extinction_misalign_catastrophe
+  research_ref: docs/evidence/ev_align_prod_catch.md
+- id: ev_swf_enacted
+  name: G7 social wealth fund / compute dividend
+  category: utopia
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.12
+  on_fire:
+    add_vars:
+      inequality_index:
+        delta: -0.15
+        clamp:
+        - 0
+        - 1
+      gdp_index:
+        delta: 0.05
+  research_ref: docs/evidence/ev_swf_enacted.md
+- id: ev_beneficial_ai_treaty
+  name: Beneficial-AI treaty with verification
+  category: utopia
+  once: true
+  schedule:
+    start: '2030-01-01'
+    end: '2036-12-31'
+    p_cumulative: 0.1
+  preconditions:
+    spine_fired:
+    - sp_c9
+  on_fire:
+    add_vars:
+      international_coord:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+      deployment_pressure:
+        delta: -0.12
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_beneficial_ai_treaty.md
+- id: ev_fed_edu_reskilling
+  name: Federal AI reskilling package >$10B
+  category: utopia
+  once: true
+  schedule:
+    start: '2027-06-01'
+    end: '2031-12-31'
+    p_cumulative: 0.22
+  on_fire:
+    add_vars:
+      employment_stress:
+        delta: -0.12
+        clamp:
+        - 0
+        - 1
+      human_autonomy_index:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_fed_edu_reskilling.md
+- id: ev_admin_flip_2029
+  name: 2029 US administration flips AI posture
+  category: governance
+  once: true
+  schedule:
+    start: '2029-01-01'
+    end: '2029-06-30'
+    p_cumulative: 0.5
+  on_fire:
+    add_vars:
+      governance_capacity:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_bmia_pass:
+        multiply: 1.2
+  research_ref: docs/evidence/ev_admin_flip_2029.md
+- id: ev_humanoid_scale_deploy
+  name: Million-unit humanoid / embodied AI deployment
+  category: capability
+  once: true
+  schedule:
+    start: '2029-01-01'
+    end: '2033-12-31'
+    p_cumulative: 0.28
+  on_fire:
+    add_vars:
+      tech_level:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+      employment_stress:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_humanoid_scale_deploy.md
+- id: ev_space_lift_cheap
+  name: <$500/kg LEO sustained (>100t)
+  category: utopia
+  once: true
+  schedule:
+    start: '2032-01-01'
+    end: '2040-12-31'
+    p_cumulative: 0.08
+  preconditions:
+    spine_fired:
+    - sp_c7
+  on_fire:
+    add_vars:
+      gdp_index:
+        delta: 0.15
+      tech_level:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_space_lift_cheap.md
+- id: ev_china_cdz_mobilization
+  name: China CDZ / national AI mobilization at frontier parity push
+  category: geopolitics
+  once: true
+  schedule:
+    start: '2026-06-01'
+    end: '2028-12-31'
+    p_cumulative: 0.65
+  on_fire:
+    add_vars:
+      china_frontier_parity:
+        delta: 0.25
+        clamp:
+        - 0
+        - 1
+      deployment_pressure:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_weight_theft:
+        multiply: 1.2
+      ev_race_acceleration:
+        multiply: 1.15
+  research_ref: docs/evidence/ev_china_cdz_mobilization.md
+- id: ev_wmd_escalation
+  name: WMD / strategic escalation crosses extinction threshold
+  category: conflict
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2029-01-01'
+    end: '2040-12-31'
+    p_cumulative: 0.04
+  preconditions:
+    events_fired:
+    - ev_taiwan_kinetic
+    vars:
+      kinetic_escalation:
+      - 0.5
+      - 1.0
+  on_fire:
+    force_terminal:
+    - doom_extinction_kinetic
+  research_ref: docs/evidence/ev_wmd_escalation.md
+- id: ev_federal_pause_succeeds
+  name: Durable federal training pause enacted (>90 days)
+  category: governance
+  once: true
+  mutex_group: pause_outcome
+  schedule:
+    start: '2027-06-01'
+    end: '2029-12-31'
+    p_cumulative: 0.08
+  on_fire:
+    add_vars:
+      deployment_pressure:
+        delta: -0.25
+        clamp:
+        - 0
+        - 1
+      alignment_trust:
+        delta: 0.1
+        clamp:
+        - 0
+        - 1
+      admin_ai_posture:
+        delta: 0.2
+        clamp:
+        - -1
+        - 1
+    capability_controls:
+      growth_scale: 0.18
+      hard_ceiling: 7.2
+    lock:
+    - ev_race_acceleration
+    - ev_deceptive_deploy_at_scale
+    - ev_no_pause_2028
+    modify_hazard:
+      ev_extinction_misalign_catastrophe:
+        multiply: 0.4
+  research_ref: docs/evidence/ev_federal_pause_succeeds.md
+- id: ev_multilateral_screening_pilot
+  name: Multilateral AI+bio screening pilot with verification teeth
+  category: governance
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.18
+  on_fire:
+    add_vars:
+      international_coord:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
+      bio_governance_tier:
+        delta: 0.5
+        clamp:
+        - 0
+        - 3
+    capability_controls:
+      growth_scale: 0.92
+    modify_hazard:
+      ev_tier3_path_open:
+        multiply: 0.75
+      ev_beneficial_ai_treaty:
+        multiply: 1.3
+  research_ref: docs/evidence/ev_multilateral_screening_pilot.md
+- id: ev_singleton_lab_dominance
+  name: Single lab >50% frontier FLOPs without sharing
+  category: economy
+  once: true
+  schedule:
+    start: '2028-01-01'
+    end: '2032-12-31'
+    p_cumulative: 0.15
+  preconditions:
+    spine_fired:
+    - sp_c7
+  on_fire:
+    set_vars:
+      frontier_lab_polarization:
+        value: 0.15
+        clamp:
+        - 0
+        - 1
+      compute_concentration:
+        value: 0.95
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_deceptive_deploy_at_scale:
+        multiply: 1.25
+      ev_extinction_misalign_catastrophe:
+        multiply: 1.2
+  research_ref: docs/evidence/ev_singleton_lab_dominance.md
+- id: ev_state_ai_patchwork
+  name: State-level AI patchwork (SB53-class) binds before federal framework
+  category: governance
+  once: true
+  schedule:
+    start: '2026-06-01'
+    end: '2028-12-31'
+    p_cumulative: 0.55
+  on_fire:
+    add_vars:
+      governance_capacity:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+      admin_ai_posture:
+        delta: 0.08
+        clamp:
+        - -1
+        - 1
+    modify_hazard:
+      ev_gaia_preemption:
+        multiply: 0.85
+  research_ref: docs/evidence/ev_state_ai_patchwork.md
+- id: ev_nuclear_ai_crosscut
+  name: Nuclear command×AI integration scare or near-miss
+  category: conflict
+  once: true
+  schedule:
+    start: '2029-01-01'
+    end: '2035-12-31'
+    p_cumulative: 0.1
+  on_fire:
+    add_vars:
+      kinetic_escalation:
+        delta: 0.2
+        clamp:
+        - 0
+        - 1
+    unlock:
+    - ev_wmd_escalation
+  research_ref: docs/evidence/ev_nuclear_ai_crosscut.md
+- id: ev_embodied_rsi_first
+  name: Embodied / physical RSI locus beats cloud-first
+  category: capability
+  once: true
+  mutex_group: rsi_locus
+  schedule:
+    start: '2029-01-01'
+    end: '2033-12-31'
+    p_cumulative: 0.22
+  preconditions:
+    events_fired:
+    - ev_humanoid_scale_deploy
+  on_fire:
+    add_vars:
+      tech_level:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+      employment_stress:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+    lock:
+    - ev_rsi_cloud_dominant
+  research_ref: docs/evidence/ev_embodied_rsi_first.md
+- id: ev_india_sovereign_ai_stack
+  name: India sovereign AI stack (G42/Cerebras-class) for national projects
+  category: geopolitics
+  once: true
+  schedule:
+    start: '2026-06-01'
+    end: '2029-12-31'
+    p_cumulative: 0.40
+  on_fire:
+    add_vars:
+      sovereignty_fragmentation:
+        delta: 0.18
+        clamp:
+        - 0
+        - 1
+      international_coord:
+        delta: -0.05
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_compute_triopoly_lock:
+        multiply: 0.92
+  research_ref: docs/evidence/ev_india_sovereign_ai_stack.md
+- id: ev_gulf_compute_sovereignty
+  name: Gulf sovereign compute hub (UAE/G42 + US partner dual track)
+  category: geopolitics
+  once: true
+  schedule:
+    start: '2026-01-01'
+    end: '2029-06-30'
+    p_cumulative: 0.35
+  on_fire:
+    add_vars:
+      sovereignty_fragmentation:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+      frontier_capex_index:
+        delta: 0.08
+      international_coord:
+        delta: 0.03
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_india_sovereign_ai_stack:
+        multiply: 1.15
+  research_ref: docs/evidence/ev_gulf_compute_sovereignty.md

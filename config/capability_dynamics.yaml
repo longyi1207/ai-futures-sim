@@ -1,0 +1,97 @@
+# Continuous internal capability dynamics (Model 2).
+# RSI = piecewise-linear calendar curve (AI 2027 plot), NOT per-milestone regime knobs.
+# See docs/CAPABILITY_DYNAMICS.md
+
+model: continuous_threshold_v1
+
+base_daily_growth: 0.00136
+multiplier_exponent: 1.0
+carrying_capacity: 11.0
+max_multiplier_in_growth: 55.0
+
+# AI 2027 internal R&D multiplier vs calendar (linear segments between anchors)
+calendar_rsi:
+  anchors:
+    - { date: "2026-01-01", multiplier: 1.13 }
+    - { date: "2026-06-01", multiplier: 1.36 }   # Agent-1 / ~C2
+    - { date: "2027-06-01", multiplier: 3.5 }   # pre Agent-2
+    - { date: "2028-06-01", multiplier: 7.8 }   # Agent-2 / ~C5 bridge
+    - { date: "2028-10-01", multiplier: 8.4 }   # late-2028 capability ramp
+    - { date: "2029-01-01", multiplier: 11.0 }
+    - { date: "2030-06-01", multiplier: 50.0 }  # superhuman researcher / ~C9
+
+inputs:
+  frontier_capex_index:
+    scale: 0.32
+    reference: 1.0
+  deployment_pressure:
+    scale: 0.22
+  china_frontier_parity:
+    scale: 0.18
+  compute_concentration:
+    scale: 0.14
+  open_weights_regime:
+    scale: 0.09
+  frontier_lab_polarization:
+    scale: 0.08
+
+gdp_funding:
+  scale: 0.14
+  reference: 1.0
+
+gdp_capex_coupling:
+  daily_pull: 0.00010
+
+race_amplification:
+  scale: 0.20
+
+governance_brake:
+  governance_scale: 0.09
+  salience_scale: 0.06
+
+trust_governance_brake:
+  scale: 0.11
+
+secret_race_boost:
+  scale: 0.09
+
+coordination_brake:
+  scale: 0.05
+
+sovereignty_fragmentation:
+  scale: 0.16
+
+admin_ai_posture:
+  growth_scale: 0.14
+  daily_capex: 0.00018
+  daily_governance: 0.00006
+
+kinetic_escalation:
+  growth_penalty: 0.14
+  daily_coord_erosion: 0.00012
+  daily_capex_penalty: 0.00020
+
+bio_spillover:
+  bio_to_cap_scale: 0.05
+  cap_to_bio_threshold: 3.0
+  cap_to_bio_daily: 0.00004
+  cap_to_bio_risk_daily: 0.00003
+
+tech_deploy_lag: 0.38
+
+shock:
+  prob: 0.018
+  log_std: 0.40
+
+run_heterogeneity:
+  growth_scale_spread: 0.10
+
+employment_coupling:
+  capability_threshold: 4.0
+  daily_stress: 0.00028
+  daily_ghost_gdp: 0.00018
+
+alignment_coupling:
+  deployment_threshold: 0.70
+  trust_ceiling: 0.35
+  daily_deception: 0.00022

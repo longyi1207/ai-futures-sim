@@ -1,0 +1,138 @@
+# AI 2027 capability milestones — THRESHOLD CROSSING on internal_capability.
+# Plot beats C3/C4/C10 remain in events.yaml.
+# Dynamics: config/capability_dynamics.yaml — see docs/CAPABILITY_DYNAMICS.md
+#
+# Latent cap crossing ≠ public milestone. observability.daily_hazard = P(legible today | latent).
+
+observability_defaults:
+  daily_hazard: 0.014
+  governance_boost: 0.22
+  deception_penalty: 0.35
+  salience_boost: 0.18
+  pause_legibility_scale: 0.40
+  paralysis_legibility_scale: 0.72
+
+milestones:
+  - id: sp_c1
+    name: ~10^28 FLOP-class frontier training run
+    ci_level: 1
+    once: true
+    threshold: 1.14
+    observability:
+      daily_hazard: 0.012
+    schedule:
+      start: "2026-01-01"
+      end: "2050-01-01"
+    on_fire:
+      add_vars:
+        frontier_capex_index: { delta: 0.08 }
+    research_ref: docs/evidence/sp_c1.md
+
+  - id: sp_c2
+    name: ~1.5× internal algo/R&D speed; Agent-1 class
+    ci_level: 2
+    once: true
+    threshold: 2.15
+    observability:
+      daily_hazard: 0.015
+    schedule:
+      start: "2026-03-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c1]
+    on_fire:
+      add_vars:
+        deployment_pressure: { delta: 0.05, clamp: [0, 1] }
+    research_ref: docs/evidence/sp_c2.md
+
+  - id: sp_c5
+    name: Continuous-learning Agent-2; ~3× internal R&D multiplier
+    ci_level: 5
+    once: true
+    threshold: 5.0
+    observability:
+      daily_hazard: 0.021
+    schedule:
+      start: "2027-01-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c2]
+    on_fire:
+      add_vars:
+        deployment_pressure: { delta: 0.08, clamp: [0, 1] }
+      unlock:
+        - ev_rsi_cloud_dominant
+    research_ref: docs/evidence/sp_c5.md
+
+  - id: sp_c6
+    name: Superhuman coder milestone
+    ci_level: 6
+    once: true
+    threshold: 5.92
+    observability:
+      daily_hazard: 0.017
+    schedule:
+      start: "2027-06-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c5]
+    on_fire:
+      add_vars:
+        employment_stress: { delta: 0.06, clamp: [0, 1] }
+    research_ref: docs/evidence/sp_c6.md
+
+  - id: sp_c7
+    name: Internal genius-country; humans marginal in lab R&D
+    ci_level: 7
+    once: true
+    threshold: 7.15
+    observability:
+      daily_hazard: 0.007
+    schedule:
+      start: "2028-01-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c6]
+    on_fire:
+      add_vars:
+        compute_concentration: { delta: 0.05, clamp: [0, 1] }
+    research_ref: docs/evidence/sp_c7.md
+
+  - id: sp_c8
+    name: AGI-class capability at frontier
+    ci_level: 8
+    once: true
+    threshold: 8.0
+    observability:
+      daily_hazard: 0.007
+    schedule:
+      start: "2028-06-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c7]
+    on_fire:
+      add_vars:
+        public_xrisk_salience: { delta: 0.15, clamp: [0, 1] }
+        deployment_pressure: { delta: 0.10, clamp: [0, 1] }
+      unlock:
+        - ev_meaning_pilot_success
+    research_ref: docs/evidence/sp_c8.md
+
+  - id: sp_c9
+    name: Superhuman AI researcher; ~50× internal R&D multiplier
+    ci_level: 9
+    once: true
+    threshold: 9.0
+    observability:
+      daily_hazard: 0.006
+    schedule:
+      start: "2028-09-01"
+      end: "2050-01-01"
+    preconditions:
+      spine_fired: [sp_c8]
+    on_fire:
+      add_vars:
+        deception_risk: { delta: 0.05, clamp: [0, 1] }
+      unlock:
+        - ev_c10_internal_concern
+    research_ref: docs/evidence/sp_c9.md

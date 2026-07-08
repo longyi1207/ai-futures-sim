@@ -1,0 +1,243 @@
+# Terminal outcomes — absorbing states
+# region: doom | severe | friction | utopia
+
+default_horizon_terminal: friction_modal
+
+event_forced:
+  - { event: ev_extinction_bio_release, terminal: doom_extinction_bio }
+  - { event: ev_extinction_misalign_catastrophe, terminal: doom_extinction_misalign }
+  - { event: ev_wmd_escalation, terminal: doom_extinction_kinetic }
+
+horizon_default:
+  # Doom / agency loss at horizon (post-capability)
+  - conditions:
+      vars:
+        human_autonomy_index: [0.0, 0.32]
+        tech_level: [0.35, 1.0]
+      spine_any_fired: [sp_c8]
+    terminal: doom_whimper
+  - conditions:
+      vars:
+        human_autonomy_index: [0.0, 0.40]
+        deception_risk: [0.50, 1.0]
+      spine_any_fired: [sp_c9]
+    terminal: doom_whimper
+  - conditions:
+      events_any: [ev_c10_internal_concern]
+      vars:
+        alignment_trust: [0.0, 0.50]
+      spine_any_fired: [sp_c9]
+    terminal: doom_whimper
+
+  # Utopia at horizon
+  - conditions:
+      vars:
+        alignment_trust: [0.76, 1.0]
+        human_autonomy_index: [0.70, 1.0]
+        deception_risk: [0.0, 0.28]
+        tech_level: [0.50, 1.0]
+      events_any: [ev_align_prod_catch, ev_prod_interp_halt]
+    terminal: utopia_symbiosis
+  - conditions:
+      vars:
+        gdp_index: [1.45, 10.0]
+        governance_capacity: [0.55, 1.0]
+        inequality_index: [0.0, 0.50]
+        human_autonomy_index: [0.55, 1.0]
+      events_any: [ev_beneficial_ai_treaty, ev_science_win_legible]
+    terminal: utopia_golden_age
+  - conditions:
+      vars:
+        gdp_index: [1.12, 2.8]
+        inequality_index: [0.0, 0.55]
+        human_autonomy_index: [0.52, 1.0]
+      events_any: [ev_swf_enacted, ev_fed_edu_reskilling, ev_meaning_pilot_success]
+    terminal: utopia_modest_welfare
+  - conditions:
+      vars:
+        gdp_index: [1.85, 10.0]
+        tech_level: [0.60, 1.0]
+        human_autonomy_index: [0.60, 1.0]
+      events_any: [ev_longevity_trial_breakthrough, ev_space_lift_cheap]
+    terminal: utopia_radical_abundance
+
+  # Friction flavors at horizon
+  - conditions:
+      events_all: [ev_federal_pause_succeeds]
+      spine_not_fired: [sp_c9]
+    terminal: friction_pause_stall
+  - conditions:
+      events_all: [ev_us_paralysis_s2]
+      spine_any_fired: [sp_c5]
+      spine_not_fired: [sp_c7]
+    terminal: friction_governance_paralysis
+  - conditions:
+      vars:
+        governance_capacity: [0.12, 0.50]
+        inequality_index: [0.60, 1.0]
+        human_autonomy_index: [0.25, 0.58]
+    terminal: friction_surveillance
+  - conditions:
+      vars:
+        human_autonomy_index: [0.0, 0.48]
+        tech_level: [0.40, 1.0]
+      spine_any_fired: [sp_c6]
+    terminal: doom_whimper
+  - conditions:
+      vars:
+        human_autonomy_index: [0.42, 0.72]
+        employment_stress: [0.42, 1.0]
+        inequality_index: [0.50, 1.0]
+      spine_any_fired: [sp_c5]
+    terminal: friction_modal
+  - conditions:
+      vars:
+        human_autonomy_index: [0.58, 0.85]
+        governance_capacity: [0.48, 0.72]
+        inequality_index: [0.0, 0.52]
+      events_any: [ev_bmia_pass, ev_multilateral_screening_pilot]
+    terminal: utopia_modest_welfare
+  - conditions:
+      vars:
+        alignment_trust: [0.52, 1.0]
+        governance_capacity: [0.50, 1.0]
+        human_autonomy_index: [0.62, 1.0]
+      spine_any_fired: [sp_c8]
+      events_any: [ev_beneficial_ai_treaty, ev_bmia_pass, ev_meaning_pilot_success]
+    terminal: utopia_golden_age
+  - conditions:
+      vars:
+        employment_stress: [0.35, 1.0]
+        inequality_index: [0.48, 1.0]
+        human_autonomy_index: [0.52, 0.92]
+      spine_any_fired: [sp_c5]
+    terminal: friction_modal
+
+terminals:
+  doom_extinction_bio:
+    region: doom
+    label: "Human extinction — engineered pandemic / bioweapon"
+    conditions:
+      events_all: [ev_tier3_release_attempt]
+      vars:
+        bio_governance_tier: [0.0, 1.5]
+
+  doom_extinction_misalign:
+    region: doom
+    label: "Human extinction — misaligned superintelligence"
+    conditions:
+      events_all: [ev_deceptive_deploy_at_scale, ev_no_shutdown_asi_threshold]
+      vars:
+        deception_risk: [0.65, 1.0]
+
+  doom_extinction_kinetic:
+    region: doom
+    label: "Human extinction — kinetic / WMD escalation"
+    conditions:
+      events_all: [ev_taiwan_kinetic, ev_wmd_escalation]
+      vars:
+        kinetic_escalation: [0.85, 1.0]
+
+  doom_whimper:
+    region: doom
+    horizon_only: true
+    label: "Agency loss — humans persist but not in control"
+    conditions:
+      vars:
+        human_autonomy_index: [0.0, 0.25]
+        tech_level: [0.55, 1.0]
+
+  severe_cyber_cascade:
+    region: severe
+    label: "Severe recoverable — cyber/finance cascade"
+    conditions:
+      events_all: [ev_cyber_cascade]
+      vars:
+        gdp_index: [0.4, 0.85]
+
+  utopia_radical_abundance:
+    region: utopia
+    horizon_only: true
+    label: "U1 — radical abundance / longevity escape"
+    conditions:
+      vars:
+        gdp_index: [2.5, 10.0]
+        tech_level: [0.85, 1.0]
+        human_autonomy_index: [0.65, 1.0]
+        inequality_index: [0.0, 0.4]
+      events_any: [ev_longevity_trial_breakthrough, ev_space_lift_cheap]
+
+  utopia_symbiosis:
+    region: utopia
+    horizon_only: true
+    label: "U2 — aligned superintelligence, human agency retained"
+    conditions:
+      vars:
+        alignment_trust: [0.8, 1.0]
+        human_autonomy_index: [0.78, 1.0]
+        deception_risk: [0.0, 0.2]
+        tech_level: [0.75, 1.0]
+      events_all: [ev_align_prod_catch]
+
+  utopia_golden_age:
+    region: utopia
+    horizon_only: true
+    label: "U3 — institutional golden age (no ASI required)"
+    conditions:
+      vars:
+        gdp_index: [1.6, 10.0]
+        governance_capacity: [0.65, 1.0]
+        inequality_index: [0.0, 0.42]
+        kinetic_escalation: [0.0, 0.3]
+      events_any: [ev_science_win_legible, ev_beneficial_ai_treaty]
+
+  utopia_modest_welfare:
+    region: utopia
+    horizon_only: true
+    label: "U4 — modest flourishing, managed inequality"
+    conditions:
+      vars:
+        gdp_index: [1.25, 2.5]
+        inequality_index: [0.0, 0.5]
+        human_autonomy_index: [0.6, 1.0]
+      events_any: [ev_swf_enacted, ev_fed_edu_reskilling]
+
+  friction_modal:
+    region: friction
+    horizon_only: true
+    label: "Modal friction — Ghost GDP, acceleration without utopia"
+    conditions:
+      vars:
+        employment_stress: [0.45, 1.0]
+        inequality_index: [0.5, 1.0]
+        human_autonomy_index: [0.35, 0.75]
+
+  friction_pause_stall:
+    region: friction
+    label: "Federal pause — frontier stalled below superhuman researcher"
+    conditions:
+      events_all: [ev_federal_pause_succeeds]
+      vars:
+        internal_capability: [3.5, 7.5]
+      spine_not_fired: [sp_c9]
+
+  friction_governance_paralysis:
+    region: friction
+    label: "Governance paralysis — capability plateaus mid-ladder"
+    conditions:
+      events_all: [ev_us_paralysis_s2]
+      spine_any_fired: [sp_c5]
+      vars:
+        governance_capacity: [0.0, 0.26]
+        internal_capability: [5.2, 6.5]
+      spine_not_fired: [sp_c7]
+
+  friction_surveillance:
+    region: friction
+    horizon_only: true
+    label: "Friction — surveillance / concentrated harm"
+    conditions:
+      vars:
+        governance_capacity: [0.2, 0.55]
+        human_autonomy_index: [0.3, 0.6]
+        inequality_index: [0.65, 1.0]

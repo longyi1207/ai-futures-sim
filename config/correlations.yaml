@@ -1,0 +1,97 @@
+# Latent cluster shocks — joint tails NOT independent.
+# Source: docs/research/spine/correlation_matrix.md Clusters A–F + sovereignty (Node 7).
+# Joint tail rule: correlated cluster events ≈ 3–5× product of marginal tail probs when z > 1.5σ.
+
+model:
+  ar1_phi: 0.98 # daily persistence of cluster latent shocks
+  init_std: 1.0
+  # log(hazard_mult) = sum(hazard_sensitivity * z_cluster); z ~ N(0,1) per cluster
+  default_hazard_sensitivity: 0.18
+
+clusters:
+  race:
+    description: Cluster A — acceleration / race (tight ↑)
+    source: correlation_matrix.md Cluster A
+    rho: 0.55
+    hazard_sensitivity: 0.20
+    events:
+      - ev_no_pause_2028
+      - ev_race_acceleration
+      - ev_gaia_preemption
+      - ev_concern_no_leak
+      - ev_federal_pause_attempt_fails
+      - ev_china_cdz_mobilization
+      - ev_weight_theft
+      - ev_open_weights_equilibrium
+
+  bio_governance:
+    description: Cluster B — physical-layer bio mitigation (tight ↑)
+    source: correlation_matrix.md Cluster B
+    rho: 0.50
+    hazard_sensitivity: 0.16
+    events:
+      - ev_bmia_pass
+      - ev_bmia_enforcement_weak
+      - ev_eu_gpai_binds
+      - ev_multilateral_screening_pilot
+      - ev_bio_public_scare
+      - ev_state_ai_patchwork
+
+  bio_tail:
+    description: Cluster C — bio tail risk (tight ↑)
+    source: correlation_matrix.md Cluster C
+    rho: 0.52
+    hazard_sensitivity: 0.22
+    events:
+      - ev_tier3_path_open
+      - ev_bio_nearmiss_hidden
+      - ev_open_weights_equilibrium
+      - ev_tier3_release_attempt
+      - ev_bio_nearmiss_disclosed
+
+  alignment_governance:
+    description: Cluster D — transparency without brakes (modal glue)
+    source: correlation_matrix.md Cluster D
+    rho: 0.45
+    hazard_sensitivity: 0.15
+    events:
+      - ev_whistle_memo
+      - ev_whistle_dump
+      - ev_labor_hearings_peak
+      - ev_concern_no_leak
+      - ev_c10_internal_concern
+
+  compute_chokepoint:
+    description: Cluster E — compute chokepoint (tight ↑ with race)
+    source: correlation_matrix.md Cluster E
+    rho: 0.48
+    hazard_sensitivity: 0.17
+    events:
+      - ev_compute_triopoly_lock
+      - ev_singleton_lab_dominance
+      - ev_energy_data_cap_bite
+      - ev_no_pause_2028
+      - ev_china_cdz_mobilization
+
+  governance_hollowing:
+    description: Cluster F/H — US governance capacity + corp hollowing
+    source: correlation_matrix.md Cluster F + Cluster H (N10–N11)
+    rho: 0.50
+    hazard_sensitivity: 0.19
+    events:
+      - ev_us_paralysis_s2
+      - ev_corp_safety_hollowing
+      - ev_gaia_preemption
+      - ev_bio_nearmiss_hidden
+      - ev_no_shutdown_asi_threshold
+
+  sovereignty:
+    description: Node 7 — EU/India/Gulf sovereign compute fragmentation
+    source: correlation_matrix.md Cluster E ↓ + Node 7 T7-C
+    rho: 0.42
+    hazard_sensitivity: 0.16
+    events:
+      - ev_india_sovereign_ai_stack
+      - ev_gulf_compute_sovereignty
+      - ev_eu_gpai_binds
+      - ev_energy_data_cap_bite

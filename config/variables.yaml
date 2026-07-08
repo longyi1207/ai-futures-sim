@@ -1,0 +1,37 @@
+# State variables — see docs/VARIABLES.md
+# Values: initial point estimates; daily_drift = slow exogenous change per day
+
+initial:
+  internal_capability: { value: 0.5 }
+  ci_level: { value: 0.5 }
+  gdp_index: { value: 1.0 }
+  employment_stress: { value: 0.12 }
+  ai_rd_multiplier: { value: 1.15 }
+  tech_level: { value: 0.05 }
+  bio_capability_tier: { value: 0.0 }
+  bio_governance_tier: { value: 0.2 }
+  bio_risk_pressure: { value: 0.05 }
+  alignment_trust: { value: 0.55 }
+  deception_risk: { value: 0.12 }
+  deployment_pressure: { value: 0.32 }
+  human_autonomy_index: { value: 0.88 }
+  governance_capacity: { value: 0.52 }
+  international_coord: { value: 0.22 }
+  compute_concentration: { value: 0.68 }
+  public_xrisk_salience: { value: 0.18 }
+  frontier_lab_polarization: { value: 0.55 }
+  frontier_capex_index: { value: 1.0 }
+  admin_ai_posture: { value: 0.0 }
+  china_frontier_parity: { value: 0.25 }
+  open_weights_regime: { value: 0.45 }
+  sovereignty_fragmentation: { value: 0.15 }
+  inequality_index: { value: 0.54 }
+  meaning_institution_health: { value: 0.48 }
+  kinetic_escalation: { value: 0.08 }
+  ghost_gdp_index: { value: 0.15 }
+
+daily_drift:
+  deployment_pressure: 0.00015
+  tech_level: 0.00008
+  bio_risk_pressure: 0.00005
+  frontier_capex_index: 0.00012

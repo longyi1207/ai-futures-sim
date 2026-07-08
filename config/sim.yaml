@@ -1,0 +1,16 @@
+# Simulation clock — one step = one calendar day
+start_date: "2026-01-01"
+end_date: "2050-01-01"  # exclusive end → 8766 days from start
+
+max_fires_per_day: 2
+max_eligible_checks_per_day: 12
+max_spine_fires_per_day: 1
+max_spine_checks_per_day: 4
+record_trace: false
+
+# Correlation latent shocks (config/correlations.yaml); set false to disable
+use_correlations: true
+
+# Random seed default (override via CLI)
+default_seed: 42
+default_runs: 10000
