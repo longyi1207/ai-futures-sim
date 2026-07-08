@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-07-08 — web explorer v2 + contributor docs
+
+- **`web/`** — outcome donut, spine course timeline, path buckets, terminal×spine flow, sample run courses
+- **`scripts/export_sample_runs.py`** — representative timelines per outcome region
+- **`scripts/export_dag.py`** — `web/data/event_graph.json` + `docs/EVENT_GRAPH.mmd`
+- **`docs/TRY_IT.md`** — fork → edit YAML → re-run walkthrough
+
 ## 2026-07-08 — calibration philosophy
 
 - **Outcome regions are emergent**, not tuned to legacy 19/28/53 partition (pre–Model-2 artifact)

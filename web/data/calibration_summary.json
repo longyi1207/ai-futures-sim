@@ -1,0 +1,106 @@
+{
+  "runs": 600,
+  "seed": 42,
+  "horizon_days": 8766,
+  "cap_by_deadline": {
+    "1": 0.92,
+    "2": 0.7316666666666667,
+    "5": 0.77,
+    "6": 0.57,
+    "7": 0.5116666666666667,
+    "8": 0.495,
+    "9": 0.42333333333333334
+  },
+  "spine_by_deadline": {
+    "sp_c1": 0.92,
+    "sp_c2": 0.7316666666666667,
+    "sp_c5": 0.77,
+    "sp_c6": 0.57,
+    "sp_c7": 0.5116666666666667,
+    "sp_c8": 0.495,
+    "sp_c9": 0.42333333333333334
+  },
+  "spine_median_day": {
+    "sp_c1": "2027-02-01",
+    "sp_c2": "2027-11-07",
+    "sp_c5": "2029-02-04",
+    "sp_c6": "2029-06-03",
+    "sp_c7": "2029-12-06",
+    "sp_c8": "2030-05-31",
+    "sp_c9": "2031-01-10"
+  },
+  "spine_never": {
+    "sp_c1": 0.0,
+    "sp_c2": 0.0,
+    "sp_c5": 0.0050000000000000044,
+    "sp_c6": 0.09666666666666668,
+    "sp_c7": 0.09833333333333338,
+    "sp_c8": 0.10166666666666668,
+    "sp_c9": 0.10666666666666669
+  },
+  "spine_conditional": {
+    "sp_c5|sp_c2": 0.77,
+    "sp_c6|sp_c5": 0.6063829787234043,
+    "sp_c7|sp_c6": 0.5825426944971537,
+    "sp_c8|sp_c7": 0.6527472527472528,
+    "sp_c9|sp_c8": 0.6091127098321343
+  },
+  "spine_conditional_n": {
+    "sp_c5|sp_c2": 600,
+    "sp_c6|sp_c5": 564,
+    "sp_c7|sp_c6": 527,
+    "sp_c8|sp_c7": 455,
+    "sp_c9|sp_c8": 417
+  },
+  "events": {
+    "ev_no_pause_2028": 0.8816666666666667,
+    "ev_bmia_pass": 0.4066666666666667,
+    "ev_us_paralysis_s2": 0.5633333333333334,
+    "ev_china_cdz_mobilization": 0.65
+  },
+  "regions": {
+    "doom": 0.17833333333333334,
+    "severe": 0.06333333333333334,
+    "friction": 0.64,
+    "utopia": 0.11833333333333333
+  },
+  "terminals": {
+    "friction_modal": 0.5416666666666666,
+    "doom_whimper": 0.15166666666666667,
+    "utopia_symbiosis": 0.016666666666666666,
+    "friction_governance_paralysis": 0.09166666666666666,
+    "utopia_modest_welfare": 0.011666666666666667,
+    "utopia_golden_age": 0.09,
+    "severe_cyber_cascade": 0.06333333333333334,
+    "friction_pause_stall": 0.006666666666666667,
+    "doom_extinction_misalign": 0.018333333333333333,
+    "doom_extinction_bio": 0.008333333333333333
+  },
+  "early_absorb_rate": 0.18833333333333332,
+  "horizon_absorb_rate": 0.8116666666666666,
+  "outcome_conditional": {
+    "doom|sp_c9": 0.19776119402985073,
+    "utopia|sp_c8": 0.13172541743970315,
+    "friction_governance_paralysis|paralysis": 0.16272189349112426,
+    "doom|ev_c10": 0.9035087719298246,
+    "ev_whistle_memo|ev_c10": 0.11403508771929824,
+    "friction_pause_stall|pause": 1.0
+  },
+  "outcome_conditional_n": {
+    "doom|sp_c9": 536,
+    "utopia|sp_c8": 539,
+    "friction_governance_paralysis|paralysis": 338,
+    "doom|ev_c10": 114,
+    "ev_whistle_memo|ev_c10": 114,
+    "friction_pause_stall|pause": 4
+  },
+  "path_buckets": {
+    "c9_no_whistle": 0.7033333333333334,
+    "paralysis_mid_ladder": 0.095,
+    "pause_stall": 0.006666666666666667,
+    "full_alignment_chain": 0.03333333333333333,
+    "stops_before_c5": 0.005,
+    "full_spine": 0.8933333333333333
+  },
+  "monotonic_spine": false
+}

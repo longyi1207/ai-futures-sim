@@ -1,0 +1,62 @@
+{
+  "runs": 200,
+  "seed": 42,
+  "spine_paths": {
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9": 0.91,
+    "c1\u2192c2\u2192c5": 0.08,
+    "c1\u2192c2\u2192c5\u2192c6": 0.005,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7": 0.005
+  },
+  "event_paths": {
+    "ev_no_pause_2028+ev_us_paralysis_s2": 0.35,
+    "ev_no_pause_2028": 0.205,
+    "ev_no_pause_2028+ev_c10_internal_concern": 0.08,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_prod_interp_halt": 0.05,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_meaning_pilot_success": 0.04,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_c10_internal_concern": 0.035,
+    "ev_us_paralysis_s2": 0.03,
+    "ev_no_pause_2028+ev_prod_interp_halt": 0.02,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_beneficial_ai_treaty": 0.02,
+    "ev_us_paralysis_s2+ev_meaning_pilot_success": 0.015,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_prod_interp_halt+ev_meaning_pilot_success": 0.015,
+    "(no key events)": 0.015,
+    "ev_no_pause_2028+ev_prod_interp_halt+ev_beneficial_ai_treaty": 0.015,
+    "ev_no_pause_2028+ev_meaning_pilot_success": 0.01,
+    "ev_no_pause_2028+ev_us_paralysis_s2+ev_c10_internal_concern+ev_prod_interp_halt": 0.01,
+    "ev_no_pause_2028+ev_beneficial_ai_treaty": 0.01,
+    "ev_c10_internal_concern+ev_meaning_pilot_success": 0.01,
+    "ev_no_pause_2028+ev_c10_internal_concern+ev_deceptive_deploy_at_scale+ev_extinction_misalign_catastrophe": 0.01,
+    "ev_us_paralysis_s2+ev_prod_interp_halt+ev_meaning_pilot_success": 0.005,
+    "ev_prod_interp_halt": 0.005,
+    "ev_meaning_pilot_success": 0.005,
+    "ev_no_pause_2028+ev_c10_internal_concern+ev_whistle_memo": 0.005,
+    "ev_federal_pause_succeeds": 0.005,
+    "ev_us_paralysis_s2+ev_c10_internal_concern": 0.005,
+    "ev_no_pause_2028+ev_prod_interp_halt+ev_meaning_pilot_success": 0.005,
+    "ev_no_pause_2028+ev_c10_internal_concern+ev_deceptive_deploy_at_scale": 0.005,
+    "ev_c10_internal_concern": 0.005,
+    "ev_us_paralysis_s2+ev_beneficial_ai_treaty": 0.005,
+    "ev_no_pause_2028+ev_c10_internal_concern+ev_whistle_memo+ev_beneficial_ai_treaty+ev_meaning_pilot_success": 0.005,
+    "ev_no_pause_2028+ev_c10_internal_concern+ev_whistle_memo+ev_meaning_pilot_success": 0.005
+  },
+  "path_buckets": {
+    "c9_no_whistle": 0.735,
+    "paralysis_mid_ladder": 0.085,
+    "pause_stall": 0.005,
+    "full_alignment_chain": 0.03,
+    "stops_before_c5": 0.0,
+    "full_spine": 0.91
+  },
+  "terminal_by_spine": {
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|friction_modal": 0.56,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|doom_whimper": 0.155,
+    "c1\u2192c2\u2192c5|friction_governance_paralysis": 0.08,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|utopia_golden_age": 0.07,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|severe_cyber_cascade": 0.065,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|utopia_symbiosis": 0.035,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|utopia_modest_welfare": 0.015,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7\u2192c8\u2192c9|doom_extinction_misalign": 0.01,
+    "c1\u2192c2\u2192c5\u2192c6|friction_pause_stall": 0.005,
+    "c1\u2192c2\u2192c5\u2192c6\u2192c7|severe_cyber_cascade": 0.005
+  }
+}

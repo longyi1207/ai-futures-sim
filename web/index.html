@@ -3,25 +3,62 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>AI Futures Sim — Explorer</title>
+    <title>AI Futures Sim — Outcomes & Paths</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>AI Futures Sim</h1>
-      <p>Load <code>calibration_summary.json</code> or <code>path_frequency.json</code> from <code>outputs/runs/</code></p>
-      <input type="file" id="file" accept="application/json" />
+      <div class="header-inner">
+        <div>
+          <h1>AI Futures Sim</h1>
+          <p class="subtitle">Monte Carlo outcomes, capability spine course, and sample world timelines</p>
+        </div>
+        <div class="header-actions">
+          <a href="https://github.com/longyi1207/ai-futures-sim" target="_blank" rel="noopener">GitHub</a>
+          <a href="https://github.com/longyi1207/ai-futures-sim/blob/main/docs/TRY_IT.md" target="_blank" rel="noopener">Try it yourself</a>
+        </div>
+      </div>
+      <div class="load-row">
+        <label>Load JSON <input type="file" id="file" accept="application/json" /></label>
+        <span class="muted">or use bundled demo data below</span>
+      </div>
     </header>
 
     <main id="app" hidden>
-      <section class="grid">
+      <section class="hero-grid">
+        <div class="card card-wide" id="outcomes">
+          <h2>Outcome regions</h2>
+          <div class="outcome-layout">
+            <canvas id="donut" width="220" height="220" aria-label="Outcome region donut chart"></canvas>
+            <div id="region-bars" class="region-bars"></div>
+          </div>
+        </div>
         <div class="card" id="meta"></div>
-        <div class="card" id="regions"></div>
-        <div class="card" id="spine"></div>
-        <div class="card" id="paths"></div>
       </section>
-      <section class="card" id="terminals"></section>
+
+      <section class="card card-wide" id="spine-course">
+        <h2>Capability spine course (median fire dates)</h2>
+        <p class="section-hint">How far the world climbs the AI-2027 ladder by deadline — stochastic per run, aggregated here.</p>
+        <div id="spine-timeline" class="spine-timeline"></div>
+      </section>
+
+      <section class="grid-2">
+        <div class="card" id="paths"></div>
+        <div class="card" id="terminal-flow"></div>
+      </section>
+
+      <section class="card card-wide" id="samples">
+        <h2>Sample simulation courses</h2>
+        <p class="section-hint">Representative runs by outcome region — spine milestones + key plot events → terminal.</p>
+        <div id="sample-runs" class="sample-runs"></div>
+      </section>
+
+      <section class="card card-wide" id="terminals"></section>
     </main>
+
+    <footer>
+      <p>Reproduce: <code>python scripts/calibration_check.py -n 600 --seed 42</code> · <code>python scripts/export_sample_runs.py</code></p>
+    </footer>
 
     <script src="app.js"></script>
   </body>

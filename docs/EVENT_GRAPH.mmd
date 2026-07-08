@@ -1,0 +1,59 @@
+flowchart LR
+  sp_c1["Cc1"]
+  sp_c2["Cc2"]
+  sp_c1 --> sp_c2
+  sp_c5["Cc5"]
+  sp_c2 --> sp_c5
+  sp_c6["Cc6"]
+  sp_c5 --> sp_c6
+  sp_c7["Cc7"]
+  sp_c6 --> sp_c7
+  sp_c8["Cc8"]
+  sp_c7 --> sp_c8
+  sp_c9["Cc9"]
+  sp_c8 --> sp_c9
+  sp_c1 -.->|requires_spine| sp_c2
+  sp_c5 -->|unlock| ev_rsi_cloud_dominant
+  sp_c2 -.->|requires_spine| sp_c5
+  sp_c5 -.->|requires_spine| sp_c6
+  sp_c6 -.->|requires_spine| sp_c7
+  sp_c8 -->|unlock| ev_meaning_pilot_success
+  sp_c7 -.->|requires_spine| sp_c8
+  sp_c9 -->|unlock| ev_c10_internal_concern
+  sp_c8 -.->|requires_spine| sp_c9
+  sp_c2 -.->|requires_spine| ev_c4_labor_shock
+  ev_c4_labor_shock -->|unlock| ev_labor_hearings_peak
+  sp_c9 -.->|requires_spine| ev_c10_internal_concern
+  ev_c10_internal_concern -->|unlock| ev_whistle_memo
+  ev_c10_internal_concern -->|unlock| ev_whistle_dump
+  ev_c10_internal_concern -->|unlock| ev_deploy_incident
+  ev_c10_internal_concern -->|unlock| ev_concern_no_leak
+  ev_no_pause_2028 -->|unlock| ev_race_acceleration
+  ev_no_pause_2028 -->|unlock| ev_deceptive_deploy_at_scale
+  ev_corp_safety_hollowing -->|unlock| ev_no_shutdown_asi_threshold
+  ev_bio_tier1_live -->|unlock| ev_bio_tier2_live
+  sp_c2 -.->|requires_spine| ev_bio_tier2_live
+  ev_bio_tier2_live -->|unlock| ev_bio_public_scare
+  ev_bio_tier2_live -->|unlock| ev_bio_nearmiss_hidden
+  ev_bio_tier2_live -->|unlock| ev_tier3_path_open
+  ev_bio_nearmiss_hidden -->|unlock| ev_tier3_path_open
+  ev_tier3_path_open -->|unlock| ev_tier3_release_attempt
+  ev_tier3_release_attempt -->|unlock| ev_extinction_bio_release
+  sp_c5 -.->|requires_spine| ev_weight_theft
+  ev_weight_theft -->|unlock| ev_race_acceleration
+  ev_weight_theft -->|unlock| ev_whistle_memo
+  ev_whistle_dump -->|unlock| ev_prod_interp_halt
+  ev_deploy_incident -->|unlock| ev_prod_interp_halt
+  ev_deceptive_deploy_at_scale -->|unlock| ev_no_shutdown_asi_threshold
+  ev_deceptive_deploy_at_scale -->|unlock| ev_extinction_misalign_catastrophe
+  ev_prod_interp_halt -->|unlock| ev_align_prod_catch
+  ev_no_shutdown_asi_threshold -->|unlock| ev_extinction_misalign_catastrophe
+  ev_open_weights_equilibrium -->|unlock| ev_open_weights_tamper_response
+  sp_c6 -.->|requires_spine| ev_cyber_cascade
+  ev_laws_mass_deploy -->|unlock| ev_taiwan_kinetic
+  sp_c5 -.->|requires_spine| ev_science_win_legible
+  sp_c6 -.->|requires_spine| ev_longevity_trial_breakthrough
+  sp_c9 -.->|requires_spine| ev_beneficial_ai_treaty
+  sp_c7 -.->|requires_spine| ev_space_lift_cheap
+  sp_c7 -.->|requires_spine| ev_singleton_lab_dominance
+  ev_nuclear_ai_crosscut -->|unlock| ev_wmd_escalation

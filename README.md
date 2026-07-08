@@ -111,6 +111,29 @@ cd web && python -m http.server 8787
 
 ---
 
+## Web explorer (outcomes & paths)
+
+```bash
+cd web && python -m http.server 8787
+# Open http://localhost:8787 — outcome donut, spine course, path buckets, sample run timelines
+```
+
+Bundled demo data in `web/data/`. Regenerate after config edits — see [`docs/TRY_IT.md`](docs/TRY_IT.md).
+
+## Modify the model yourself
+
+**Start here:** [`docs/TRY_IT.md`](docs/TRY_IT.md) — edit one `p_cumulative`, re-run calibration, read emergent regions.
+
+| Doc | Contents |
+|-----|----------|
+| [`docs/VARIABLES.md`](docs/VARIABLES.md) | State variables glossary |
+| [`docs/PROBABILITY_MODEL.md`](docs/PROBABILITY_MODEL.md) | `p_cumulative` semantics |
+| [`docs/SPINE.md`](docs/SPINE.md) | Capability milestones |
+| [`docs/EVENTS_INDEX.md`](docs/EVENTS_INDEX.md) | All 57 plot events |
+| `python scripts/export_dag.py` | Event graph JSON + Mermaid |
+
+---
+
 ## License
 
 MIT — see [`LICENSE`](LICENSE).

@@ -1,0 +1,1109 @@
+{
+  "nodes": [
+    {
+      "id": "sp_c1",
+      "kind": "spine",
+      "name": "~10^28 FLOP-class frontier training run",
+      "ci_level": 1
+    },
+    {
+      "id": "sp_c2",
+      "kind": "spine",
+      "name": "~1.5\u00d7 internal algo/R&D speed; Agent-1 class",
+      "ci_level": 2
+    },
+    {
+      "id": "sp_c5",
+      "kind": "spine",
+      "name": "Continuous-learning Agent-2; ~3\u00d7 internal R&D multiplier",
+      "ci_level": 5
+    },
+    {
+      "id": "sp_c6",
+      "kind": "spine",
+      "name": "Superhuman coder milestone",
+      "ci_level": 6
+    },
+    {
+      "id": "sp_c7",
+      "kind": "spine",
+      "name": "Internal genius-country; humans marginal in lab R&D",
+      "ci_level": 7
+    },
+    {
+      "id": "sp_c8",
+      "kind": "spine",
+      "name": "AGI-class capability at frontier",
+      "ci_level": 8
+    },
+    {
+      "id": "sp_c9",
+      "kind": "spine",
+      "name": "Superhuman AI researcher; ~50\u00d7 internal R&D multiplier",
+      "ci_level": 9
+    },
+    {
+      "id": "ev_c4_labor_shock",
+      "kind": "event",
+      "name": "C4 labor shock visible",
+      "category": "capability",
+      "p_cumulative": 0.9,
+      "research_ref": "docs/evidence/ev_c4_labor_shock.md"
+    },
+    {
+      "id": "ev_labor_hearings_peak",
+      "kind": "event",
+      "name": "Peak DC labor / AI hearings",
+      "category": "policy",
+      "p_cumulative": 0.75,
+      "research_ref": "docs/evidence/ev_labor_hearings_peak.md"
+    },
+    {
+      "id": "ev_c10_internal_concern",
+      "kind": "event",
+      "name": "Internal eval flags deception at superhuman-researcher tier",
+      "category": "alignment",
+      "p_cumulative": 0.52,
+      "research_ref": "docs/evidence/ev_c10_internal_concern.md"
+    },
+    {
+      "id": "ev_us_paralysis_s2",
+      "kind": "event",
+      "name": "US federal governance paralysis (S2)",
+      "category": "governance",
+      "p_cumulative": 0.55,
+      "research_ref": "docs/evidence/ev_us_paralysis_s2.md"
+    },
+    {
+      "id": "ev_bmia_pass",
+      "kind": "event",
+      "name": "Federal BMIA-class mandatory screening enacted",
+      "category": "bio_policy",
+      "p_cumulative": 0.45,
+      "research_ref": "docs/evidence/ev_bmia_pass.md"
+    },
+    {
+      "id": "ev_bmia_enforcement_weak",
+      "kind": "event",
+      "name": "BMIA passes but enforcement gutted / delayed",
+      "category": "bio_policy",
+      "p_cumulative": 0.25,
+      "research_ref": "docs/evidence/ev_bmia_enforcement_weak.md"
+    },
+    {
+      "id": "ev_gaia_preemption",
+      "kind": "event",
+      "name": "Federal AI framework preempts state incident reporting",
+      "category": "governance",
+      "p_cumulative": 0.48,
+      "research_ref": "docs/evidence/ev_gaia_preemption.md"
+    },
+    {
+      "id": "ev_eu_gpai_binds",
+      "kind": "event",
+      "name": "EU GPAI Act binds US frontier labs",
+      "category": "governance",
+      "p_cumulative": 0.14,
+      "research_ref": "docs/evidence/ev_eu_gpai_binds.md"
+    },
+    {
+      "id": "ev_no_pause_2028",
+      "kind": "event",
+      "name": "No federal training pause through 2028",
+      "category": "governance",
+      "p_cumulative": 0.88,
+      "research_ref": "docs/evidence/ev_no_pause_2028.md"
+    },
+    {
+      "id": "ev_federal_pause_attempt_fails",
+      "kind": "event",
+      "name": "Pause bill advances but fails / watered down",
+      "category": "governance",
+      "p_cumulative": 0.35,
+      "research_ref": "docs/evidence/ev_federal_pause_attempt_fails.md"
+    },
+    {
+      "id": "ev_corp_safety_hollowing",
+      "kind": "event",
+      "name": "Corporate safety team hollowing / PBC erosion",
+      "category": "governance",
+      "p_cumulative": 0.52,
+      "research_ref": "docs/evidence/ev_corp_safety_hollowing.md"
+    },
+    {
+      "id": "ev_bio_tier1_live",
+      "kind": "event",
+      "name": "Tier-1 bio assist (LLM lab tools) widespread",
+      "category": "bio",
+      "p_cumulative": 0.9,
+      "research_ref": "docs/evidence/ev_bio_tier1_live.md"
+    },
+    {
+      "id": "ev_bio_tier2_live",
+      "kind": "event",
+      "name": "Tier-2 skilled-actor CBRN uplift live",
+      "category": "bio",
+      "p_cumulative": 0.75,
+      "research_ref": "docs/evidence/ev_bio_tier2_live.md"
+    },
+    {
+      "id": "ev_bio_public_scare",
+      "kind": "event",
+      "name": "Public bio scare (Trigger E mainstream)",
+      "category": "bio",
+      "p_cumulative": 0.3,
+      "research_ref": "docs/evidence/ev_bio_public_scare.md"
+    },
+    {
+      "id": "ev_bio_nearmiss_hidden",
+      "kind": "event",
+      "name": "Tier-2 near-miss stays hidden",
+      "category": "bio",
+      "p_cumulative": 0.28,
+      "research_ref": "docs/evidence/ev_bio_nearmiss_hidden.md"
+    },
+    {
+      "id": "ev_bio_nearmiss_disclosed",
+      "kind": "event",
+      "name": "Tier-2 near-miss disclosed publicly",
+      "category": "bio",
+      "p_cumulative": 0.12,
+      "research_ref": "docs/evidence/ev_bio_nearmiss_disclosed.md"
+    },
+    {
+      "id": "ev_tier3_path_open",
+      "kind": "event",
+      "name": "Tier-3 design path becomes viable before screening effective",
+      "category": "bio",
+      "p_cumulative": 0.22,
+      "research_ref": "docs/evidence/ev_tier3_path_open.md"
+    },
+    {
+      "id": "ev_tier3_release_attempt",
+      "kind": "event",
+      "name": "Tier-3 release / lab escape / deliberate deploy attempt",
+      "category": "bio",
+      "p_cumulative": 0.08,
+      "research_ref": "docs/evidence/ev_tier3_release_attempt.md"
+    },
+    {
+      "id": "ev_extinction_bio_release",
+      "kind": "event",
+      "name": "Catastrophic pandemic / bioweapon extinction event",
+      "category": "doom",
+      "p_cumulative": 0.15,
+      "research_ref": "docs/evidence/ev_extinction_bio_release.md"
+    },
+    {
+      "id": "ev_weight_theft",
+      "kind": "event",
+      "name": "Frontier weight theft / export-control crisis",
+      "category": "geopolitics",
+      "p_cumulative": 0.25,
+      "research_ref": "docs/evidence/ev_weight_theft.md"
+    },
+    {
+      "id": "ev_race_acceleration",
+      "kind": "event",
+      "name": "Post-theft or post-pause-failure arms race accelerates",
+      "category": "geopolitics",
+      "p_cumulative": 0.22,
+      "research_ref": "docs/evidence/ev_race_acceleration.md"
+    },
+    {
+      "id": "ev_whistle_memo",
+      "kind": "event",
+      "name": "NYT/WSJ memo leak \u2192 hearings",
+      "category": "alignment",
+      "p_cumulative": 0.35,
+      "research_ref": "docs/evidence/ev_whistle_memo.md"
+    },
+    {
+      "id": "ev_whistle_dump",
+      "kind": "event",
+      "name": "Eval dump showing scheming",
+      "category": "alignment",
+      "p_cumulative": 0.2,
+      "research_ref": "docs/evidence/ev_whistle_dump.md"
+    },
+    {
+      "id": "ev_deploy_incident",
+      "kind": "event",
+      "name": "Live deployment safety incident",
+      "category": "alignment",
+      "p_cumulative": 0.08,
+      "research_ref": "docs/evidence/ev_deploy_incident.md"
+    },
+    {
+      "id": "ev_concern_no_leak",
+      "kind": "event",
+      "name": "Internal concern without public whistleblower cycle",
+      "category": "alignment",
+      "p_cumulative": 0.37,
+      "research_ref": "docs/evidence/ev_concern_no_leak.md"
+    },
+    {
+      "id": "ev_deceptive_deploy_at_scale",
+      "kind": "event",
+      "name": "Deceptive / scheming model deployed at scale",
+      "category": "alignment",
+      "p_cumulative": 0.22,
+      "research_ref": "docs/evidence/ev_deceptive_deploy_at_scale.md"
+    },
+    {
+      "id": "ev_prod_interp_halt",
+      "kind": "event",
+      "name": "Production interpretability catches scheming \u2192 halt",
+      "category": "alignment",
+      "p_cumulative": 0.18,
+      "research_ref": "docs/evidence/ev_prod_interp_halt.md"
+    },
+    {
+      "id": "ev_no_shutdown_asi_threshold",
+      "kind": "event",
+      "name": "No shutdown at ASI-threshold governance moment",
+      "category": "alignment",
+      "p_cumulative": 0.62,
+      "research_ref": "docs/evidence/ev_no_shutdown_asi_threshold.md"
+    },
+    {
+      "id": "ev_extinction_misalign_catastrophe",
+      "kind": "event",
+      "name": "Misaligned superintelligence executes extinction",
+      "category": "doom",
+      "p_cumulative": 0.28,
+      "research_ref": "docs/evidence/ev_extinction_misalign_catastrophe.md"
+    },
+    {
+      "id": "ev_rsi_cloud_dominant",
+      "kind": "event",
+      "name": "RSI locus = cloud/software (not embodied first)",
+      "category": "capability",
+      "p_cumulative": 0.55,
+      "research_ref": "docs/evidence/ev_rsi_cloud_dominant.md"
+    },
+    {
+      "id": "ev_open_weights_equilibrium",
+      "kind": "event",
+      "name": "Open-weights frontier equilibrium persists",
+      "category": "security",
+      "p_cumulative": 0.45,
+      "research_ref": "docs/evidence/ev_open_weights_equilibrium.md"
+    },
+    {
+      "id": "ev_open_weights_tamper_response",
+      "kind": "event",
+      "name": "Tamper-detection / open-weight crackdown after misuse",
+      "category": "security",
+      "p_cumulative": 0.2,
+      "research_ref": "docs/evidence/ev_open_weights_tamper_response.md"
+    },
+    {
+      "id": "ev_cyber_cascade",
+      "kind": "event",
+      "name": "AI-enabled cyber/finance cascade (non-extinction)",
+      "category": "security",
+      "p_cumulative": 0.12,
+      "research_ref": "docs/evidence/ev_cyber_cascade.md"
+    },
+    {
+      "id": "ev_compute_triopoly_lock",
+      "kind": "event",
+      "name": "Frontier training locked to hyperscaler triopoly",
+      "category": "economy",
+      "p_cumulative": 0.82,
+      "research_ref": "docs/evidence/ev_compute_triopoly_lock.md"
+    },
+    {
+      "id": "ev_laws_mass_deploy",
+      "kind": "event",
+      "name": "Mass LAWS deployment without restraint treaty",
+      "category": "conflict",
+      "p_cumulative": 0.35,
+      "research_ref": "docs/evidence/ev_laws_mass_deploy.md"
+    },
+    {
+      "id": "ev_taiwan_kinetic",
+      "kind": "event",
+      "name": "Kinetic engagement Taiwan Strait",
+      "category": "conflict",
+      "p_cumulative": 0.06,
+      "research_ref": "docs/evidence/ev_taiwan_kinetic.md"
+    },
+    {
+      "id": "ev_energy_data_cap_bite",
+      "kind": "event",
+      "name": "Energy / data sovereignty caps bite on scaling",
+      "category": "economy",
+      "p_cumulative": 0.3,
+      "research_ref": "docs/evidence/ev_energy_data_cap_bite.md"
+    },
+    {
+      "id": "ev_science_win_legible",
+      "kind": "event",
+      "name": "AlphaFold-class win politically legible",
+      "category": "utopia",
+      "p_cumulative": 0.42,
+      "research_ref": "docs/evidence/ev_science_win_legible.md"
+    },
+    {
+      "id": "ev_longevity_trial_breakthrough",
+      "kind": "event",
+      "name": "AI-designed therapy Phase II breakthrough",
+      "category": "utopia",
+      "p_cumulative": 0.18,
+      "research_ref": "docs/evidence/ev_longevity_trial_breakthrough.md"
+    },
+    {
+      "id": "ev_meaning_pilot_success",
+      "kind": "event",
+      "name": "OECD-scale meaning/wellbeing pilot succeeds",
+      "category": "utopia",
+      "p_cumulative": 0.15,
+      "research_ref": "docs/evidence/ev_meaning_pilot_success.md"
+    },
+    {
+      "id": "ev_align_prod_catch",
+      "kind": "event",
+      "name": "Alignment scales \u2014 prod monitoring works",
+      "category": "utopia",
+      "p_cumulative": 0.25,
+      "research_ref": "docs/evidence/ev_align_prod_catch.md"
+    },
+    {
+      "id": "ev_swf_enacted",
+      "kind": "event",
+      "name": "G7 social wealth fund / compute dividend",
+      "category": "utopia",
+      "p_cumulative": 0.12,
+      "research_ref": "docs/evidence/ev_swf_enacted.md"
+    },
+    {
+      "id": "ev_beneficial_ai_treaty",
+      "kind": "event",
+      "name": "Beneficial-AI treaty with verification",
+      "category": "utopia",
+      "p_cumulative": 0.1,
+      "research_ref": "docs/evidence/ev_beneficial_ai_treaty.md"
+    },
+    {
+      "id": "ev_fed_edu_reskilling",
+      "kind": "event",
+      "name": "Federal AI reskilling package >$10B",
+      "category": "utopia",
+      "p_cumulative": 0.22,
+      "research_ref": "docs/evidence/ev_fed_edu_reskilling.md"
+    },
+    {
+      "id": "ev_admin_flip_2029",
+      "kind": "event",
+      "name": "2029 US administration flips AI posture",
+      "category": "governance",
+      "p_cumulative": 0.5,
+      "research_ref": "docs/evidence/ev_admin_flip_2029.md"
+    },
+    {
+      "id": "ev_humanoid_scale_deploy",
+      "kind": "event",
+      "name": "Million-unit humanoid / embodied AI deployment",
+      "category": "capability",
+      "p_cumulative": 0.28,
+      "research_ref": "docs/evidence/ev_humanoid_scale_deploy.md"
+    },
+    {
+      "id": "ev_space_lift_cheap",
+      "kind": "event",
+      "name": "<$500/kg LEO sustained (>100t)",
+      "category": "utopia",
+      "p_cumulative": 0.08,
+      "research_ref": "docs/evidence/ev_space_lift_cheap.md"
+    },
+    {
+      "id": "ev_china_cdz_mobilization",
+      "kind": "event",
+      "name": "China CDZ / national AI mobilization at frontier parity push",
+      "category": "geopolitics",
+      "p_cumulative": 0.65,
+      "research_ref": "docs/evidence/ev_china_cdz_mobilization.md"
+    },
+    {
+      "id": "ev_wmd_escalation",
+      "kind": "event",
+      "name": "WMD / strategic escalation crosses extinction threshold",
+      "category": "conflict",
+      "p_cumulative": 0.04,
+      "research_ref": "docs/evidence/ev_wmd_escalation.md"
+    },
+    {
+      "id": "ev_federal_pause_succeeds",
+      "kind": "event",
+      "name": "Durable federal training pause enacted (>90 days)",
+      "category": "governance",
+      "p_cumulative": 0.08,
+      "research_ref": "docs/evidence/ev_federal_pause_succeeds.md"
+    },
+    {
+      "id": "ev_multilateral_screening_pilot",
+      "kind": "event",
+      "name": "Multilateral AI+bio screening pilot with verification teeth",
+      "category": "governance",
+      "p_cumulative": 0.18,
+      "research_ref": "docs/evidence/ev_multilateral_screening_pilot.md"
+    },
+    {
+      "id": "ev_singleton_lab_dominance",
+      "kind": "event",
+      "name": "Single lab >50% frontier FLOPs without sharing",
+      "category": "economy",
+      "p_cumulative": 0.15,
+      "research_ref": "docs/evidence/ev_singleton_lab_dominance.md"
+    },
+    {
+      "id": "ev_state_ai_patchwork",
+      "kind": "event",
+      "name": "State-level AI patchwork (SB53-class) binds before federal framework",
+      "category": "governance",
+      "p_cumulative": 0.55,
+      "research_ref": "docs/evidence/ev_state_ai_patchwork.md"
+    },
+    {
+      "id": "ev_nuclear_ai_crosscut",
+      "kind": "event",
+      "name": "Nuclear command\u00d7AI integration scare or near-miss",
+      "category": "conflict",
+      "p_cumulative": 0.1,
+      "research_ref": "docs/evidence/ev_nuclear_ai_crosscut.md"
+    },
+    {
+      "id": "ev_embodied_rsi_first",
+      "kind": "event",
+      "name": "Embodied / physical RSI locus beats cloud-first",
+      "category": "capability",
+      "p_cumulative": 0.22,
+      "research_ref": "docs/evidence/ev_embodied_rsi_first.md"
+    },
+    {
+      "id": "ev_india_sovereign_ai_stack",
+      "kind": "event",
+      "name": "India sovereign AI stack (G42/Cerebras-class) for national projects",
+      "category": "geopolitics",
+      "p_cumulative": 0.4,
+      "research_ref": "docs/evidence/ev_india_sovereign_ai_stack.md"
+    },
+    {
+      "id": "ev_gulf_compute_sovereignty",
+      "kind": "event",
+      "name": "Gulf sovereign compute hub (UAE/G42 + US partner dual track)",
+      "category": "geopolitics",
+      "p_cumulative": 0.35,
+      "research_ref": "docs/evidence/ev_gulf_compute_sovereignty.md"
+    }
+  ],
+  "edges": [
+    {
+      "from": "sp_c1",
+      "to": "sp_c2",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c5",
+      "to": "ev_rsi_cloud_dominant",
+      "type": "unlock"
+    },
+    {
+      "from": "sp_c2",
+      "to": "sp_c5",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c5",
+      "to": "sp_c6",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c6",
+      "to": "sp_c7",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c8",
+      "to": "ev_meaning_pilot_success",
+      "type": "unlock"
+    },
+    {
+      "from": "sp_c7",
+      "to": "sp_c8",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c9",
+      "to": "ev_c10_internal_concern",
+      "type": "unlock"
+    },
+    {
+      "from": "sp_c8",
+      "to": "sp_c9",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c2",
+      "to": "ev_c4_labor_shock",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_c4_labor_shock",
+      "to": "ev_labor_hearings_peak",
+      "type": "unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_labor_hearings_peak",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_labor_hearings_peak",
+      "to": "ev_federal_pause_attempt_fails",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "sp_c9",
+      "to": "ev_c10_internal_concern",
+      "type": "requires_spine"
+    },
+    {
+      "from": true,
+      "to": "ev_c10_internal_concern",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_whistle_memo",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_whistle_dump",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_deploy_incident",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_concern_no_leak",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_us_paralysis_s2",
+      "to": "ev_bmia_pass",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_us_paralysis_s2",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bmia_pass",
+      "to": "ev_bmia_enforcement_weak",
+      "type": "lock"
+    },
+    {
+      "from": "ev_bmia_pass",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bmia_pass",
+      "to": "ev_tier3_release_attempt",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bmia_enforcement_weak",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_gaia_preemption",
+      "to": "ev_bio_nearmiss_hidden",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_no_pause_2028",
+      "to": "ev_race_acceleration",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_no_pause_2028",
+      "to": "ev_deceptive_deploy_at_scale",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_federal_pause_attempt_fails",
+      "to": "ev_no_pause_2028",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_corp_safety_hollowing",
+      "to": "ev_no_shutdown_asi_threshold",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_corp_safety_hollowing",
+      "to": "ev_prod_interp_halt",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bio_tier1_live",
+      "to": "ev_bio_tier2_live",
+      "type": "unlock"
+    },
+    {
+      "from": "sp_c2",
+      "to": "ev_bio_tier2_live",
+      "type": "requires_spine"
+    },
+    {
+      "from": true,
+      "to": "ev_bio_tier2_live",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_bio_tier2_live",
+      "to": "ev_bio_public_scare",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_bio_tier2_live",
+      "to": "ev_bio_nearmiss_hidden",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_bio_tier2_live",
+      "to": "ev_tier3_path_open",
+      "type": "unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_bio_public_scare",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_bio_public_scare",
+      "to": "ev_bmia_pass",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": true,
+      "to": "ev_bio_nearmiss_hidden",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_bio_nearmiss_hidden",
+      "to": "ev_tier3_path_open",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_bio_nearmiss_hidden",
+      "to": "ev_bmia_pass",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bio_tier2_live",
+      "to": "ev_bio_nearmiss_disclosed",
+      "type": "requires_event"
+    },
+    {
+      "from": "ev_bio_nearmiss_disclosed",
+      "to": "ev_bio_nearmiss_hidden",
+      "type": "lock"
+    },
+    {
+      "from": "ev_bio_nearmiss_disclosed",
+      "to": "ev_bmia_pass",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_bio_nearmiss_disclosed",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": true,
+      "to": "ev_tier3_path_open",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_tier3_path_open",
+      "to": "ev_tier3_release_attempt",
+      "type": "unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_tier3_release_attempt",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_tier3_release_attempt",
+      "to": "ev_extinction_bio_release",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_tier3_release_attempt",
+      "to": "ev_extinction_bio_release",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_tier3_release_attempt",
+      "to": "ev_extinction_bio_release",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_extinction_bio_release",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "sp_c5",
+      "to": "ev_weight_theft",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_weight_theft",
+      "to": "ev_race_acceleration",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_weight_theft",
+      "to": "ev_whistle_memo",
+      "type": "unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_race_acceleration",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_whistle_memo",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_whistle_memo",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_whistle_memo",
+      "to": "ev_federal_pause_attempt_fails",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_whistle_memo",
+      "to": "ev_no_pause_2028",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_whistle_dump",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_whistle_dump",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_whistle_dump",
+      "to": "ev_prod_interp_halt",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_deploy_incident",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_deploy_incident",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_deploy_incident",
+      "to": "ev_prod_interp_halt",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_c10_internal_concern",
+      "to": "ev_concern_no_leak",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_concern_no_leak",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_concern_no_leak",
+      "to": "ev_no_pause_2028",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": true,
+      "to": "ev_deceptive_deploy_at_scale",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_deceptive_deploy_at_scale",
+      "to": "ev_no_shutdown_asi_threshold",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_deceptive_deploy_at_scale",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_prod_interp_halt",
+      "to": "ev_align_prod_catch",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_prod_interp_halt",
+      "to": "ev_deceptive_deploy_at_scale",
+      "type": "lock"
+    },
+    {
+      "from": "ev_prod_interp_halt",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "lock"
+    },
+    {
+      "from": true,
+      "to": "ev_no_shutdown_asi_threshold",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_no_shutdown_asi_threshold",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_deceptive_deploy_at_scale",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "requires_unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_rsi_cloud_dominant",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_open_weights_equilibrium",
+      "to": "ev_open_weights_tamper_response",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_open_weights_equilibrium",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_open_weights_tamper_response",
+      "to": "ev_tier3_release_attempt",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "sp_c6",
+      "to": "ev_cyber_cascade",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_laws_mass_deploy",
+      "to": "ev_taiwan_kinetic",
+      "type": "unlock"
+    },
+    {
+      "from": true,
+      "to": "ev_taiwan_kinetic",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_taiwan_kinetic",
+      "to": "ev_race_acceleration",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "sp_c5",
+      "to": "ev_science_win_legible",
+      "type": "requires_spine"
+    },
+    {
+      "from": "sp_c6",
+      "to": "ev_longevity_trial_breakthrough",
+      "type": "requires_spine"
+    },
+    {
+      "from": true,
+      "to": "ev_align_prod_catch",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_align_prod_catch",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "lock"
+    },
+    {
+      "from": "sp_c9",
+      "to": "ev_beneficial_ai_treaty",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_admin_flip_2029",
+      "to": "ev_bmia_pass",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "sp_c7",
+      "to": "ev_space_lift_cheap",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_china_cdz_mobilization",
+      "to": "ev_weight_theft",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_china_cdz_mobilization",
+      "to": "ev_race_acceleration",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_taiwan_kinetic",
+      "to": "ev_wmd_escalation",
+      "type": "requires_event"
+    },
+    {
+      "from": true,
+      "to": "ev_wmd_escalation",
+      "type": "requires_unlock"
+    },
+    {
+      "from": "ev_federal_pause_succeeds",
+      "to": "ev_race_acceleration",
+      "type": "lock"
+    },
+    {
+      "from": "ev_federal_pause_succeeds",
+      "to": "ev_deceptive_deploy_at_scale",
+      "type": "lock"
+    },
+    {
+      "from": "ev_federal_pause_succeeds",
+      "to": "ev_no_pause_2028",
+      "type": "lock"
+    },
+    {
+      "from": "ev_federal_pause_succeeds",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_multilateral_screening_pilot",
+      "to": "ev_tier3_path_open",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_multilateral_screening_pilot",
+      "to": "ev_beneficial_ai_treaty",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "sp_c7",
+      "to": "ev_singleton_lab_dominance",
+      "type": "requires_spine"
+    },
+    {
+      "from": "ev_singleton_lab_dominance",
+      "to": "ev_deceptive_deploy_at_scale",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_singleton_lab_dominance",
+      "to": "ev_extinction_misalign_catastrophe",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_state_ai_patchwork",
+      "to": "ev_gaia_preemption",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_nuclear_ai_crosscut",
+      "to": "ev_wmd_escalation",
+      "type": "unlock"
+    },
+    {
+      "from": "ev_humanoid_scale_deploy",
+      "to": "ev_embodied_rsi_first",
+      "type": "requires_event"
+    },
+    {
+      "from": "ev_embodied_rsi_first",
+      "to": "ev_rsi_cloud_dominant",
+      "type": "lock"
+    },
+    {
+      "from": "ev_india_sovereign_ai_stack",
+      "to": "ev_compute_triopoly_lock",
+      "type": "modify_hazard",
+      "mult": null
+    },
+    {
+      "from": "ev_gulf_compute_sovereignty",
+      "to": "ev_india_sovereign_ai_stack",
+      "type": "modify_hazard",
+      "mult": null
+    }
+  ],
+  "meta": {
+    "events": 57,
+    "spine": 7
+  }
+}

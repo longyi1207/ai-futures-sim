@@ -1,0 +1,732 @@
+{
+  "seed": 42,
+  "sampled_from": 400,
+  "runs": [
+    {
+      "run_id": 0,
+      "terminal": "friction_modal",
+      "region": "friction",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028"
+      ],
+      "timeline": [
+        {
+          "day": 359,
+          "date": "2026-12-26",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "day": 606,
+          "date": "2027-08-30",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 731,
+          "date": "2028-01-02"
+        },
+        {
+          "day": 1063,
+          "date": "2028-11-29",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1152,
+          "date": "2029-02-26",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1275,
+          "date": "2029-06-29",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1662,
+          "date": "2030-07-21",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 1763,
+          "date": "2030-10-30",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.0,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 5.0,
+        "bio_governance_tier": 1.0,
+        "bio_risk_pressure": 0.768,
+        "alignment_trust": 0.43,
+        "deception_risk": 0.17,
+        "deployment_pressure": 0.57
+      }
+    },
+    {
+      "run_id": 1,
+      "terminal": "friction_modal",
+      "region": "friction",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_china_cdz_mobilization",
+        "ev_us_paralysis_s2"
+      ],
+      "timeline": [
+        {
+          "day": 412,
+          "date": "2027-02-17",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_us_paralysis_s2",
+          "kind": "event",
+          "day": 443,
+          "date": "2027-03-20"
+        },
+        {
+          "day": 693,
+          "date": "2027-11-25",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_china_cdz_mobilization",
+          "kind": "event",
+          "day": 813,
+          "date": "2028-03-24"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 872,
+          "date": "2028-05-22"
+        },
+        {
+          "day": 1141,
+          "date": "2029-02-15",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1227,
+          "date": "2029-05-12",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1701,
+          "date": "2030-08-29",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1920,
+          "date": "2031-04-05",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 2091,
+          "date": "2031-09-23",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.08,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 4.995,
+        "bio_governance_tier": 1.0,
+        "bio_risk_pressure": 0.73,
+        "alignment_trust": 0.43,
+        "deception_risk": 0.17,
+        "deployment_pressure": 0.69
+      }
+    },
+    {
+      "run_id": 4,
+      "terminal": "doom_whimper",
+      "region": "doom",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_china_cdz_mobilization",
+        "ev_c10_internal_concern",
+        "ev_bmia_pass"
+      ],
+      "timeline": [
+        {
+          "id": "ev_china_cdz_mobilization",
+          "kind": "event",
+          "day": 218,
+          "date": "2026-08-07"
+        },
+        {
+          "day": 448,
+          "date": "2027-03-25",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 737,
+          "date": "2028-01-08"
+        },
+        {
+          "day": 787,
+          "date": "2028-02-27",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_bmia_pass",
+          "kind": "event",
+          "day": 1067,
+          "date": "2028-12-03"
+        },
+        {
+          "day": 1164,
+          "date": "2029-03-10",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1220,
+          "date": "2029-05-05",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1349,
+          "date": "2029-09-11",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1443,
+          "date": "2029-12-14",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 1627,
+          "date": "2030-06-16",
+          "id": "sp_c9",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_c10_internal_concern",
+          "kind": "event",
+          "day": 2113,
+          "date": "2031-10-15"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.0,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 3.049,
+        "bio_governance_tier": 2.5,
+        "bio_risk_pressure": 0.581,
+        "alignment_trust": 0.4,
+        "deception_risk": 0.42,
+        "deployment_pressure": 0.77
+      }
+    },
+    {
+      "run_id": 24,
+      "terminal": "doom_whimper",
+      "region": "doom",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_china_cdz_mobilization",
+        "ev_c10_internal_concern"
+      ],
+      "timeline": [
+        {
+          "day": 372,
+          "date": "2027-01-08",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_china_cdz_mobilization",
+          "kind": "event",
+          "day": 518,
+          "date": "2027-06-03"
+        },
+        {
+          "day": 656,
+          "date": "2027-10-19",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 807,
+          "date": "2028-03-18"
+        },
+        {
+          "day": 1129,
+          "date": "2029-02-03",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1236,
+          "date": "2029-05-21",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1393,
+          "date": "2029-10-25",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1559,
+          "date": "2030-04-09",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 1671,
+          "date": "2030-07-30",
+          "id": "sp_c9",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_c10_internal_concern",
+          "kind": "event",
+          "day": 1898,
+          "date": "2031-03-14"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.0,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 4.059,
+        "bio_governance_tier": 0.2,
+        "bio_risk_pressure": 1.0,
+        "alignment_trust": 0.28,
+        "deception_risk": 1.0,
+        "deployment_pressure": 0.87
+      }
+    },
+    {
+      "run_id": 5,
+      "terminal": "utopia_symbiosis",
+      "region": "utopia",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [],
+      "timeline": [
+        {
+          "day": 398,
+          "date": "2027-02-03",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "day": 684,
+          "date": "2027-11-16",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "day": 1059,
+          "date": "2028-11-25",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1252,
+          "date": "2029-06-06",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1351,
+          "date": "2029-09-13",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1479,
+          "date": "2030-01-19",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 1665,
+          "date": "2030-07-24",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.15,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 51.5,
+        "tech_level": 1.0,
+        "bio_capability_tier": 5.0,
+        "bio_governance_tier": 0.7,
+        "bio_risk_pressure": 1.0,
+        "alignment_trust": 0.95,
+        "deception_risk": 0,
+        "deployment_pressure": 0.55
+      }
+    },
+    {
+      "run_id": 10,
+      "terminal": "utopia_modest_welfare",
+      "region": "utopia",
+      "terminal_day": 8765,
+      "terminal_date": "2049-12-31",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_china_cdz_mobilization"
+      ],
+      "timeline": [
+        {
+          "day": 343,
+          "date": "2026-12-10",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "day": 658,
+          "date": "2027-10-21",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 765,
+          "date": "2028-02-05"
+        },
+        {
+          "id": "ev_china_cdz_mobilization",
+          "kind": "event",
+          "day": 970,
+          "date": "2028-08-28"
+        },
+        {
+          "day": 1059,
+          "date": "2028-11-25",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1182,
+          "date": "2029-03-28",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 2061,
+          "date": "2031-08-24",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 2165,
+          "date": "2031-12-06",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 2247,
+          "date": "2032-02-26",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 1.13,
+        "employment_stress": 1.0,
+        "ai_rd_multiplier": 51.5,
+        "tech_level": 1.0,
+        "bio_capability_tier": 5.0,
+        "bio_governance_tier": 0.2,
+        "bio_risk_pressure": 1.0,
+        "alignment_trust": 0.7,
+        "deception_risk": 0,
+        "deployment_pressure": 0.77
+      }
+    },
+    {
+      "run_id": 14,
+      "terminal": "severe_cyber_cascade",
+      "region": "severe",
+      "terminal_day": 2681,
+      "terminal_date": "2033-05-05",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_us_paralysis_s2"
+      ],
+      "timeline": [
+        {
+          "id": "ev_us_paralysis_s2",
+          "kind": "event",
+          "day": 219,
+          "date": "2026-08-08"
+        },
+        {
+          "day": 342,
+          "date": "2026-12-09",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 762,
+          "date": "2028-02-02"
+        },
+        {
+          "day": 865,
+          "date": "2028-05-15",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "day": 1290,
+          "date": "2029-07-14",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1369,
+          "date": "2029-10-01",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1666,
+          "date": "2030-07-25",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1856,
+          "date": "2031-01-31",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 2449,
+          "date": "2032-09-15",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 10.597,
+        "ci_level": 10.0,
+        "gdp_index": 0.75,
+        "employment_stress": 0.614,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 1.547,
+        "bio_governance_tier": 1.0,
+        "bio_risk_pressure": 0.184,
+        "alignment_trust": 0.55,
+        "deception_risk": 0.17,
+        "deployment_pressure": 0.65
+      }
+    },
+    {
+      "run_id": 17,
+      "terminal": "severe_cyber_cascade",
+      "region": "severe",
+      "terminal_day": 2920,
+      "terminal_date": "2033-12-30",
+      "fired_spine": [
+        "sp_c1",
+        "sp_c2",
+        "sp_c5",
+        "sp_c6",
+        "sp_c7",
+        "sp_c8",
+        "sp_c9"
+      ],
+      "key_events": [
+        "ev_no_pause_2028",
+        "ev_china_cdz_mobilization"
+      ],
+      "timeline": [
+        {
+          "day": 423,
+          "date": "2027-02-28",
+          "id": "sp_c1",
+          "kind": "spine"
+        },
+        {
+          "day": 621,
+          "date": "2027-09-14",
+          "id": "sp_c2",
+          "kind": "spine"
+        },
+        {
+          "id": "ev_china_cdz_mobilization",
+          "kind": "event",
+          "day": 733,
+          "date": "2028-01-04"
+        },
+        {
+          "id": "ev_no_pause_2028",
+          "kind": "event",
+          "day": 772,
+          "date": "2028-02-12"
+        },
+        {
+          "day": 1098,
+          "date": "2029-01-03",
+          "id": "sp_c5",
+          "kind": "spine"
+        },
+        {
+          "day": 1200,
+          "date": "2029-04-15",
+          "id": "sp_c6",
+          "kind": "spine"
+        },
+        {
+          "day": 1373,
+          "date": "2029-10-05",
+          "id": "sp_c7",
+          "kind": "spine"
+        },
+        {
+          "day": 1532,
+          "date": "2030-03-13",
+          "id": "sp_c8",
+          "kind": "spine"
+        },
+        {
+          "day": 1598,
+          "date": "2030-05-18",
+          "id": "sp_c9",
+          "kind": "spine"
+        }
+      ],
+      "final_state": {
+        "internal_capability": 11.0,
+        "ci_level": 10.0,
+        "gdp_index": 0.83,
+        "employment_stress": 0.738,
+        "ai_rd_multiplier": 50.0,
+        "tech_level": 1.0,
+        "bio_capability_tier": 2.683,
+        "bio_governance_tier": 0.2,
+        "bio_risk_pressure": 0.813,
+        "alignment_trust": 0.43,
+        "deception_risk": 0.17,
+        "deployment_pressure": 0.77
+      }
+    }
+  ]
+}
