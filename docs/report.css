@@ -156,3 +156,28 @@ ul, ol {
   padding-left: 1.5em;
 }
 li { margin: 0.2em 0; }
+
+figure {
+  margin: 1.2em 0;
+  padding: 0;
+  page-break-inside: avoid;
+  text-align: center;
+}
+
+figure img {
+  max-width: 100%;
+  border: 0.5pt solid #ccc;
+  border-radius: 3px;
+}
+
+figure figcaption {
+  font-family: "Helvetica Neue", Arial, sans-serif;
+  font-size: 8.5pt;
+  color: #555;
+  margin-top: 0.5em;
+  text-align: left;
+}
+
+figure figcaption strong {
+  color: #222;
+}

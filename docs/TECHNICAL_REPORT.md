@@ -1,6 +1,6 @@
 ---
 title: "A Joint Monte Carlo Model of AI-Driven Civilizational Outcomes, 2026–2050"
-author: "Longyi"
+author: "Long Yi — Independent Researcher — yilongjack2001@gmail.com"
 date: "July 2026"
 ---
 
@@ -160,6 +160,8 @@ A one-at-a-time sensitivity sweep (±25% perturbation per parameter from its cur
 
 Three parameters — `multiplier_exponent`, `carrying_capacity`, `base_daily_growth` — account for the overwhelming majority of the model's response to every calibration target measured. Everything else is comparatively cheap to get wrong. More pointedly: seven of the twenty-two parameters (the `input.*.scale` terms gating on `deployment_pressure`, `china_frontier_parity`, `us_china_race_index`, `compute_concentration`, `eu_regulatory_bind`, `open_weights_regime`, and `frontier_lab_polarization`) score **exactly 0.0% sensitivity** — not merely small, but structurally inert, because `_input_factor()` computes `1 + scale · max(0, v/reference − 1)`, and the driving variables stay close enough to their reference values across the trajectories this configuration actually samples that the excess term never activates. Each of these seven carries an inline evidentiary citation in `config/capability_dynamics.yaml`; the sensitivity result shows that citation is not currently doing the epistemic work a citation is supposed to do, since the parameter it justifies has zero measured effect on any model output. This does not resolve the identifiability problem — it only localizes where the slack is — but it does mean that any claim of the form "this specific constant is well-supported because it cites paper X" should be read alongside this table before being trusted. Full per-parameter results: `outputs/runs/sensitivity_capability.json`; methodology and reproduction command: `docs/CALIBRATION.md`.
 
+![**Figure 1.** Ranked sensitivity of all 22 capability-growth parameters. Three parameters (red) account for nearly all measured response; seven (gray) are structurally inert at zero. Reproduce: `python scripts/generate_report_figures.py`.](figures/fig2_sensitivity.png)
+
 ### 6.4 Regression Testing
 
 The engine carries 44 automated tests (`pytest`) covering hazard-conversion math, terminal-reachability regressions for the two defect classes in §6.2, config cross-reference integrity (every event ID referenced in a precondition, unlock, or terminal rule must exist), and society-hazard coupling invariants. All 44 pass as of this report.
@@ -179,9 +181,13 @@ The engine carries 44 automated tests (`pytest`) covering hazard-conversion math
 
 These four numbers sum to 100% by construction (every run resolves to exactly one region) and are **measured**, not tuned — no threshold or rule in `terminals.yaml` was adjusted to move this distribution toward a pre-specified target (§6, §8).
 
+![**Figure 2.** Emergent four-region split, averaged over 3 seeds × 400 runs. Error bars omitted from the figure; see the table above for the per-seed range.](figures/fig1_regions.png)
+
 ### 7.2 Terminal Decomposition
 
 At `n=600` (seed 42), the 17 terminal states decompose as: `friction_managed_non_utopia` 21%, `friction_ghost_gdp_no_transfer` 20%, `utopia_modest_welfare` 12%, `friction_governance_paralysis` 11%, `friction_labor_backlash` 9%, `utopia_golden_age` 6%, `severe_cyber_cascade` 6%, `doom_whimper` 5%, with the remaining ~10% distributed across `utopia_symbiosis`, `doom_extinction_misalign`, `friction_surveillance`, `friction_pause_stall`, `doom_extinction_bio`, and `utopia_radical_abundance` — several of the latter resting on fewer than 15 occurrences at this sample size (§8).
+
+![**Figure 3.** Branching structure of the joint Monte Carlo from capability gates (2026–28) through governance forks (2028–29) and the alignment-scare branch (2029–31) to the four emergent regions at the 2050 horizon. Ribbon width is share of simulated runs, not an independent scenario weight. Static export of the [interactive web explorer](https://longyi1207.github.io/ai-futures-sim/web/); colors follow the region legend embedded in the figure.](figures/fig3_branching.png)
 
 ### 7.3 Event Impact Analysis
 
