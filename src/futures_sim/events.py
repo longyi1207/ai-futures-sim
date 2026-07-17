@@ -91,7 +91,7 @@ class EventCatalog:
         if "daily_hazard" in sched:
             base = float(sched["daily_hazard"])
         else:
-            p_cum = float(sched.get("p_cumulative", 0.0))
+            p_cum = float(state.event_p_overrides.get(event_id, sched.get("p_cumulative", 0.0)))
             total_days = max(1, (end - start).days + 1)
             # Constant daily hazard over the full window — do NOT re-scale p_cumulative
             # against shrinking remaining days (that inflates marginal P toward 1).
@@ -104,7 +104,12 @@ class EventCatalog:
             base = correlation.adjust_hazard(event_id, base, cluster_latents)
         return base
 
-    def fire(self, event_id: str, state: WorldState) -> None:
+    def fire(
+        self,
+        event_id: str,
+        state: WorldState,
+        rng: np.random.Generator | None = None,
+    ) -> None:
         ev = self.events[event_id]
         state.fired_events.add(event_id)
         group = ev.get("mutex_group")
@@ -113,6 +118,30 @@ class EventCatalog:
                 if other != event_id:
                     state.locked_events.add(other)
         apply_effects(state, ev.get("on_fire"), event_id)
+        self._fire_weighted_branch(ev, state, rng)
+
+    def _fire_weighted_branch(
+        self,
+        ev: dict[str, Any],
+        state: WorldState,
+        rng: np.random.Generator | None,
+    ) -> None:
+        branches = (ev.get("on_fire") or {}).get("weighted_fire")
+        if not branches:
+            return
+        active_rng = rng or np.random.default_rng()
+        weights = np.array([float(b["weight"]) for b in branches], dtype=float)
+        total = float(weights.sum())
+        if total <= 0:
+            return
+        probs = weights / total
+        idx = int(active_rng.choice(len(branches), p=probs))
+        chosen = str(branches[idx]["event"])
+        if chosen in state.fired_events or chosen in state.locked_events:
+            return
+        if chosen not in self.events:
+            raise KeyError(f"Unknown weighted branch event: {chosen}")
+        self.fire(chosen, state, rng=active_rng)
 
     def eligible_ids(self, state: WorldState, current: date, window_pool: list[str] | None = None) -> list[str]:
         pool = window_pool if window_pool is not None else self.events

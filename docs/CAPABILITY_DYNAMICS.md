@@ -52,7 +52,7 @@ Between anchors: linear interpolation. Same calendar for every run; variance fro
 | `compute_concentration` | RSI-friendly concentration |
 | `open_weights_regime` | Knowledge diffusion |
 | `frontier_lab_polarization` | Race duplication |
-| `gdp_index` | Funding channel + capex pull |
+| `gdp_index` | Funding channel + capex pull; **also driven by** capability via `gdp_growth_coupling` (below) |
 | `governance_capacity` | Race amp + governance brake |
 | `public_xrisk_salience` | Regulatory brake |
 | `international_coord` | Coordination brake |
@@ -62,6 +62,120 @@ Between anchors: linear interpolation. Same calendar for every run; variance fro
 | `kinetic_escalation` | Geopolitical capex/coord penalty |
 | `bio_capability_tier` | Dual-use spillover ↔ cap |
 | `tech_level`, `employment_stress`, `deception_risk` | Derived couplings |
+
+## GDP growth coupling (added 2026-07-16, revised 2026-07-16) `[GUESS]` on magnitude
+
+Before this, `gdp_index` had **no connection to capability growth at all** — only 6
+discrete event deltas (max combined +0.40 from baseline 1.0), while `ghost_gdp_index`
+(a different variable) *did* scale continuously with capability via
+`employment_coupling`. This made `gdp_index >= 1.45/1.85/2.5` — the gates on
+`utopia_golden_age` and `utopia_radical_abundance` in `config/terminals.yaml` —
+mathematically unreachable regardless of how the rest of the run played out.
+
+**First attempt (superseded same day):** an additive daily delta, magnitude picked
+empirically to make the existing terminal gdp thresholds land in a "nice-looking"
+distribution. This was flagged (correctly) as reverse-engineering a parameter to hit
+a target rather than modeling the real mechanism — `gdp_index` is a *level index*
+that should compound like real GDP, not accumulate a flat daily amount.
+
+**Current version:** `gdp_growth_coupling` compounds `gdp_index` daily via an
+annualized rate = `baseline_annual_growth + tech_level_accel_scale * tech_level`,
+converted to a daily compounding factor. Two real-data anchors:
+
+- `baseline_annual_growth: 0.022` (2.2%/yr) — historical long-run real GDP growth,
+  US and global both ~2-3%/yr (BEA NIPA long-run series; World Bank WDI). Applied
+  from day 1 regardless of capability — economies grow without transformative AI too.
+- `tech_level_accel_scale: 0.012` (+1.2pp/yr at `tech_level=1.0`, full deployment) —
+  anchored on the closest *real* precedent (general-purpose-technology diffusion:
+  Jorgenson/Stiroh-style growth accounting attributes roughly +0.5-1.0pp of annual US
+  TFP growth to IT during its ~1995-2004 peak diffusion), not AI-specific speculation.
+  Deliberately far below the "AI explosive growth" literature's central-to-high
+  estimates (Davidson 2021, Open Philanthropy: 20-30%+/yr in full-automation
+  scenarios; tempered by Erdil & Besiroglu 2023's bottleneck critique) — because (a)
+  `tech_level` saturates near 1.0 and *never decays* for most horizon-surviving runs,
+  so even a modest rate compounds over 15-20+ sustained years, and (b) this sim
+  already has separate frictions (`deployment_pressure`, `governance_capacity`,
+  `sovereignty_fragmentation`, `compute_concentration`) damping how much latent
+  capability reaches real deployment — stacking the literature's most aggressive
+  rate on top would double-count those frictions. Full rationale in
+  `config/capability_dynamics.yaml`'s inline comment.
+
+**Resulting distribution** (n=500, seed=42): `gdp_index` p50≈2.2, p90≈2.4, p99≈2.6 —
+most horizon-surviving runs clear `utopia_modest_welfare`/`utopia_golden_age`'s gdp
+gates (this is expected and *not* a problem: `governance_capacity`, `inequality_index`,
+`distribution_regime`, and the required events remain the binding constraints for
+those terminals — matching the research finding that GDP growth itself is the modal
+case and *distribution* is the rare, hard part). **Resolved 2026-07-16**: raised the
+`utopia_radical_abundance` gate to gdp_index≥2.5 (matching the canonical
+`terminals.` definition, which had drifted from `horizon_default`'s 1.85) — now a
+genuinely rare ~2.2% rather than 12.6%. See `docs/CALIBRATION.md` "Terminal
+reachability" for the before/after.
+
+## Sustained drag: kinetic escalation, governance collapse, sovereignty fragmentation
+
+Added 2026-07-16 alongside a `capability_drop` mechanism (below) after the owner
+pointed out that `kinetic_escalation`, governance collapse, and
+`sovereignty_fragmentation` only ever slowed AI *capability* growth
+(`_growth_factor`'s existing brake terms) and never touched `gdp_index` at all —
+meaning an active war (`ev_taiwan_kinetic`) cost GDP exactly one event-delta, then
+growth resumed unaffected the very next day, regardless of the war still being
+ongoing (`kinetic_escalation` has no decay mechanism — once elevated, it stays
+elevated for the rest of the run).
+
+`gdp_growth_coupling` now subtracts three ongoing drag terms from the annual rate
+for as long as the underlying state is bad (not just once):
+
+- `kinetic_drag_scale: 0.10` — -10pp/yr at `kinetic_escalation=1.0` (active
+  great-power war). Grounded in IMF WEO's ~-0.5 to -1pp global spillover estimate
+  from the (regionally contained) Russia-Ukraine war, scaled up toward Bloomberg
+  Economics' (2024) ~$10T / ~10%-of-global-GDP estimate for a full US-China Taiwan
+  conflict given the chip-supply chokepoint. At `kinetic_escalation=0.45` (one
+  `ev_taiwan_kinetic` firing, not full WMD escalation) this costs ~4.5pp/yr —
+  enough to push net growth to roughly flat/mildly negative, not untouched.
+- `governance_collapse_drag_scale: 0.02` — -2pp/yr at `governance_capacity=0` vs a
+  0.5 reference. Smaller and slower than the kinetic term on purpose — real
+  institutional-quality/growth literature (Kaufmann-Kraay-Mastruzzi
+  governance-indicator regressions; Acemoglu & Robinson) finds real but modest
+  effects at this scale.
+- `fragmentation_drag_scale: 0.012` — -1.2pp/yr at `sovereignty_fragmentation=1.0`.
+  IMF SDN "Geoeconomic Fragmentation and the Future of Multilateralism" (2023)
+  estimates global GDP *level* losses of ~0.2%-7% across limited-to-severe
+  decoupling scenarios; approximated here as an annual-rate drag.
+
+**Empirical check** (n=800, seed=42): the 6 runs where `ev_taiwan_kinetic` fired
+show final `gdp_index` p50=**0.465** vs **1.349** for the other 794 runs — a real,
+lasting economic scar, not a one-day dip that recovers.
+
+## Capability regression: `capability_drop`
+
+Before this, `internal_capability` could only ever *slow down* (via
+`capability_growth_scale`/`hard_ceiling` controls), never actually decline — no
+mechanism represented physical destruction of compute infrastructure, verified
+capability rollback, brain-drain, or an energy crisis forcing capacity offline.
+`effects.py::apply_effects` now supports `capability_controls.capability_drop` — an
+absolute one-time reduction to `internal_capability` (not `ci_level`, the
+public/observed-milestone tracker, which is a running max and correctly does *not*
+reverse — already-trained models and know-how don't get un-invented because some
+fabs were destroyed; only the ability to keep advancing is set back).
+
+Wired into `ev_taiwan_kinetic` (`capability_drop: 0.5`, of ~10-11 max Ci scale) —
+grounded in the real chokepoint (Taiwan/TSMC fabricates the large majority of
+leading-edge logic chips; Chris Miller, *Chip War*, 2022) but the magnitude itself
+is `[GUESS]` — there is no clean real-world conversion from "fabs destroyed" to
+"Ci units lost."
+
+**Empirical finding, not (yet) further tuned**: at n=800, all 6 runs where
+`ev_taiwan_kinetic` fired end with `internal_capability` back at the 11.0 ceiling —
+the drop gets regrown within weeks to months, because by the time this event is
+eligible (2028-2035) most runs are already past `sp_c8`/`sp_c9` where the calendar
+RSI multiplier reaches ~50x, and `ev_taiwan_kinetic` itself boosts
+`ev_race_acceleration`'s hazard 1.5x. Read charitably, this is a coherent (if
+unintended) emergent story rather than a bug: a Taiwan war devastates the civilian
+economy durably but doesn't necessarily halt the capability race itself — an
+analogue to wartime R&D acceleration (Manhattan Project, radar, jet engines all
+*accelerated* during WWII even as civilian economies were damaged). Left as-is;
+would add a matching sustained capability-growth penalty (mirroring the GDP drag
+terms above) if the owner wants "war actually stops the race" modeled instead.
 
 ## Calibration
 

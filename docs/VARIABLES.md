@@ -41,6 +41,9 @@ All variables live on `WorldState` (`src/futures_sim/state.py`). Initial values 
 | `frontier_capex_index` | ≥1 | Frontier AI CapEx vs 2026 |
 | `admin_ai_posture` | −1…+1 | Admin acceleration vs regulation |
 | `china_frontier_parity` | 0–1 | China frontier vs US |
+| `us_china_race_index` | 0–1 | US-China competitive race intensity (race dynamics, separate from raw parity) |
+| `eu_regulatory_bind` | 0–1 | EU GPAI/AI Act enforcement bite on frontier labs |
+| `china_open_weight_strategy` | 0–1 | China's strategic push on open-weights release |
 | `open_weights_regime` | 0–1 | Open-weights norm strength |
 | `sovereignty_fragmentation` | 0–1 | EU/India/Gulf sovereign compute decouple from US hyperscalers |
 | `kinetic_escalation` | 0–1 | Great-power kinetic risk |
@@ -52,6 +55,15 @@ All variables live on `WorldState` (`src/futures_sim/state.py`). Initial values 
 | `inequality_index` | 0–1 | AI gains concentration (↑ worse for utopia) |
 | `meaning_institution_health` | 0–1 | Wellbeing / civic pilots |
 | `ghost_gdp_index` | 0–1 | GDP↑ without broad wage/employment participation |
+| `labor_mobilization` | 0–1 | Organized labor/political response to visible AI-driven displacement |
+| `reskilling_absorption` | 0–1 | How much displaced labor is actually re-employed via reskilling (vs. guidance-only programs) |
+| `distribution_regime` | 0–1 | Strength of active gains-distribution policy (SWF, reskilling, wellbeing pilots) — low + high `ghost_gdp_index` ⇒ `friction_ghost_gdp_no_transfer` |
+
+## Capability dynamics controls
+
+| Variable | Scale | Meaning |
+|----------|-------|---------|
+| `rsi_calendar_delay_days` | ≥0, days | Cumulative delay applied to the calendar-RSI lookup (`capability.py::step_capability`) from governance/disclosure events' `capability_controls.rsi_delay_days`. Each contributing event's magnitude is `[GUESS]`-labeled — see the "RSI delay assumption" section in that event's `docs/evidence/<id>.md`. |
 
 ## Why not raw "job loss %" only?
 

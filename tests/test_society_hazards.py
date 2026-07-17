@@ -65,12 +65,15 @@ def test_low_governance_boosts_paralysis_hazard():
     )
 
 
-def test_c4_requires_employment_stress():
+def test_c4_eligible_on_sp_c2_regardless_of_employment_stress():
+    """ev_c4_labor_shock's on_fire effect *causes* employment_stress (+0.22) -- it
+    must not also require employment_stress as a precondition (fixed 2026-07-16:
+    that was circular, since nothing else could raise employment_stress that high
+    before this event fires, permanently blocking it and everything downstream
+    that requires_unlock from it)."""
     config = load_config()
     catalog = EventCatalog(config["events"], society_hazards=config.get("society_hazards"))
     state = WorldState()
     state.fired_spine.add("sp_c2")
-    state.employment_stress = 0.10
-    assert not catalog.is_eligible("ev_c4_labor_shock", state, date(2027, 6, 1))
-    state.employment_stress = 0.30
+    state.employment_stress = 0.0
     assert catalog.is_eligible("ev_c4_labor_shock", state, date(2027, 6, 1))

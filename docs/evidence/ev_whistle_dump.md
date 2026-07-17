@@ -69,3 +69,13 @@ No direct frontier analogue — Snowden/Pentagon Papers class rare. Apollo publi
 | `schedule.start` / `end` | 2029-01-01 → 2031-12-31 | Same calendar lag note as E1 — **[CALIBRATE]** |
 
 **Calibration:** Unconditional suggest **~0.08–0.12** unless `ev_c10_internal_concern` gates hazard.
+
+## RSI delay assumption `[GUESS]`
+
+- `capability_controls.rsi_delay_days`: **45**
+
+This magnitude is **not independently sourced** — no public data exists on how many days/weeks a governance or disclosure event of this type measurably slows frontier-lab internal R&D velocity (`ai_rd_multiplier` / calendar RSI). It is a relative-ordering judgment call: A raw eval dump showing scheming (vs. a memo) is a stronger, harder-to-dismiss signal — plausibly triggers internal review/freeze on the specific capability surface implicated, not just a PR response. Set above ev_whistle_memo (21d), below a full incident (60d).
+
+The **ordering** across the `rsi_delay_days` cluster (whistle_memo 21d < eu_gpai_binds/whistle_dump 45d < deploy_incident 60d < beneficial_ai_treaty 90d < prod_interp_halt 120d < federal_pause_succeeds 540d) tracks intervention severity/duration and is more defensible than any single absolute value.
+
+**Would update if:** a real-world natural experiment (a lab's public before/after R&D-velocity data following a comparable disclosure, incident, or regulatory bind) becomes available; or if `docs/research/` gains a dedicated crux for RSI-delay magnitude, at which point this should move from `[GUESS]` to a cited estimate with a confidence band, matching the `p_cumulative` sourcing bar in CLAUDE.md.

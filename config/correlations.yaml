@@ -7,6 +7,8 @@ model:
   init_std: 1.0
   # log(hazard_mult) = sum(hazard_sensitivity * z_cluster); z ~ N(0,1) per cluster
   default_hazard_sensitivity: 0.18
+  # Sensitivity knob: 0 disables cluster glue, 0.5/1/2 for sweep runs.
+  hazard_sensitivity_scale: 1.0
 
 clusters:
   race:
@@ -59,7 +61,16 @@ clusters:
       - ev_whistle_dump
       - ev_labor_hearings_peak
       - ev_concern_no_leak
+
+  internal_alignment_signal:
+    description: Internal eval / monitor signal, separate from public whistle cycle
+    source: node4_evidence_rationale.md C10 salience split
+    rho: 0.30
+    hazard_sensitivity: 0.08
+    events:
+      - ev_alignment_salience_early
       - ev_c10_internal_concern
+      - ev_prod_interp_halt
 
   compute_chokepoint:
     description: Cluster E — compute chokepoint (tight ↑ with race)
@@ -95,3 +106,14 @@ clusters:
       - ev_gulf_compute_sovereignty
       - ev_eu_gpai_binds
       - ev_energy_data_cap_bite
+
+  actor_geopolitics:
+    description: US-China race and EU binding as actor-state drivers
+    source: node9_evidence_rationale.md + node3_evidence_rationale.md
+    rho: 0.40
+    hazard_sensitivity: 0.14
+    events:
+      - ev_china_cdz_mobilization
+      - ev_weight_theft
+      - ev_race_acceleration
+      - ev_eu_gpai_binds

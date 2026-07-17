@@ -61,3 +61,13 @@ Saunders testimony (2024): maximum salience → SB 53 transparency, **no pause**
 | `modify_hazard` | misalign extinction ×0.4 | Pause ↓ misalign tail if fires |
 
 **Calibration:** P(pause) + P(no-pause) need not sum to 1.0 globally — different windows; mutex applies within same sim path after gating.
+
+## RSI delay assumption `[GUESS]`
+
+- `capability_controls.rsi_delay_days`: **540**
+
+This magnitude is **not independently sourced** — no public data exists on how many days/weeks a governance or disclosure event of this type measurably slows frontier-lab internal R&D velocity (`ai_rd_multiplier` / calendar RSI). It is a relative-ordering judgment call: This is the only event in the cluster representing an actual binding compute/training pause (see mutex_group vs ev_no_pause_2028 and growth_scale: 0.18 hard ceiling already on this event) — an 18-month delay is of the same order as the growth_scale collapse already modeled, not an independent judgment.
+
+The **ordering** across the `rsi_delay_days` cluster (whistle_memo 21d < eu_gpai_binds/whistle_dump 45d < deploy_incident 60d < beneficial_ai_treaty 90d < prod_interp_halt 120d < federal_pause_succeeds 540d) tracks intervention severity/duration and is more defensible than any single absolute value.
+
+**Would update if:** a real-world natural experiment (a lab's public before/after R&D-velocity data following a comparable disclosure, incident, or regulatory bind) becomes available; or if `docs/research/` gains a dedicated crux for RSI-delay magnitude, at which point this should move from `[GUESS]` to a cited estimate with a confidence band, matching the `p_cumulative` sourcing bar in CLAUDE.md.

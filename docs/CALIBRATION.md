@@ -43,3 +43,155 @@ cd web && python -m http.server 8787
 ## Horizon assignment
 
 Runs reaching 2050 without an absorbing terminal are classified via `horizon_default` cascade in `config/terminals.yaml`. `horizon_only` terminals (e.g. `friction_modal`) are not checked mid-sim.
+
+## Terminal reachability (2026-07-16 investigation)
+
+`horizon_default` is a **first-match-wins list** (`terminals.py::default_terminal_at_horizon`). Two independent failure modes were found and partially fixed:
+
+**1. Ordering shadowing (fixed).** `friction_ghost_gdp_no_transfer`'s condition
+(`ghost_gdp_index>=0.30, distribution_regime<0.30, inequality_index>=0.48`) is
+satisfied by the large majority of horizon-assigned runs (ghost_gdp_index ratchets up
+via `employment_coupling` once capability crosses 4.0; distribution_regime rarely
+crosses 0.30 since only `ev_swf_enacted` moves it). Sitting first in the list, it was
+silently pre-empting `friction_modal`, `friction_labor_backlash`,
+`friction_surveillance`, and one `utopia_golden_age` variant — all of which had
+individually satisfiable conditions but fired **0/400 times**. Fixed by reordering
+the whole `horizon_default` list doom -> utopia -> friction, and *within* friction
+from most-specific-condition to least (ghost_gdp_no_transfer now last, right before
+the true `friction_unclassified` fallback).
+
+**2. Structural unreachability (partially fixed).** `gdp_index` had no capability
+coupling at all — see "GDP growth coupling" in `docs/CAPABILITY_DYNAMICS.md` — making
+`utopia_golden_age`/`utopia_radical_abundance`'s gdp thresholds mathematically
+unreachable regardless of ordering. Added `gdp_growth_coupling`.
+
+**Before → after** (n=800, seed=42; cumulative effect of the ordering fix, the
+real-data-grounded compounding gdp coupling, the `ev_state_revenue_measures` event,
+and the `utopia_radical_abundance`/`severe_cyber_cascade` threshold recalibration —
+see `docs/CAPABILITY_DYNAMICS.md` "GDP growth coupling" for why the first, additive
+version of the gdp coupling was replaced same-day):
+
+| Terminal | Before (no fixes) | After |
+|---|---|---|
+| `friction_ghost_gdp_no_transfer` | 69.8% (dominant) | 5.6% |
+| `friction_modal` | 0% (shadowed) | 30.8% |
+| `friction_managed_non_utopia` | 0% (unreachable — no intermediate event) | 10.5% |
+| `friction_unclassified` (residual) | ~0% | 12.9% |
+| `utopia_golden_age` | 0% (shadowed + gdp-unreachable) | 10.4% |
+| `utopia_modest_welfare` | 7.0% | 6.4% |
+| `severe_cyber_cascade` | 7.0%-ish pre-WIP, 0% after gdp fix broke it | 5.8% (fixed) |
+| `utopia_radical_abundance` | 0% (mathematically impossible), then 12.6% (threshold too low) | 2.2% (rare tail, as intended) |
+| region mix (doom/severe/friction/utopia) | 4.8/6.8/80.2/8.2 | 3.8/5.8/69.6/20.9 |
+
+The two open questions from the previous pass are resolved:
+
+- **`utopia_radical_abundance`** — raised the `gdp_index` gate from 1.85 to **2.5**,
+  which also fixes a drift where `horizon_default`'s check (1.85) and the canonical
+  `terminals.utopia_radical_abundance` definition (2.5) had silently diverged. n=800
+  showed P(gdp_index≥2.5)=5.2% unconditionally; combined with the tech_level/autonomy/
+  event requirements, the terminal now lands at 2.2% — a genuinely rare tail rather
+  than a common outcome, without touching the (real-data-grounded) growth rate itself.
+- **`severe_cyber_cascade`** — traced `gdp_index` on the actual day `ev_cyber_cascade`
+  fires (post its own -0.25 delta) across 9 sample runs: min=1.01, p50=1.05, max=1.21.
+  The old `[0.4, 0.85]` gate assumed gdp_index barely moves from 1.0 (true before the
+  gdp coupling fix) and became unreachable once realistic compounding applies — by the
+  time this event is eligible (2029-2035, gated on sp_c6), baseline+AI-accelerated
+  growth has already pushed gdp_index past 1.0 net of the shock. New gate `[0.85, 1.30]`
+  is anchored on that trace, not re-guessed, and the terminal fires at a sane 5.8%.
+
+**Still unreached / rare** — reachable in principle, structurally rare or gated on a mechanism gap not addressed this pass:
+
+- `friction_labor_backlash` — gated on `ev_reskilling_fails_absorb_c4` firing, which requires `ev_fed_edu_reskilling` NOT fired; but `ev_labor_ai_mobilization` (a precondition-adjacent event) *boosts* `ev_fed_edu_reskilling`'s hazard, so the two paths partly cancel each other out. Worth checking event correlation, not just terminal ordering.
+- `friction_surveillance` — needs `human_autonomy_index` in [0.25, 0.58]; autonomy's empirical distribution rarely sits in that band (typically ~0.68-0.93 outside doom trajectories, <0.4 inside them) — the band falls in a gap between "normal friction" and "doom" trajectories under current dynamics.
+
+### Fixed: `friction_managed_non_utopia` — added the missing event rather than inventing a number
+
+`docs/research/utopia/node_u2_distribution_evidence_rationale.md` already had a sourced
+probability estimate for an intermediate policy outcome with **no corresponding
+event** — the actual fix for this terminal's reachability gap, not a new invented
+number:
+
+- **"P=0.38 — State-level AI-adjacent revenue measures (CA/NY/WA) by 2028"** — a
+  state-level compute tax / data-center surcharge / equity-severance mandate "with
+  teeth," distinct from (and more likely than) full federal SWF (`ev_swf_enacted`,
+  P=0.10-0.12). Would plausibly raise `distribution_regime` by a *partial* amount
+  (patchwork, not full settlement) — exactly the intermediate state
+  `friction_managed_non_utopia` needs and currently has no path to. Also matches
+  "P=0.45 — Second-wave policy window @C6-C7" (serious federal commission → bill,
+  not enactment) as a second, later-window variant.
+
+**Added 2026-07-16** as `ev_state_revenue_measures` (`docs/evidence/ev_state_revenue_measures.md`,
+p_cumulative=0.38, distribution_regime +0.22, inequality_index -0.05 — sized to land
+in `friction_managed_non_utopia`'s band alone, deliberately smaller than
+`ev_swf_enacted`'s deltas since it's a partial/patchwork mechanism by design). The
+"second-wave" variant (P=0.45, later C6-C7 window) was not modeled as a separate
+event — folded into the rationale for the same event's window rather than adding a
+second near-duplicate. `friction_managed_non_utopia`'s horizon_default rule was also
+split into two OR'd variants (distribution-led vs reskilling-led) since requiring
+both `distribution_regime` and `reskilling_absorption` in-band simultaneously — with
+no event moving both — made the AND-form unreachable regardless of this fix.
+
+## Capability-growth parameter sensitivity (identifiability check)
+
+`capability.py::_growth_factor` composes **22 independent multiplicative scale/exponent
+constants** from `config/capability_dynamics.yaml`, but the calibration targets in
+`calibration_lib.py` are only **12 numbers** (7 `cap_by_deadline` marginals + 5
+`SPINE_CONDITIONALS`). That is an under-identified system: many different parameter
+settings can hit the same milestone-deadline targets while differing arbitrarily
+elsewhere. Before trusting any single constant's exact value, it's worth knowing which
+of the 22 the calibration targets actually respond to.
+
+**Method** (`scripts/sensitivity_capability.py`): one-at-a-time ±25% perturbation from
+the current YAML value, common random numbers (same seed, `probability_uncertainty`
+forced off to isolate structural sensitivity from elicitation noise), n=60,
+seed=42. `sensitivity_score` = sum of `|Δ|` across `sp_c5_by_deadline`,
+`sp_c9_by_deadline`, `doom` region share, `utopia` region share, comparing the −25%
+and +25% runs.
+
+| Rank | Parameter | Score | Read |
+|---|---|---|---|
+| 1 | `multiplier_exponent` | **161.7%** | Exponent on the RSI multiplier (up to 55×) — by far the most load-bearing single number in the model. A ±25% swing alone moves `sp_c9_by_deadline` by 50pp. |
+| 2 | `carrying_capacity` | **98.3%** | Logistic ceiling on `internal_capability`; directly gates how much of the spine is reachable at all. |
+| 3 | `base_daily_growth` | **95.0%** | Linear growth-rate multiplier; moves `sp_c5_by_deadline` by 78pp. |
+| 4 | `coordination_brake.scale` | 23.3% | |
+| 5 | `governance_brake.governance_scale` | 21.7% | |
+| 6 | `sovereignty_fragmentation.scale` | 20.0% | |
+| 6 | `race_amplification.scale` | 20.0% | |
+| 8 | `governance_brake.salience_scale` | 18.3% | |
+| 8 | `trust_governance_brake.scale` | 18.3% | |
+| 10 | `admin_ai_posture.growth_scale` | 13.3% | |
+| 10 | `kinetic_escalation.growth_penalty` | 13.3% | |
+| 10 | `secret_race_boost.scale` | 13.3% | |
+| 13 | `bio_spillover.bio_to_cap_scale` | 8.3% | |
+| 13 | `gdp_funding.scale` | 8.3% | |
+| 15 | `input.frontier_capex_index.scale` | 1.7% | |
+| 16–22 | `input.deployment_pressure/china_frontier_parity/us_china_race_index/compute_concentration/eu_regulatory_bind/open_weights_regime/frontier_lab_polarization.scale` | **0.0%** (all seven) | See below — structurally inert, not just "small effect." |
+
+Full per-parameter lo/hi metrics: `outputs/runs/sensitivity_capability.json`.
+
+**Takeaways:**
+
+1. **Three numbers do almost all the work**: `multiplier_exponent`, `carrying_capacity`,
+   `base_daily_growth` account for the overwhelming majority of the model's response to
+   the calibration targets. These three should get the most scrutiny/evidence when
+   revised — everything else is comparatively cheap to get wrong.
+2. **The seven `input.*.scale` terms at exactly 0.0% aren't merely "low sensitivity" —
+   they're structurally inert under the current dynamics.** `_input_factor()` computes
+   `1 + scale * max(0, val/reference - 1)`: if the driving state variable
+   (`deployment_pressure`, `china_frontier_parity`, `us_china_race_index`,
+   `compute_concentration`, `eu_regulatory_bind`, `open_weights_regime`,
+   `frontier_lab_polarization`) stays close to its `reference` value for most of a
+   typical 2026–2050 trajectory, the excess term never activates regardless of `scale`.
+   Two honest readings: (a) these variables are supposed to move further from baseline
+   in scenarios this sweep's fixed seed/config didn't sample — worth re-running the
+   sweep at a seed/config where e.g. `china_frontier_parity` swings further — or (b)
+   these knobs are currently decorative and the model would behave identically with
+   them deleted. Don't treat their YAML values as calibrated until one of these is
+   resolved.
+3. **This does not fix the identifiability problem** — it only tells you where the
+   slack is. Reducing free parameters (e.g., folding the seven inert `input.*.scale`
+   terms into a single generic "governance/geopolitics index" coupling, or dropping
+   them) would make the remaining ~15 parameters easier to actually calibrate against
+   12 targets.
+
+Re-run: `python scripts/sensitivity_capability.py -n 200 --seed 42 --output outputs/runs/sensitivity_capability.json` (takes ~25-45 min pure Python at n=200; the script logs progress per parameter and writes partial results after each one, so it's safe to inspect mid-run or kill early).

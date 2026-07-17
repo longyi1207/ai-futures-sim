@@ -85,6 +85,21 @@ def _apply_macro_couplings(state: WorldState, dyn: dict[str, Any]) -> None:
             clamp=(0.5, 3.0),
         )
 
+    # Added 2026-07-16: kinetic_escalation previously had NO decay -- once any
+    # kinetic event fired, tension stayed at its peak value for the rest of the
+    # simulation (potentially 20+ years), permanently dragging capability growth
+    # and (via gdp_growth_coupling) GDP growth. Real great-power tension cycles up
+    # and down over years-to-decades (Cold War thaws/re-freezes are the standard
+    # reference case), it doesn't monotonically ratchet. Exponential relaxation
+    # toward a residual floor (0.08, matching the 2026 initial value -- tension
+    # doesn't fully return to a pre-conflict baseline). [GUESS] on the decay rate
+    # (0.0003/day => ~6yr half-life): no natural experiment exists for "AI-era
+    # great-power tension half-life" specifically.
+    decay = float(kin.get("daily_decay", 0.0))
+    floor = float(kin.get("decay_floor", 0.08))
+    if decay > 0 and k > floor:
+        state.apply_delta("kinetic_escalation", -decay * (k - floor), clamp=(0.0, 1.0))
+
 
 def _growth_factor(state: WorldState, dyn: dict[str, Any]) -> float:
     factor = 1.0
@@ -160,7 +175,8 @@ def step_capability(
     _apply_macro_couplings(state, dyn)
 
     anchors = rsi_anchors or []
-    cal_m = calendar_rsi_multiplier(day, anchors)
+    delayed_day = max(0, day - int(round(state.rsi_calendar_delay_days)))
+    cal_m = calendar_rsi_multiplier(delayed_day, anchors)
     state.ai_rd_multiplier = max(state.ai_rd_multiplier, cal_m)
 
     base = float(dyn.get("base_daily_growth", 0.002))
@@ -185,8 +201,71 @@ def step_capability(
 
     emp = dyn.get("employment_coupling") or {}
     if state.internal_capability >= float(emp.get("capability_threshold", 4.0)):
-        state.apply_delta("employment_stress", float(emp.get("daily_stress", 0.00025)), clamp=(0.0, 1.0))
-        state.apply_delta("ghost_gdp_index", float(emp.get("daily_ghost_gdp", 0.00015)), clamp=(0.0, 1.0))
+        # Stock-flow, not a one-way ratchet: displacement flows in continuously,
+        # absorption/redistribution flows out continuously (scaled by the same
+        # reskilling_absorption/distribution_regime variables the event graph
+        # already moves), rather than only offsetting via one-off event deltas
+        # (e.g. ev_fed_edu_reskilling's one-time -0.12). Before this, 84% of runs
+        # (n=500) saturated employment_stress AND ghost_gdp_index at exactly 1.0
+        # regardless of outcome -- the one-time nudges couldn't keep up with 15-20+
+        # years of continuous inflow, so these variables carried almost no
+        # discriminating information between "well-managed" and "unmanaged"
+        # transitions.
+        stress_in = float(emp.get("daily_stress", 0.00028))
+        stress_absorb_scale = float(emp.get("daily_stress_absorption_scale", 0.0))
+        state.apply_delta(
+            "employment_stress",
+            stress_in - stress_absorb_scale * state.reskilling_absorption,
+            clamp=(0.0, 1.0),
+        )
+
+        ghost_in = float(emp.get("daily_ghost_gdp", 0.00018))
+        ghost_absorb_scale = float(emp.get("daily_ghost_gdp_absorption_scale", 0.0))
+        state.apply_delta(
+            "ghost_gdp_index",
+            ghost_in - ghost_absorb_scale * state.distribution_regime,
+            clamp=(0.0, 1.0),
+        )
+
+        # inequality_index had the same bug as gdp_index originally did: no
+        # continuous coupling at all, only a handful of discrete event deltas
+        # (max observed ceiling ~0.62 across 800 runs) -- meaning it could never
+        # reach genuinely high concentration levels regardless of outcome. This is
+        # the same real-world mechanism as ghost_gdp_index (compute/capital rents
+        # accruing to owners rather than being broadly shared -- research:
+        # node_u2_distribution_evidence_rationale.md "P=0.73 -- top decile
+        # captures >=60% of AI-attributed surplus", explicitly a *continuous*
+        # concentration process, not a one-off event), so it gets the same
+        # stock-flow treatment: concentration flows in with capability, offset by
+        # active distribution policy.
+        ineq_in = float(emp.get("daily_inequality_concentration", 0.0))
+        ineq_absorb_scale = float(emp.get("daily_inequality_absorption_scale", 0.0))
+        state.apply_delta(
+            "inequality_index",
+            ineq_in - ineq_absorb_scale * state.distribution_regime,
+            clamp=(0.0, 1.0),
+        )
+
+    gdp = dyn.get("gdp_growth_coupling") or {}
+    baseline_annual = float(gdp.get("baseline_annual_growth", 0.022))
+    accel_scale = float(gdp.get("tech_level_accel_scale", 0.0))
+
+    kinetic_drag_scale = float(gdp.get("kinetic_drag_scale", 0.0))
+    gov_drag_scale = float(gdp.get("governance_collapse_drag_scale", 0.0))
+    gov_drag_ref = float(gdp.get("governance_collapse_reference", 0.5))
+    frag_drag_scale = float(gdp.get("fragmentation_drag_scale", 0.0))
+
+    governance_deficit = max(0.0, gov_drag_ref - state.governance_capacity) / max(1e-6, gov_drag_ref)
+
+    annual_rate = (
+        baseline_annual
+        + accel_scale * state.tech_level
+        - kinetic_drag_scale * state.kinetic_escalation
+        - gov_drag_scale * governance_deficit
+        - frag_drag_scale * state.sovereignty_fragmentation
+    )
+    daily_rate = (1.0 + annual_rate) ** (1.0 / 365.0) - 1.0
+    state.set_var("gdp_index", state.gdp_index * (1.0 + daily_rate), clamp=(0.15, 10.0))
 
     align = dyn.get("alignment_coupling") or {}
     if (

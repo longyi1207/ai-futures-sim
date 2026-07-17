@@ -38,6 +38,9 @@ class WorldState:
     frontier_capex_index: float = 1.0
     admin_ai_posture: float = 0.0
     china_frontier_parity: float = 0.25
+    us_china_race_index: float = 0.30
+    eu_regulatory_bind: float = 0.10
+    china_open_weight_strategy: float = 0.20
     open_weights_regime: float = 0.45
     sovereignty_fragmentation: float = 0.15
 
@@ -46,10 +49,14 @@ class WorldState:
     meaning_institution_health: float = 0.50
     kinetic_escalation: float = 0.0
     ghost_gdp_index: float = 0.15
+    labor_mobilization: float = 0.10
+    reskilling_absorption: float = 0.20
+    distribution_regime: float = 0.10
 
     # Capability dynamics controls (pause, governance friction)
     capability_growth_scale: float = 1.0
     capability_hard_ceiling: float = 11.0
+    rsi_calendar_delay_days: float = 0.0
     latent_spine: set[str] = field(default_factory=set)
 
     fired_events: set[str] = field(default_factory=set)
@@ -58,6 +65,7 @@ class WorldState:
     locked_events: set[str] = field(default_factory=set)
     unlocked_events: set[str] = field(default_factory=set)
     hazard_multipliers: dict[str, float] = field(default_factory=dict)
+    event_p_overrides: dict[str, float] = field(default_factory=dict)
 
     terminal: str | None = None
     terminal_day: int | None = None
@@ -82,7 +90,15 @@ class WorldState:
         return int(min(10, max(0, round(self.ci_level))))
 
     def snapshot(self) -> dict[str, Any]:
-        skip = {"fired_events", "fired_spine", "latent_spine", "locked_events", "unlocked_events", "hazard_multipliers"}
+        skip = {
+            "fired_events",
+            "fired_spine",
+            "latent_spine",
+            "locked_events",
+            "unlocked_events",
+            "hazard_multipliers",
+            "event_p_overrides",
+        }
         d = {k: v for k, v in self.__dict__.items() if k not in skip}
         d["fired_events"] = sorted(self.fired_events)
         d["fired_spine"] = sorted(self.fired_spine)

@@ -18,11 +18,44 @@ ghost_gdp_index:
     ev_labor_hearings_peak: { scale: 0.32 }
     ev_laws_mass_deploy: { scale: 0.18 }
 
+labor_mobilization:
+  reference: 0.10
+  mode: excess
+  events:
+    ev_labor_ai_mobilization: { scale: 0.42 }
+    ev_labor_hearings_peak: { scale: 0.34 }
+    ev_fed_edu_reskilling: { scale: 0.30 }
+    ev_swf_enacted: { scale: 0.24 }
+
+reskilling_absorption:
+  - reference: 0.25
+    mode: excess
+    events:
+      ev_meaning_pilot_success: { scale: 0.22 }
+      ev_swf_enacted: { scale: 0.16 }
+  - reference: 0.28
+    mode: deficit
+    events:
+      ev_reskilling_fails_absorb_c4: { scale: 0.38 }
+      ev_labor_ai_mobilization: { scale: 0.22 }
+
+distribution_regime:
+  - reference: 0.20
+    mode: excess
+    events:
+      ev_swf_enacted: { scale: 0.24 }
+      ev_meaning_pilot_success: { scale: 0.14 }
+  - reference: 0.20
+    mode: deficit
+    events:
+      ev_reskilling_fails_absorb_c4: { scale: 0.24 }
+
 # --- Tier 1: salience / pause / whistle ---
 public_xrisk_salience:
   reference: 0.18
   mode: excess
   events:
+    ev_alignment_salience_early: { scale: 0.20 }
     ev_bmia_pass: { scale: 0.32 }
     ev_federal_pause_succeeds: { scale: 0.28 }
     ev_federal_pause_attempt_fails: { scale: 0.22 }
@@ -128,6 +161,32 @@ china_frontier_parity:
     ev_china_cdz_mobilization: { scale: 0.36 }
     ev_weight_theft: { scale: 0.26 }
     ev_race_acceleration: { scale: 0.22 }
+
+us_china_race_index:
+  reference: 0.30
+  mode: excess
+  events:
+    ev_no_pause_2028: { scale: 0.30 }
+    ev_weight_theft: { scale: 0.32 }
+    ev_race_acceleration: { scale: 0.34 }
+    ev_federal_pause_succeeds: { scale: -0.18 }
+
+eu_regulatory_bind:
+  - reference: 0.10
+    mode: excess
+    events:
+      ev_eu_gpai_binds: { scale: 0.30 }
+      ev_beneficial_ai_treaty: { scale: 0.18 }
+      ev_multilateral_screening_pilot: { scale: 0.18 }
+      ev_no_pause_2028: { scale: -0.12 }
+
+china_open_weight_strategy:
+  reference: 0.20
+  mode: excess
+  events:
+    ev_open_weights_equilibrium: { scale: 0.28 }
+    ev_tier3_path_open: { scale: 0.18 }
+    ev_weight_theft: { scale: 0.12 }
 
 compute_concentration:
   reference: 0.68

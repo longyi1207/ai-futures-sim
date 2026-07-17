@@ -27,10 +27,18 @@ events:
   preconditions:
     spine_fired:
     - sp_c2
-    vars:
-      employment_stress:
-      - 0.25
-      - 1.0
+    # NOTE (fixed 2026-07-16): this precondition previously also required
+    # employment_stress in [0.25, 1.0] -- circular, since nothing else can raise
+    # employment_stress that high before this event fires (the continuous
+    # employment_coupling only activates at capability>=4.0, reached ~2029, after
+    # this event's own window closes 2028-12-31; and the two events downstream of
+    # THIS one that also touch employment_stress/labor_mobilization both
+    # `requires_unlock` from this event, so they can't fire first either). The
+    # event's own on_fire effect *is* what's supposed to introduce the labor shock
+    # -- requiring it to already be present was a logical impossibility, not a
+    # calibration choice. Result: 0/800 fires before the fix; blocked the entire
+    # downstream labor-mobilization / reskilling-failure chain, including
+    # friction_labor_backlash (see docs/CALIBRATION.md "Terminal reachability").
   on_fire:
     add_vars:
       employment_stress:
@@ -50,6 +58,8 @@ events:
         - 1
     unlock:
     - ev_labor_hearings_peak
+    - ev_labor_ai_mobilization
+    - ev_reskilling_fails_absorb_c4
   research_ref: docs/evidence/ev_c4_labor_shock.md
 - id: ev_labor_hearings_peak
   name: Peak DC labor / AI hearings
@@ -71,27 +81,135 @@ events:
       ev_federal_pause_attempt_fails:
         multiply: 1.2
   research_ref: docs/evidence/ev_labor_hearings_peak.md
-- id: ev_c10_internal_concern
-  name: Internal eval flags deception at superhuman-researcher tier
-  category: alignment
+- id: ev_labor_ai_mobilization
+  name: AI labor mobilization after visible C4 shock
+  category: society
+  once: true
+  requires_unlock: true
+  schedule:
+    start: '2027-01-01'
+    end: '2030-12-31'
+    p_cumulative: 0.48
+  preconditions:
+    events_fired:
+    - ev_c4_labor_shock
+  on_fire:
+    add_vars:
+      labor_mobilization:
+        delta: 0.35
+        clamp:
+        - 0
+        - 1
+      public_xrisk_salience:
+        delta: 0.05
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_fed_edu_reskilling:
+        multiply: 1.25
+      ev_swf_enacted:
+        multiply: 1.15
+  research_ref: docs/research/spine/crosscut_x4_education_evidence_rationale.md
+- id: ev_reskilling_fails_absorb_c4
+  name: Reskilling fails to absorb C4 labor shock by 2032
+  category: society
   once: true
   requires_unlock: true
   schedule:
     start: '2029-01-01'
-    end: '2031-12-31'
-    p_cumulative: 0.52
+    end: '2032-12-31'
+    p_cumulative: 0.60
   preconditions:
-    spine_fired:
-    - sp_c9
+    events_fired:
+    - ev_c4_labor_shock
+    events_not_fired:
+    - ev_fed_edu_reskilling
+    vars:
+      reskilling_absorption:
+      - 0.0
+      - 0.45
   on_fire:
     add_vars:
-      deception_risk:
-        delta: 0.25
+      employment_stress:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
+      inequality_index:
+        delta: 0.08
+        clamp:
+        - 0
+        - 1
+      human_autonomy_index:
+        delta: -0.06
+        clamp:
+        - 0
+        - 1
+      reskilling_absorption:
+        delta: -0.08
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/research/spine/crosscut_x4_education_evidence_rationale.md
+- id: ev_alignment_salience_early
+  name: Early alignment salience before canonical C10
+  category: alignment
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2030-12-31'
+    p_cumulative: 0.58
+  preconditions:
+    spine_fired:
+    - sp_c6
+  on_fire:
+    add_vars:
+      public_xrisk_salience:
+        delta: 0.10
         clamp:
         - 0
         - 1
       alignment_trust:
-        delta: -0.15
+        delta: -0.04
+        clamp:
+        - 0
+        - 1
+    modify_hazard:
+      ev_c10_internal_concern:
+        multiply: 1.15
+      ev_prod_interp_halt:
+        multiply: 1.10
+  research_ref: docs/evidence/ev_c10_internal_concern.md
+- id: ev_c10_internal_concern
+  name: Internal eval / monitor flags C10-grade deception concern
+  category: alignment
+  once: true
+  schedule:
+    start: '2028-06-01'
+    end: '2031-12-31'
+    p_cumulative: 0.52
+  preconditions:
+    spine_fired:
+    - sp_c7
+    vars:
+      deception_risk:
+      - 0.12
+      - 1.0
+  on_fire:
+    add_vars:
+      deception_risk:
+        delta: 0.18
+        clamp:
+        - 0
+        - 1
+      alignment_trust:
+        delta: -0.08
+        clamp:
+        - 0
+        - 1
+      public_xrisk_salience:
+        delta: 0.10
         clamp:
         - 0
         - 1
@@ -100,6 +218,15 @@ events:
     - ev_whistle_dump
     - ev_deploy_incident
     - ev_concern_no_leak
+    weighted_fire:
+    - event: ev_whistle_memo
+      weight: 0.35
+    - event: ev_whistle_dump
+      weight: 0.20
+    - event: ev_deploy_incident
+      weight: 0.08
+    - event: ev_concern_no_leak
+      weight: 0.37
   research_ref: docs/evidence/ev_c10_internal_concern.md
 - id: ev_us_paralysis_s2
   name: US federal governance paralysis (S2)
@@ -208,6 +335,18 @@ events:
         clamp:
         - 0
         - 1
+      eu_regulatory_bind:
+        delta: 0.45
+        clamp:
+        - 0
+        - 1
+      us_china_race_index:
+        delta: -0.05
+        clamp:
+        - 0
+        - 1
+    capability_controls:
+      rsi_delay_days: 45
   research_ref: docs/evidence/ev_eu_gpai_binds.md
 - id: ev_no_pause_2028
   name: No federal training pause through 2028
@@ -222,6 +361,11 @@ events:
     add_vars:
       deployment_pressure:
         delta: 0.1
+        clamp:
+        - 0
+        - 1
+      us_china_race_index:
+        delta: 0.12
         clamp:
         - 0
         - 1
@@ -463,6 +607,11 @@ events:
         clamp:
         - 0
         - 1
+      us_china_race_index:
+        delta: 0.18
+        clamp:
+        - 0
+        - 1
     unlock:
     - ev_race_acceleration
     - ev_whistle_memo
@@ -488,6 +637,11 @@ events:
         clamp:
         - 0
         - 1
+      us_china_race_index:
+        delta: 0.15
+        clamp:
+        - 0
+        - 1
   research_ref: docs/evidence/ev_race_acceleration.md
 - id: ev_whistle_memo
   name: NYT/WSJ memo leak → hearings
@@ -509,11 +663,21 @@ events:
         clamp:
         - 0
         - 1
+      governance_capacity:
+        delta: 0.03
+        clamp:
+        - 0
+        - 1
     modify_hazard:
       ev_federal_pause_attempt_fails:
         multiply: 1.3
       ev_no_pause_2028:
         multiply: 1.1
+      ev_prod_interp_halt:
+        multiply: 1.20
+    capability_controls:
+      growth_scale: 0.96
+      rsi_delay_days: 21
   research_ref: docs/evidence/ev_whistle_memo.md
 - id: ev_whistle_dump
   name: Eval dump showing scheming
@@ -535,8 +699,16 @@ events:
         clamp:
         - 0
         - 1
+      public_xrisk_salience:
+        delta: 0.12
+        clamp:
+        - 0
+        - 1
     unlock:
     - ev_prod_interp_halt
+    capability_controls:
+      growth_scale: 0.93
+      rsi_delay_days: 45
   research_ref: docs/evidence/ev_whistle_dump.md
 - id: ev_deploy_incident
   name: Live deployment safety incident
@@ -560,6 +732,14 @@ events:
         clamp:
         - 0
         - 1
+      public_xrisk_salience:
+        delta: 0.18
+        clamp:
+        - 0
+        - 1
+    capability_controls:
+      growth_scale: 0.90
+      rsi_delay_days: 60
   research_ref: docs/evidence/ev_deploy_incident.md
 - id: ev_concern_no_leak
   name: Internal concern without public whistleblower cycle
@@ -578,6 +758,8 @@ events:
     modify_hazard:
       ev_no_pause_2028:
         multiply: 1.2
+      ev_prod_interp_halt:
+        multiply: 1.05
   research_ref: docs/evidence/ev_concern_no_leak.md
 - id: ev_deceptive_deploy_at_scale
   name: Deceptive / scheming model deployed at scale
@@ -626,6 +808,7 @@ events:
         - 1
     capability_controls:
       growth_scale: 0.78
+      rsi_delay_days: 120
     lock:
     - ev_deceptive_deploy_at_scale
     - ev_extinction_misalign_catastrophe
@@ -699,6 +882,11 @@ events:
     add_vars:
       bio_risk_pressure:
         delta: 0.08
+        clamp:
+        - 0
+        - 1
+      china_open_weight_strategy:
+        delta: 0.22
         clamp:
         - 0
         - 1
@@ -813,6 +1001,18 @@ events:
         - 1
       gdp_index:
         delta: -0.15
+    capability_controls:
+      # [GUESS] on magnitude, but the mechanism itself is real-world grounded:
+      # Taiwan (TSMC) fabricates the large majority of leading-edge (<7nm) logic
+      # chips (Chris Miller, "Chip War", 2022; RAND/CSIS Taiwan Strait chip-supply
+      # analyses). A kinetic conflict there would not un-invent already-trained
+      # frontier models, but would severely curtail the ability to keep producing
+      # leading-edge compute for years -- a real setback to *capacity to keep
+      # advancing*, not just a slower rate from here. 0.5 (of ~10-11 max Ci scale)
+      # approximates "several years of foregone frontier compute growth" -- there
+      # is no clean real-world conversion from "fabs destroyed" to "Ci units lost",
+      # so treat this as an order-of-magnitude placeholder, not a precise estimate.
+      capability_drop: 0.5
     modify_hazard:
       ev_race_acceleration:
         multiply: 1.5
@@ -937,9 +1137,40 @@ events:
         clamp:
         - 0
         - 1
+      distribution_regime:
+        delta: 0.45
+        clamp:
+        - 0
+        - 1
+      human_autonomy_index:
+        delta: 0.04
+        clamp:
+        - 0
+        - 1
       gdp_index:
         delta: 0.05
   research_ref: docs/evidence/ev_swf_enacted.md
+- id: ev_state_revenue_measures
+  name: State-level AI revenue measures with teeth (CA/NY/WA)
+  category: utopia
+  once: true
+  schedule:
+    start: '2027-01-01'
+    end: '2028-12-31'
+    p_cumulative: 0.38
+  on_fire:
+    add_vars:
+      distribution_regime:
+        delta: 0.22
+        clamp:
+        - 0
+        - 1
+      inequality_index:
+        delta: -0.05
+        clamp:
+        - 0
+        - 1
+  research_ref: docs/evidence/ev_state_revenue_measures.md
 - id: ev_beneficial_ai_treaty
   name: Beneficial-AI treaty with verification
   category: utopia
@@ -963,6 +1194,8 @@ events:
         clamp:
         - 0
         - 1
+    capability_controls:
+      rsi_delay_days: 90
   research_ref: docs/evidence/ev_beneficial_ai_treaty.md
 - id: ev_fed_edu_reskilling
   name: Federal AI reskilling package >$10B
@@ -979,11 +1212,18 @@ events:
         clamp:
         - 0
         - 1
+      reskilling_absorption:
+        delta: 0.38
+        clamp:
+        - 0
+        - 1
       human_autonomy_index:
         delta: 0.05
         clamp:
         - 0
         - 1
+    lock:
+    - ev_reskilling_fails_absorb_c4
   research_ref: docs/evidence/ev_fed_edu_reskilling.md
 - id: ev_admin_flip_2029
   name: 2029 US administration flips AI posture
@@ -1000,8 +1240,15 @@ events:
         clamp:
         - 0
         - 1
+      admin_ai_posture:
+        delta: 0.30
+        clamp:
+        - 0
+        - 1
     modify_hazard:
       ev_bmia_pass:
+        multiply: 1.2
+      ev_fed_edu_reskilling:
         multiply: 1.2
   research_ref: docs/evidence/ev_admin_flip_2029.md
 - id: ev_humanoid_scale_deploy
@@ -1058,6 +1305,16 @@ events:
     add_vars:
       china_frontier_parity:
         delta: 0.25
+        clamp:
+        - 0
+        - 1
+      us_china_race_index:
+        delta: 0.22
+        clamp:
+        - 0
+        - 1
+      china_open_weight_strategy:
+        delta: 0.10
         clamp:
         - 0
         - 1
@@ -1121,6 +1378,7 @@ events:
     capability_controls:
       growth_scale: 0.18
       hard_ceiling: 7.2
+      rsi_delay_days: 540
     lock:
     - ev_race_acceleration
     - ev_deceptive_deploy_at_scale

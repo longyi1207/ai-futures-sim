@@ -23,6 +23,7 @@ class CorrelationModel:
     event_to_clusters: dict[str, list[str]] = field(default_factory=dict)
     ar1_phi: float = 0.98
     init_std: float = 1.0
+    hazard_sensitivity_scale: float = 1.0
 
     @classmethod
     def from_config(cls, doc: dict[str, Any] | None) -> CorrelationModel | None:
@@ -50,6 +51,7 @@ class CorrelationModel:
             event_to_clusters=event_to_clusters,
             ar1_phi=float(model.get("ar1_phi", 0.98)),
             init_std=float(model.get("init_std", 1.0)),
+            hazard_sensitivity_scale=float(model.get("hazard_sensitivity_scale", 1.0)),
         )
 
     def init_latents(self, rng: np.random.Generator) -> dict[str, float]:
@@ -77,7 +79,11 @@ class CorrelationModel:
         log_mult = 0.0
         for cid in cluster_ids:
             spec = self.clusters[cid]
-            log_mult += spec.hazard_sensitivity * cluster_latents.get(cid, 0.0)
+            log_mult += (
+                self.hazard_sensitivity_scale
+                * spec.hazard_sensitivity
+                * cluster_latents.get(cid, 0.0)
+            )
 
         adjusted = base_hazard * math.exp(log_mult)
         return float(np.clip(adjusted, 0.0, 1.0))

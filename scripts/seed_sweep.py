@@ -8,6 +8,8 @@ import json
 import sys
 from pathlib import Path
 
+import numpy as np
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 from calibration_lib import CAP_BY_DEADLINE, OUTCOME_REGIONS, SPINE_DEADLINE, ok, run_calibration  # noqa: E402
@@ -43,6 +45,16 @@ def main() -> None:
             f"target {c5_target:5.0%}  {ok(report.spine_by_deadline['sp_c5'], c5_target, c5_tol)}"
         )
         print(f"  monotonic: {'✓' if report.monotonic_spine else '✗'}  early_absorb: {report.early_absorb_rate:.1%}\n")
+
+    print("=" * 60)
+    print(f"Cross-seed aggregate (mean ± std over {len(args.seeds)} seeds, {args.n} runs each):")
+    agg: dict[str, list[float]] = {}
+    for reg in OUTCOME_REGIONS:
+        for row in rows:
+            agg.setdefault(reg, []).append(row["regions"].get(reg, 0.0))
+    for reg in OUTCOME_REGIONS:
+        vals = np.array(agg[reg])
+        print(f"  {reg}: {vals.mean():6.1%} ± {vals.std(ddof=1):5.1%}  (range {vals.min():.1%}-{vals.max():.1%})")
 
     if args.output:
         args.output.parent.mkdir(parents=True, exist_ok=True)

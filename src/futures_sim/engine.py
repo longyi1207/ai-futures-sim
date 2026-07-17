@@ -64,6 +64,7 @@ class SimEngine:
     def run_once(self) -> RunResult:
         state = WorldState()
         self._apply_initial(state)
+        self._sample_probability_overrides(state)
         het = self.capability_dyn.get("run_heterogeneity") or {}
         if float(het.get("growth_scale_spread", 0)) > 0:
             spread = float(het["growth_scale_spread"])
@@ -105,7 +106,7 @@ class SimEngine:
 
             fired_today = self._sample_events(state, current, day, cluster_latents)
             for eid in fired_today:
-                self.catalog.fire(eid, state)
+                self.catalog.fire(eid, state, rng=self.rng)
                 terminal = check_terminals(state, self.config["terminals"])
                 if terminal:
                     state.terminal = terminal
@@ -146,6 +147,28 @@ class SimEngine:
     def _apply_initial(self, state: WorldState) -> None:
         for name, spec in self.config["variables"].get("initial", {}).items():
             state.set_var(name, float(spec["value"]))
+
+    def _sample_probability_overrides(self, state: WorldState) -> None:
+        """Sample run-level uncertainty around elicited p_cumulative inputs."""
+        cfg = self.config["sim"].get("probability_uncertainty") or {}
+        if not bool(cfg.get("enabled", False)):
+            return
+        concentration = float(cfg.get("beta_concentration", 80.0))
+        if concentration <= 0:
+            return
+        include = set(cfg.get("events") or [])
+        for eid, ev in self.catalog.events.items():
+            if include and eid not in include:
+                continue
+            sched = ev.get("schedule", {})
+            if "p_cumulative" not in sched:
+                continue
+            p = float(sched.get("p_cumulative", 0.0))
+            if p <= 0.0 or p >= 1.0:
+                continue
+            alpha = max(1e-6, p * concentration)
+            beta = max(1e-6, (1.0 - p) * concentration)
+            state.event_p_overrides[eid] = float(self.rng.beta(alpha, beta))
 
     def _drift_variables(self, state: WorldState) -> None:
         """Slow exogenous drift — capability dynamics handle RSI; this is residual."""

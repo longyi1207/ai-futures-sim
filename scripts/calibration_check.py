@@ -61,13 +61,15 @@ def print_report(report: CalibrationReport) -> None:
     print("\nEVENTS:")
     for eid, (target, tol, note) in EVENT_TARGETS.items():
         sim_p = report.events.get(eid, 0.0)
-        print(f"  {eid}: {sim_p:6.1%}  target {target:5.0%}  {ok(sim_p, target, tol)}  {note}")
+        lo, hi = report.events_ci.get(eid, (sim_p, sim_p))
+        print(f"  {eid}: {sim_p:6.1%} [{lo:5.1%},{hi:5.1%}]  target {target:5.0%}  {ok(sim_p, target, tol)}  {note}")
 
-    print(f"\nOUTCOME REGIONS (emergent — not legacy 19/28/53 targets):")
+    print(f"\nOUTCOME REGIONS (emergent — not legacy 19/28/53 targets; 95% Wilson CI, n={report.runs}):")
     print(f"  early absorb: {report.early_absorb_rate:6.1%}  horizon assign: {report.horizon_absorb_rate:6.1%}")
     for reg in OUTCOME_REGIONS:
         sim_p = report.regions.get(reg, 0.0)
-        print(f"  {reg}: {sim_p:6.1%}")
+        lo, hi = report.regions_ci.get(reg, (sim_p, sim_p))
+        print(f"  {reg}: {sim_p:6.1%}  [{lo:5.1%}, {hi:5.1%}]")
 
     print("\nOUTCOME conditionals:")
     for label, sim_p in sorted(report.outcome_conditional.items()):

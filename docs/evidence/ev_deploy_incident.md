@@ -69,3 +69,13 @@ Uber AV 2018 pedestrian death — vivid harm → regulatory response, classified
 | `on_fire.unlock` | `[ev_prod_interp_halt]` | Incident may force monitoring halt path |
 
 **Calibration:** **0.08** conditional; unconditional **~0.03–0.05** if parent concern P<1.
+
+## RSI delay assumption `[GUESS]`
+
+- `capability_controls.rsi_delay_days`: **60**
+
+This magnitude is **not independently sourced** — no public data exists on how many days/weeks a governance or disclosure event of this type measurably slows frontier-lab internal R&D velocity (`ai_rd_multiplier` / calendar RSI). It is a relative-ordering judgment call: An attributed live production harm (vs. leaked internal concern) is the first Trigger-E variant with an external victim/liability surface — plausibly forces a incident-response pause on the deployed system class, longer than an internal-leak response.
+
+The **ordering** across the `rsi_delay_days` cluster (whistle_memo 21d < eu_gpai_binds/whistle_dump 45d < deploy_incident 60d < beneficial_ai_treaty 90d < prod_interp_halt 120d < federal_pause_succeeds 540d) tracks intervention severity/duration and is more defensible than any single absolute value.
+
+**Would update if:** a real-world natural experiment (a lab's public before/after R&D-velocity data following a comparable disclosure, incident, or regulatory bind) becomes available; or if `docs/research/` gains a dedicated crux for RSI-delay magnitude, at which point this should move from `[GUESS]` to a cited estimate with a confidence band, matching the `p_cumulative` sourcing bar in CLAUDE.md.

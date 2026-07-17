@@ -28,8 +28,12 @@ inputs:
     scale: 0.22
   china_frontier_parity:
     scale: 0.18
+  us_china_race_index:
+    scale: 0.16
   compute_concentration:
     scale: 0.14
+  eu_regulatory_bind:
+    scale: -0.08
   open_weights_regime:
     scale: 0.09
   frontier_lab_polarization:
@@ -70,6 +74,8 @@ kinetic_escalation:
   growth_penalty: 0.14
   daily_coord_erosion: 0.00012
   daily_capex_penalty: 0.00020
+  daily_decay: 0.0003
+  decay_floor: 0.08
 
 bio_spillover:
   bio_to_cap_scale: 0.05
@@ -90,6 +96,148 @@ employment_coupling:
   capability_threshold: 4.0
   daily_stress: 0.00028
   daily_ghost_gdp: 0.00018
+  # Added 2026-07-16: absorption/redistribution now flows out continuously (scaled
+  # by reskilling_absorption / distribution_regime), not just via one-off event
+  # deltas -- see the inline comment in capability.py::step_capability for why
+  # (84% of runs saturated both variables at 1.0 regardless of outcome). [GUESS] on
+  # magnitude: sized so that reskilling_absorption/distribution_regime at their
+  # "policy succeeded" levels (~0.55-0.58, reached via ev_fed_edu_reskilling /
+  # ev_swf_enacted) roughly cancel the inflow (net ~flat), while the ~0.20 baseline
+  # (no policy) still lets stress/ghost-GDP climb toward saturation over the
+  # remaining simulation -- i.e. saturation becomes the "no policy response"
+  # outcome specifically, not a foregone conclusion regardless of policy.
+  daily_stress_absorption_scale: 0.00048
+  daily_ghost_gdp_absorption_scale: 0.00033
+  # Added 2026-07-16 (same stock-flow pattern, same [GUESS]-on-magnitude caveat):
+  # inequality_index had zero continuous coupling to capability at all -- only
+  # discrete event deltas, observed ceiling ~0.62 across 800 runs, meaning it could
+  # never represent genuinely high concentration ("oligarchic"/surveillance-adjacent)
+  # outcomes regardless of what else happened in a run. Rate set slightly below
+  # ghost_gdp's (0.00015 vs 0.00018) since inequality is a broader concept than the
+  # narrower GDP-vs-payroll decoupling ghost_gdp_index tracks; absorption scale
+  # sized so distribution_regime at its "policy succeeded" level (~0.55) roughly
+  # cancels inflow, matching the same policy-conditional-saturation logic as stress/
+  # ghost_gdp above.
+  daily_inequality_concentration: 0.00015
+  daily_inequality_absorption_scale: 0.00028
+
+# Real (headline) GDP growth — previously missing entirely: gdp_index had zero
+# capability coupling (only 6 discrete event deltas, max +0.40 combined), making
+# gdp_index>=1.45/1.85/2.5 (utopia_golden_age / utopia_radical_abundance gates in
+# terminals.yaml) mathematically unreachable. Rebuilt as compounding growth
+# (gdp_index is a level index, not an additive score — growth compounds like real
+# GDP), not the additive delta the first version of this coupling used.
+#
+# baseline_annual_growth: 2.2%/yr — historical long-run real GDP growth, US and
+# global average both sit ~2-3%/yr (BEA NIPA long-run series; World Bank World
+# Development Indicators). Applied unconditionally from day 1 — economies grow
+# without transformative AI too.
+#
+# tech_level_accel_scale: +1.2pp annual growth at tech_level=1.0 (full deployment,
+# "deployed aggregate capability" per docs/VARIABLES.md), i.e. up to ~3.4%/yr total at
+# full deployment. [GUESS] on magnitude — no real natural experiment exists yet for
+# "AI capability level -> annualized real GDP growth rate." Anchored on the closest
+# real precedent — general-purpose-technology diffusion — rather than AI-specific
+# speculation. Citations verified via web search 2026-07-16 (previous version of
+# this comment mischaracterized two of them — corrected below):
+#   - Jorgenson, Ho & Stiroh (growth-accounting literature on the 1995-2004 US
+#     productivity surge) find IT capital deepening + IT-related TFP accounted for
+#     ~47-60% of aggregate US labor-productivity growth over 1995-2003/2000 — a
+#     *share* of productivity growth, not a standalone pp figure. Given overall US
+#     productivity growth that era (~2.5-3%/yr), that share implies roughly
+#     +1.2-1.8pp attributable to IT specifically. (Previous version of this comment
+#     stated "+0.5-1.0pp" — understated; +1.2pp here sits at the *low end* of the
+#     corrected range, not above it as previously framed.)
+#   - Aghion, Jones & Jones, "Artificial Intelligence and Economic Growth" (NBER
+#     w23928, 2017) — confirmed real citation. Semi-endogenous growth model; AI's
+#     growth effect ranges from modest to large depending on elasticity-of-
+#     substitution assumptions.
+#   - Davidson, "Could Advanced AI Drive Explosive Economic Growth?" (Open
+#     Philanthropy, 2021) — confirmed real citation, but previously overstated
+#     here as a "central-to-high" scenario. Davidson's own framing: "explosive
+#     growth" (>30%/yr) is an explicit **low-probability tail** he assigns ~10%
+#     probability to *by 2100* — not a central estimate, and not obviously
+#     reachable within this sim's 2026-2050 window even in Davidson's own view.
+#   - Erdil & Besiroglu, "Explosive growth from AI automation: A review of the
+#     arguments" (arXiv 2309.11690, Epoch AI, 2023) — confirmed real citation.
+#     Reviews 9 counterarguments (regulatory hurdles, production bottlenecks,
+#     alignment issues, pace of automation among them); concludes explosive
+#     growth is "plausible" given broad labor substitution but "high confidence
+#     ... currently unwarranted." ("energy/land" bottlenecks in the previous
+#     version of this comment overstated the specificity of their critique —
+#     softened to "production bottlenecks" above.)
+# Deliberately conservative because: (a) `tech_level` saturates near 1.0 and *stays*
+# there for most horizon-surviving runs (it only rises, never decays) — meaning even
+# a modest rate compounds over 15-20+ sustained years, so the explosive-growth
+# literature's rates would be wildly too aggressive here; (b) this sim already has
+# separate frictions (deployment_pressure, governance_capacity,
+# sovereignty_fragmentation, compute_concentration) damping how much latent
+# capability reaches real deployment, so stacking the literature's most aggressive
+# rate on top would double-count those frictions. A genuine growth-singularity
+# scenario is arguably better represented as its own rare event than folded into this
+# coupling's default ceiling — open question, would revisit if the owner wants that
+# tail modeled explicitly. Terminal gdp_index gates (utopia_modest_welfare/
+# golden_age/radical_abundance in terminals.yaml) are not very discriminating on
+# their own at these rates — governance_capacity/inequality/distribution_regime and
+# the required events remain the binding constraints, which is intentional: this
+# model's own research (node_u2_distribution_evidence_rationale.md) frames GDP
+# growth itself as the modal case and *distribution* as the rare, hard part.
+gdp_growth_coupling:
+  baseline_annual_growth: 0.022
+  tech_level_accel_scale: 0.012
+
+  # Added 2026-07-16: these three friction variables previously only slowed AI
+  # *capability* growth (via _growth_factor's kinetic_escalation/governance_brake/
+  # sovereignty_fragmentation terms) and never touched gdp_index growth at all --
+  # meaning e.g. an active Taiwan Strait war (kinetic_escalation elevated
+  # indefinitely, no decay mechanism exists) would only cost GDP one one-time event
+  # delta, then GDP would resume growing normally the very next day regardless of
+  # the war still being ongoing. Unrealistic; these subtract from the annual rate
+  # for as long as the underlying state stays bad, not just once.
+  #
+  # kinetic_drag_scale: -10pp/yr at kinetic_escalation=1.0 (active great-power war).
+  # Citations verified via web search 2026-07-16, both confirmed accurate: IMF WEO
+  # (April 2022) revised its 2022 global growth forecast down 0.8pp specifically
+  # attributed to the Russia-Ukraine war (within the "-0.5 to -1pp" range cited
+  # here) from a large but geographically contained regional war; Bloomberg
+  # Economics ("The $10 Trillion Fight," 2024, updated Feb 2026 to $10.6T/~9.6%)
+  # estimated a full-scale US-China conflict over Taiwan at ~$10T (~10% of global
+  # GDP) given the chip-supply chokepoint -- confirmed precisely, and Bloomberg's
+  # own regional breakdown (South Korea -23.3%, Japan -13.5%, Taiwan ~-40% GDP in
+  # year one) suggests the *global* 10% average likely understates the shock for
+  # directly-exposed economies. This sim only tracks one aggregate kinetic_escalation
+  # variable, not regional GDP, so the global average is the right anchor here. At
+  # kinetic_escalation=1.0 this pushes net annual growth negative (recession),
+  # which is the point -- kinetic_escalation=0.45 (a single Taiwan-kinetic event,
+  # not full WMD escalation) costs ~4.5pp, landing growth near flat/mildly negative, not
+  # untouched.
+  kinetic_drag_scale: 0.10
+
+  # governance_collapse_drag_scale: -2pp/yr at governance_capacity=0 (total
+  # institutional collapse) vs the 0.5 baseline reference. Smaller and slower-
+  # acting than the kinetic term by design. Checked via web search 2026-07-16:
+  # Kaufmann & Kraay's governance-indicators work (the real, well-known World Bank
+  # Worldwide Governance Indicators project) does establish a robust causal
+  # channel from governance quality to economic outcomes -- but their headline
+  # results are about cross-country income *level* differences, not a clean
+  # "X pp of annual growth per unit of governance" figure, and Acemoglu &
+  # Robinson's institutional-economics thesis (*Why Nations Fail*) is similarly a
+  # real, well-established framework without a single quotable growth-rate
+  # coefficient. The "-2pp at zero governance" magnitude itself is **[GUESS]**,
+  # not read off either source -- correcting the previous version of this comment,
+  # which implied the specific number came from these citations. What's real: the
+  # causal channel and its being smaller/slower than a war-sized shock. What's
+  # not verified: this specific number.
+  governance_collapse_drag_scale: 0.02
+  governance_collapse_reference: 0.5
+
+  # fragmentation_drag_scale: -1.2pp/yr at sovereignty_fragmentation=1.0 (severe
+  # decoupling). IMF Staff Discussion Note "Geoeconomic Fragmentation and the
+  # Future of Multilateralism" (2023) estimates global GDP *level* losses of
+  # roughly 0.2%-7% under fragmentation scenarios ranging from limited to severe
+  # tech/trade decoupling; approximated here as an annual-rate drag that
+  # compounds toward a comparable cumulative level effect over time.
+  fragmentation_drag_scale: 0.012
 
 alignment_coupling:
   deployment_threshold: 0.70

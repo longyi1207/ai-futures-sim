@@ -11,6 +11,18 @@ record_trace: false
 # Correlation latent shocks (config/correlations.yaml); set false to disable
 use_correlations: true
 
+# Run-level uncertainty around elicited p_cumulative values.
+# Each run samples every event's p_cumulative from Beta(p*conc, (1-p)*conc)
+# instead of using the point estimate — propagates elicitation uncertainty
+# into the outcome distribution. `events: []` (default) means "all events
+# with a p_cumulative"; list explicit ids to restrict to a subset.
+# beta_concentration: 80 ≈ elicitation noise of a "medium" confidence estimate
+# (see docs/evidence/ conf ratings) — std ≈ sqrt(p(1-p)/81), ~5.5pp at p=0.5.
+probability_uncertainty:
+  enabled: true
+  beta_concentration: 80
+  events: []
+
 # Random seed default (override via CLI)
 default_seed: 42
 default_runs: 10000

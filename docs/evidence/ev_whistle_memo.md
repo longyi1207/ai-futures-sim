@@ -72,3 +72,14 @@ Saunders 2024 — TIME + congressional testimony → SB-53 **transparency**, not
 | `on_fire.modify_hazard` | `ev_federal_pause_attempt_fails` ×1.3; `ev_no_pause_2028` ×1.1 | Modal: scandal → failed pause, not halt |
 
 **Calibration:** With `ev_c10_internal_concern` P≈0.50, sim fraction firing E1 ≈ **0.15–0.18** unconditional, not 0.35.
+
+## RSI delay assumption `[GUESS]`
+
+- `capability_controls.rsi_delay_days`: **21**
+- `capability_controls.growth_scale`: 0.96
+
+This magnitude is **not independently sourced** — no public data exists on how many days/weeks a governance or disclosure event of this type measurably slows frontier-lab internal R&D velocity (`ai_rd_multiplier` / calendar RSI). It is a relative-ordering judgment call: A 6-10 week mainstream media cycle around a memo leak (Observable section) plausibly costs a lab a few weeks of focused R&D velocity (legal/PR/leadership attention diverted) without materially changing headcount or compute allocation — hence the shortest delay and the mildest growth_scale (0.96) in this cluster.
+
+The **ordering** across the `rsi_delay_days` cluster (whistle_memo 21d < eu_gpai_binds/whistle_dump 45d < deploy_incident 60d < beneficial_ai_treaty 90d < prod_interp_halt 120d < federal_pause_succeeds 540d) tracks intervention severity/duration and is more defensible than any single absolute value.
+
+**Would update if:** a real-world natural experiment (a lab's public before/after R&D-velocity data following a comparable disclosure, incident, or regulatory bind) becomes available; or if `docs/research/` gains a dedicated crux for RSI-delay magnitude, at which point this should move from `[GUESS]` to a cited estimate with a confidence band, matching the `p_cumulative` sourcing bar in CLAUDE.md.

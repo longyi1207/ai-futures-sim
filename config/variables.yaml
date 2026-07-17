@@ -23,12 +23,18 @@ initial:
   frontier_capex_index: { value: 1.0 }
   admin_ai_posture: { value: 0.0 }
   china_frontier_parity: { value: 0.25 }
+  us_china_race_index: { value: 0.30 }
+  eu_regulatory_bind: { value: 0.10 }
+  china_open_weight_strategy: { value: 0.20 }
   open_weights_regime: { value: 0.45 }
   sovereignty_fragmentation: { value: 0.15 }
   inequality_index: { value: 0.54 }
   meaning_institution_health: { value: 0.48 }
   kinetic_escalation: { value: 0.08 }
   ghost_gdp_index: { value: 0.15 }
+  labor_mobilization: { value: 0.10 }
+  reskilling_absorption: { value: 0.20 }
+  distribution_regime: { value: 0.10 }
 
 daily_drift:
   deployment_pressure: 0.00015

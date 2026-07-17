@@ -48,3 +48,13 @@ GDPR — compliance overhead, not US industry shutdown.
 |-------|-------|-------|
 | `p_cumulative` | **0.14** | **Aligned** with crux registry |
 | `on_fire` | `international_coord` +0.12; `deployment_pressure` −0.05 | Brake not pause |
+
+## RSI delay assumption `[GUESS]`
+
+- `capability_controls.rsi_delay_days`: **45**
+
+This magnitude is **not independently sourced** — no public data exists on how many days/weeks a governance or disclosure event of this type measurably slows frontier-lab internal R&D velocity (`ai_rd_multiplier` / calendar RSI). It is a relative-ordering judgment call: EU GPAI Code of Practice enforcement binding on frontier labs plausibly costs compliance/legal engineering time proportional to a multi-jurisdiction regulatory response — set comparable to a major internal safety incident (45d), well short of a binding US pause.
+
+The **ordering** across the `rsi_delay_days` cluster (whistle_memo 21d < eu_gpai_binds/whistle_dump 45d < deploy_incident 60d < beneficial_ai_treaty 90d < prod_interp_halt 120d < federal_pause_succeeds 540d) tracks intervention severity/duration and is more defensible than any single absolute value.
+
+**Would update if:** a real-world natural experiment (a lab's public before/after R&D-velocity data following a comparable disclosure, incident, or regulatory bind) becomes available; or if `docs/research/` gains a dedicated crux for RSI-delay magnitude, at which point this should move from `[GUESS]` to a cited estimate with a confidence band, matching the `p_cumulative` sourcing bar in CLAUDE.md.

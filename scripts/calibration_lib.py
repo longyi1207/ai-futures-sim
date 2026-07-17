@@ -14,6 +14,22 @@ from futures_sim.config import load_config
 from futures_sim.engine import RunResult, SimEngine
 from futures_sim.terminals import classify_region
 
+
+def wilson_ci(k: int, n: int, z: float = 1.96) -> tuple[float, float]:
+    """Wilson score interval for a binomial proportion — robust at small n / extreme p.
+
+    Used instead of the point estimate alone: with n≈500-2000 MC runs, a region at
+    ~2% has a relative CI width of ±1-2pp that a bare percentage hides (see CLAUDE.md
+    meta-pitfall #5 — "report confidence intervals, not point estimates only").
+    """
+    if n <= 0:
+        return (0.0, 0.0)
+    p = k / n
+    denom = 1.0 + z * z / n
+    center = (p + z * z / (2 * n)) / denom
+    half = (z * np.sqrt(p * (1 - p) / n + z * z / (4 * n * n))) / denom
+    return (max(0.0, center - half), min(1.0, center + half))
+
 # AI-2027 spine deadlines (c5 aligned to modal ~2029 Q1 per 03_ci_spine.md)
 CAP_BY_DEADLINE: dict[int, tuple[str, float, float]] = {
     1: ("2027-06-30", 0.78, 0.10),
@@ -80,7 +96,9 @@ class CalibrationReport:
     spine_conditional: dict[str, float] = field(default_factory=dict)
     spine_conditional_n: dict[str, int] = field(default_factory=dict)
     events: dict[str, float] = field(default_factory=dict)
+    events_ci: dict[str, tuple[float, float]] = field(default_factory=dict)
     regions: dict[str, float] = field(default_factory=dict)
+    regions_ci: dict[str, tuple[float, float]] = field(default_factory=dict)
     terminals: dict[str, float] = field(default_factory=dict)
     early_absorb_rate: float = 0.0
     horizon_absorb_rate: float = 0.0
@@ -210,7 +228,9 @@ def run_calibration(
         spine_conditional={k: cond_num[k] / cond_den[k] for k in cond_den},
         spine_conditional_n=dict(cond_den),
         events={eid: fired_events[eid] / n for eid in EVENT_TARGETS},
+        events_ci={eid: wilson_ci(fired_events[eid], n) for eid in EVENT_TARGETS},
         regions={k: regions[k] / n for k in OUTCOME_REGIONS},
+        regions_ci={k: wilson_ci(regions[k], n) for k in OUTCOME_REGIONS},
         terminals={k: terminals[k] / n for k in terminals},
         early_absorb_rate=early / n,
         horizon_absorb_rate=(n - early) / n,

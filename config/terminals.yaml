@@ -1,7 +1,7 @@
 # Terminal outcomes — absorbing states
 # region: doom | severe | friction | utopia
 
-default_horizon_terminal: friction_modal
+default_horizon_terminal: friction_unclassified
 
 event_forced:
   - { event: ev_extinction_bio_release, terminal: doom_extinction_bio }
@@ -9,7 +9,18 @@ event_forced:
   - { event: ev_wmd_escalation, terminal: doom_extinction_kinetic }
 
 horizon_default:
-  # Doom / agency loss at horizon (post-capability)
+  # Order matters: first match wins (see terminals.py::default_terminal_at_horizon).
+  # Sections below are ordered doom -> utopia -> friction, and *within* each section
+  # from most-specific/narrow condition to least-specific/broadest, so a broad
+  # catch-all-shaped rule (e.g. friction_ghost_gdp_no_transfer) can never pre-empt a
+  # more specific, more narratively-distinct rule listed after it. This ordering was
+  # introduced 2026-07-16 after discovering ghost_gdp_no_transfer — sitting first and
+  # matching ~70-90% of all horizon-assigned runs — was silently shadowing
+  # friction_modal, friction_labor_backlash, friction_surveillance, and one
+  # utopia_golden_age variant, which fired 0/400 times despite their conditions being
+  # individually satisfiable. See docs/CALIBRATION.md "Terminal reachability" section.
+
+  # --- Doom / agency loss at horizon (post-capability) ---
   - conditions:
       vars:
         human_autonomy_index: [0.0, 0.32]
@@ -23,13 +34,51 @@ horizon_default:
       spine_any_fired: [sp_c9]
     terminal: doom_whimper
   - conditions:
-      events_any: [ev_c10_internal_concern]
+      events_all: [ev_deceptive_deploy_at_scale, ev_no_shutdown_asi_threshold]
       vars:
-        alignment_trust: [0.0, 0.50]
+        human_autonomy_index: [0.0, 0.72]
+        deception_risk: [0.35, 1.0]
       spine_any_fired: [sp_c9]
     terminal: doom_whimper
+  - conditions:
+      vars:
+        human_autonomy_index: [0.0, 0.48]
+        tech_level: [0.40, 1.0]
+      spine_any_fired: [sp_c6]
+    terminal: doom_whimper
 
-  # Utopia at horizon
+  # --- Utopia at horizon ---
+  - conditions:
+      vars:
+        gdp_index: [1.05, 2.8]
+        inequality_index: [0.0, 0.55]
+        human_autonomy_index: [0.55, 1.0]
+        distribution_regime: [0.35, 1.0]
+      events_any: [ev_swf_enacted]
+    terminal: utopia_modest_welfare
+  - conditions:
+      vars:
+        employment_stress: [0.0, 0.48]
+        human_autonomy_index: [0.55, 1.0]
+        reskilling_absorption: [0.45, 1.0]
+      events_any: [ev_fed_edu_reskilling]
+    terminal: utopia_modest_welfare
+  - conditions:
+      vars:
+        human_autonomy_index: [0.58, 0.85]
+        governance_capacity: [0.48, 0.72]
+        inequality_index: [0.0, 0.52]
+        distribution_regime: [0.35, 1.0]
+      events_any: [ev_bmia_pass, ev_multilateral_screening_pilot]
+    terminal: utopia_modest_welfare
+  - conditions:
+      vars:
+        gdp_index: [1.12, 2.8]
+        inequality_index: [0.0, 0.55]
+        human_autonomy_index: [0.52, 1.0]
+        reskilling_absorption: [0.45, 1.0]
+      events_any: [ev_swf_enacted, ev_fed_edu_reskilling, ev_meaning_pilot_success]
+    terminal: utopia_modest_welfare
   - conditions:
       vars:
         alignment_trust: [0.76, 1.0]
@@ -40,6 +89,14 @@ horizon_default:
     terminal: utopia_symbiosis
   - conditions:
       vars:
+        alignment_trust: [0.52, 1.0]
+        governance_capacity: [0.50, 1.0]
+        human_autonomy_index: [0.62, 1.0]
+      spine_any_fired: [sp_c8]
+      events_any: [ev_beneficial_ai_treaty, ev_bmia_pass, ev_meaning_pilot_success]
+    terminal: utopia_golden_age
+  - conditions:
+      vars:
         gdp_index: [1.45, 10.0]
         governance_capacity: [0.55, 1.0]
         inequality_index: [0.0, 0.50]
@@ -47,21 +104,22 @@ horizon_default:
       events_any: [ev_beneficial_ai_treaty, ev_science_win_legible]
     terminal: utopia_golden_age
   - conditions:
+      # gdp_index threshold raised 1.85->2.5 on 2026-07-16 to match the canonical
+      # terminals.utopia_radical_abundance definition below (they'd drifted apart —
+      # likely a stale copy from before either was calibrated against real growth
+      # dynamics). At 1.85, this fired in ~12.6% of runs post gdp_growth_coupling —
+      # too common for a "rare, everything went right" tier; n=800 empirical check
+      # showed P(gdp_index>=2.5)=5.2% unconditionally, combined with the tech_level/
+      # autonomy/event requirements this lands in the low single digits, which reads
+      # as the right order of magnitude for this terminal.
       vars:
-        gdp_index: [1.12, 2.8]
-        inequality_index: [0.0, 0.55]
-        human_autonomy_index: [0.52, 1.0]
-      events_any: [ev_swf_enacted, ev_fed_edu_reskilling, ev_meaning_pilot_success]
-    terminal: utopia_modest_welfare
-  - conditions:
-      vars:
-        gdp_index: [1.85, 10.0]
+        gdp_index: [2.5, 10.0]
         tech_level: [0.60, 1.0]
         human_autonomy_index: [0.60, 1.0]
       events_any: [ev_longevity_trial_breakthrough, ev_space_lift_cheap]
     terminal: utopia_radical_abundance
 
-  # Friction flavors at horizon
+  # --- Friction flavors at horizon: most-specific first, broadest catch-all last ---
   - conditions:
       events_all: [ev_federal_pause_succeeds]
       spine_not_fired: [sp_c9]
@@ -72,17 +130,40 @@ horizon_default:
       spine_not_fired: [sp_c7]
     terminal: friction_governance_paralysis
   - conditions:
+      events_any: [ev_reskilling_fails_absorb_c4]
+      vars:
+        labor_mobilization: [0.30, 1.0]
+        employment_stress: [0.35, 1.0]
+      spine_any_fired: [sp_c5]
+    terminal: friction_labor_backlash
+  # human_autonomy_index has NO upper bound below (fixed 2026-07-16, was 0.85 then
+  # 0.92): it's driven entirely by discrete event deltas, not continuous drift, so
+  # it clusters at ~15 distinct sums (0.53 up to 1.00) rather than varying smoothly
+  # -- any finite ceiling here just relocates which cluster falls through to
+  # friction_unclassified next (0.85 caught 109/800 runs at the 0.88 cluster; 0.92
+  # still missed the 0.96 cluster, 15/800). Dropping the ceiling entirely is safe:
+  # utopia rules are checked earlier in this list and already claim genuinely-
+  # flourishing runs via their own (stricter) distribution_regime/
+  # reskilling_absorption thresholds, so this terminal doesn't need autonomy to do
+  # any of that discriminating work.
+  - conditions:
+      vars:
+        distribution_regime: [0.30, 0.65]
+        human_autonomy_index: [0.50, 1.0]
+      events_any: [ev_swf_enacted, ev_state_revenue_measures]
+    terminal: friction_managed_non_utopia
+  - conditions:
+      vars:
+        reskilling_absorption: [0.25, 0.60]
+        human_autonomy_index: [0.50, 1.0]
+      events_any: [ev_fed_edu_reskilling]
+    terminal: friction_managed_non_utopia
+  - conditions:
       vars:
         governance_capacity: [0.12, 0.50]
         inequality_index: [0.60, 1.0]
         human_autonomy_index: [0.25, 0.58]
     terminal: friction_surveillance
-  - conditions:
-      vars:
-        human_autonomy_index: [0.0, 0.48]
-        tech_level: [0.40, 1.0]
-      spine_any_fired: [sp_c6]
-    terminal: doom_whimper
   - conditions:
       vars:
         human_autonomy_index: [0.42, 0.72]
@@ -92,26 +173,19 @@ horizon_default:
     terminal: friction_modal
   - conditions:
       vars:
-        human_autonomy_index: [0.58, 0.85]
-        governance_capacity: [0.48, 0.72]
-        inequality_index: [0.0, 0.52]
-      events_any: [ev_bmia_pass, ev_multilateral_screening_pilot]
-    terminal: utopia_modest_welfare
-  - conditions:
-      vars:
-        alignment_trust: [0.52, 1.0]
-        governance_capacity: [0.50, 1.0]
-        human_autonomy_index: [0.62, 1.0]
-      spine_any_fired: [sp_c8]
-      events_any: [ev_beneficial_ai_treaty, ev_bmia_pass, ev_meaning_pilot_success]
-    terminal: utopia_golden_age
-  - conditions:
-      vars:
         employment_stress: [0.35, 1.0]
         inequality_index: [0.48, 1.0]
+        distribution_regime: [0.0, 0.30]
         human_autonomy_index: [0.52, 0.92]
       spine_any_fired: [sp_c5]
     terminal: friction_modal
+  - conditions:
+      vars:
+        ghost_gdp_index: [0.30, 1.0]
+        distribution_regime: [0.0, 0.30]
+        inequality_index: [0.48, 1.0]
+      spine_any_fired: [sp_c5]
+    terminal: friction_ghost_gdp_no_transfer
 
 terminals:
   doom_extinction_bio:
@@ -150,10 +224,17 @@ terminals:
   severe_cyber_cascade:
     region: severe
     label: "Severe recoverable — cyber/finance cascade"
+    # Window re-calibrated 2026-07-16: [0.4, 0.85] assumed gdp_index barely moves from
+    # 1.0 (true before the gdp_growth_coupling fix). Traced 9 runs' actual gdp_index on
+    # the day ev_cyber_cascade fires (post its own -0.25 delta): min=1.01, p50=1.05,
+    # max=1.21 — the old window could never be reached once realistic compounding
+    # growth applies (event window is 2029-2035, gated on sp_c6, by which point
+    # baseline+AI-accelerated growth has already pushed gdp_index past 1.0 even net of
+    # the shock). New window empirically anchored on that trace, not re-guessed.
     conditions:
       events_all: [ev_cyber_cascade]
       vars:
-        gdp_index: [0.4, 0.85]
+        gdp_index: [0.85, 1.30]
 
   utopia_radical_abundance:
     region: utopia
@@ -200,6 +281,8 @@ terminals:
         gdp_index: [1.25, 2.5]
         inequality_index: [0.0, 0.5]
         human_autonomy_index: [0.6, 1.0]
+        distribution_regime: [0.35, 1.0]
+        reskilling_absorption: [0.45, 1.0]
       events_any: [ev_swf_enacted, ev_fed_edu_reskilling]
 
   friction_modal:
@@ -210,7 +293,50 @@ terminals:
       vars:
         employment_stress: [0.45, 1.0]
         inequality_index: [0.5, 1.0]
+        distribution_regime: [0.0, 0.40]
         human_autonomy_index: [0.35, 0.75]
+
+  friction_ghost_gdp_no_transfer:
+    region: friction
+    horizon_only: true
+    label: "Friction — Ghost GDP without meaningful transfer"
+    conditions:
+      vars:
+        ghost_gdp_index: [0.30, 1.0]
+        distribution_regime: [0.0, 0.30]
+        inequality_index: [0.48, 1.0]
+
+  friction_labor_backlash:
+    region: friction
+    horizon_only: true
+    label: "Friction — labor backlash without absorption"
+    conditions:
+      events_all: [ev_reskilling_fails_absorb_c4]
+      vars:
+        labor_mobilization: [0.30, 1.0]
+        employment_stress: [0.35, 1.0]
+
+  friction_managed_non_utopia:
+    region: friction
+    horizon_only: true
+    label: "Friction — managed distribution but not flourishing"
+    # NOTE: this canonical block is documentation only (region/label lookup) — the
+    # actual horizon-time gating conditions live in horizon_default as two separate
+    # OR'd rules (distribution-led via ev_swf_enacted/ev_state_revenue_measures, or
+    # reskilling-led via ev_fed_edu_reskilling), since requiring both axes at once in
+    # a single AND made this terminal unreachable in practice (see docs/CALIBRATION.md
+    # "Terminal reachability").
+    conditions:
+      vars:
+        distribution_regime: [0.30, 0.65]
+        reskilling_absorption: [0.25, 0.60]
+        human_autonomy_index: [0.50, 1.0]
+
+  friction_unclassified:
+    region: friction
+    horizon_only: true
+    label: "Friction — unclassified residual"
+    conditions: {}
 
   friction_pause_stall:
     region: friction

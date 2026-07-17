@@ -54,6 +54,19 @@ def apply_effects(state: WorldState, effects: dict[str, Any] | None, event_id: s
                 state.capability_hard_ceiling,
                 state.internal_capability + float(ctrl["hard_ceiling_delta"]),
             )
+        if "rsi_delay_days" in ctrl:
+            state.rsi_calendar_delay_days += float(ctrl["rsi_delay_days"])
+        if "capability_drop" in ctrl:
+            # Absolute one-time reduction to internal_capability -- for physical
+            # destruction of compute infrastructure (fabs, datacenters), not just a
+            # growth slowdown. Growth-rate controls above (growth_scale,
+            # hard_ceiling) can only cap *future* growth; nothing previously could
+            # reduce capability already reached. Deliberately does NOT reduce
+            # ci_level (the public observed-milestone tracker, a running max) --
+            # already-trained models and know-how don't get un-invented just
+            # because some fabs are destroyed; only the ability to keep advancing
+            # is set back.
+            state.internal_capability = max(0.0, state.internal_capability - float(ctrl["capability_drop"]))
 
 
 def _is_unit_var(name: str) -> bool:
