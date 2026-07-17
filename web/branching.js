@@ -1,5 +1,38 @@
 /** Branching timeline — Sankey-style ribbons from export_branching_timeline.py */
 
+const BT_UI = {
+  en: {
+    noData: "No branching data — run <code>python scripts/export_branching_timeline.py</code>",
+    colors: "Colors",
+    legendSpine: "Capability stage (not an outcome)",
+    legendGov: "Governance fork (race / paralysis / pause)",
+    legendC10: "C10 alignment scare branch",
+    legendFriction: "Friction",
+    legendDoom: "Doom",
+    legendUtopia: "Utopia",
+    legendSevere: "Severe",
+    ariaLabel: "Branching futures timeline",
+    topPaths: "Modal story paths",
+    pathBuckets: "Named path buckets",
+    regionNames: { doom: "doom", utopia: "utopia", friction: "friction", severe: "severe" },
+  },
+  zh: {
+    noData: "无分叉数据 — 运行 <code>python scripts/export_branching_timeline.py --lang zh</code>",
+    colors: "颜色",
+    legendSpine: "能力阶段（非结局）",
+    legendGov: "治理分叉（竞赛 / 瘫痪 / 暂停）",
+    legendC10: "C10 对齐担忧分支",
+    legendFriction: "摩擦",
+    legendDoom: "末日",
+    legendUtopia: "繁荣",
+    legendSevere: "严重",
+    ariaLabel: "AI 未来分叉时间线",
+    topPaths: "模态故事路径",
+    pathBuckets: "命名路径桶",
+    regionNames: { doom: "末日", utopia: "繁荣", friction: "摩擦", severe: "严重" },
+  },
+};
+
 const BT_REGION_COLORS = {
   doom: "#f28b82",
   utopia: "#81c995",
@@ -65,9 +98,9 @@ function btRibbonPath(x0, y0, h0, x1, y1, h1) {
 }
 
 function renderBranchingTimeline(container, data) {
+  const ui = BT_UI[data?.meta?.lang === "zh" ? "zh" : "en"];
   if (!data?.nodes?.length) {
-    container.innerHTML =
-      "<p class='muted'>No branching data — run <code>python scripts/export_branching_timeline.py</code></p>";
+    container.innerHTML = `<p class='muted'>${ui.noData}</p>`;
     return;
   }
 
@@ -135,11 +168,12 @@ function renderBranchingTimeline(container, data) {
     )
     .join("");
 
+  const arrow = data.meta?.lang === "zh" ? " → " : " → ";
   const topPaths = (data.top_paths || [])
     .slice(0, 5)
     .map(
       (p) =>
-        `<li><span class="bt-path-region ${p.region}">${p.region}</span> ${btPct(p.share)} — ${p.labels.join(" → ")}</li>`
+        `<li><span class="bt-path-region ${p.region}">${ui.regionNames[p.region] || p.region}</span> ${btPct(p.share)} — ${p.labels.join(arrow)}</li>`
     )
     .join("");
 
@@ -147,32 +181,32 @@ function renderBranchingTimeline(container, data) {
     <div class="bt-header">
       <p class="section-hint">${data.meta?.subtitle || ""}</p>
       <div class="bt-legend">
-        <span class="bt-legend-title">Colors</span>
-        <span><i class="swatch swatch-spine"></i> Capability stage (not an outcome)</span>
-        <span><i class="swatch swatch-gov"></i> Governance fork (race / paralysis / pause)</span>
-        <span><i class="swatch swatch-c10"></i> C10 alignment scare branch</span>
-        <span><i class="swatch swatch-friction"></i> Friction</span>
-        <span><i class="swatch swatch-doom"></i> Doom</span>
-        <span><i class="swatch swatch-utopia"></i> Utopia</span>
-        <span><i class="swatch swatch-severe"></i> Severe</span>
+        <span class="bt-legend-title">${ui.colors}</span>
+        <span><i class="swatch swatch-spine"></i> ${ui.legendSpine}</span>
+        <span><i class="swatch swatch-gov"></i> ${ui.legendGov}</span>
+        <span><i class="swatch swatch-c10"></i> ${ui.legendC10}</span>
+        <span><i class="swatch swatch-friction"></i> ${ui.legendFriction}</span>
+        <span><i class="swatch swatch-doom"></i> ${ui.legendDoom}</span>
+        <span><i class="swatch swatch-utopia"></i> ${ui.legendUtopia}</span>
+        <span><i class="swatch swatch-severe"></i> ${ui.legendSevere}</span>
       </div>
     </div>
-    <svg class="bt-svg" viewBox="0 0 ${width} ${height}" width="100%" aria-label="Branching futures timeline">
+    <svg class="bt-svg" viewBox="0 0 ${width} ${height}" width="100%" aria-label="${ui.ariaLabel}">
       ${colLabels}
       ${ribbonEls}
       ${nodeEls}
     </svg>
     <div class="bt-footer">
       <div class="bt-top-paths">
-        <h3>Modal story paths</h3>
+        <h3>${ui.topPaths}</h3>
         <ul>${topPaths}</ul>
       </div>
       <div class="bt-buckets">
-        <h3>Named path buckets</h3>
+        <h3>${ui.pathBuckets}</h3>
         ${Object.entries(data.path_buckets || {})
           .sort((a, b) => b[1] - a[1])
           .slice(0, 5)
-          .map(([k, v]) => `<div class="bt-bucket"><span>${k.replace(/_/g, " ")}</span><span>${btPct(v)}</span></div>`)
+          .map(([k, v]) => `<div class="bt-bucket"><span>${k}</span><span>${btPct(v)}</span></div>`)
           .join("")}
       </div>
     </div>`;

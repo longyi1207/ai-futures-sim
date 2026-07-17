@@ -1,0 +1,444 @@
+{
+  "meta": {
+    "runs": 600,
+    "seed": 42,
+    "lang": "zh",
+    "title": "\u8054\u5408\u8499\u7279\u5361\u6d1b\u5206\u53c9\u8def\u5f84",
+    "subtitle": "\u4e1d\u5e26\u5bbd\u5ea6 = \u6a21\u62df\u8fd0\u884c\u4efd\u989d \u00b7 \u975e\u72ec\u7acb\u60c5\u666f\u6743\u91cd"
+  },
+  "regions": {
+    "doom": 0.17833333333333334,
+    "severe": 0.06333333333333334,
+    "friction": 0.64,
+    "utopia": 0.11833333333333333
+  },
+  "terminals": {
+    "friction_modal": 0.5416666666666666,
+    "doom_whimper": 0.15166666666666667,
+    "friction_governance_paralysis": 0.09166666666666666,
+    "utopia_golden_age": 0.09,
+    "severe_cyber_cascade": 0.06333333333333334,
+    "doom_extinction_misalign": 0.018333333333333333,
+    "utopia_symbiosis": 0.016666666666666666,
+    "utopia_modest_welfare": 0.011666666666666667
+  },
+  "path_buckets": {
+    "C9 \u65e0\u5439\u54e8\u94fe": 0.7033333333333334,
+    "\u762b\u75ea\u00b7\u4e2d\u9636\u810a\u67f1": 0.095,
+    "\u6682\u505c\u540e\u505c\u6ede": 0.006666666666666667,
+    "\u5b8c\u6574\u5bf9\u9f50\u94fe": 0.03333333333333333,
+    "\u6b62\u4e8e C5 \u524d": 0.005,
+    "\u5168\u810a\u67f1 c1\u2192c9": 0.8933333333333333
+  },
+  "columns": [
+    {
+      "id": 0,
+      "year": "2026",
+      "label": "\u5f53\u4e0b"
+    },
+    {
+      "id": 1,
+      "year": "2027\u201328",
+      "label": "\u80fd\u529b\u95e8"
+    },
+    {
+      "id": 2,
+      "year": "2028\u201329",
+      "label": "\u6cbb\u7406\u5206\u53c9"
+    },
+    {
+      "id": 3,
+      "year": "2029\u201331",
+      "label": "\u5bf9\u9f50\u6050\u614c"
+    },
+    {
+      "id": 4,
+      "year": "2050",
+      "label": "\u6d8c\u73b0\u56db\u5206\u533a"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "start",
+      "col": 0,
+      "label": "\u8054\u5408 MC \u8d77\u70b9",
+      "share": 1.0,
+      "detail": "600 \u6b21\u8fd0\u884c\uff0c\u6bcf\u6b21\u4e00\u4e2a\u4e16\u754c"
+    },
+    {
+      "id": "high_spine",
+      "col": 1,
+      "label": "\u8fbe C8\u2013C9",
+      "share": 0.8983,
+      "detail": "\u5b8c\u6574\u80fd\u529b\u810a\u67f1"
+    },
+    {
+      "id": "mid_spine",
+      "col": 1,
+      "label": "\u6b62\u4e8e C5\u2013C7",
+      "share": 0.0967,
+      "detail": "\u4e2d\u9636\u5e73\u53f0"
+    },
+    {
+      "id": "low_spine",
+      "col": 1,
+      "label": "\u6b62\u4e8e C2\u2013C4",
+      "share": 0.005,
+      "detail": "\u65e9\u671f\u505c\u6ede"
+    },
+    {
+      "id": "race_paralysis",
+      "col": 2,
+      "label": "\u7ade\u8d5b+\u762b\u75ea",
+      "share": 0.4933,
+      "detail": "\u65e0\u6682\u505c \u00b7 \u8054\u90a6\u50f5\u5c40"
+    },
+    {
+      "id": "race",
+      "col": 2,
+      "label": "\u7ade\u8d5b\u7ee7\u7eed",
+      "share": 0.3883,
+      "detail": "\u65e0\u8054\u90a6\u8bad\u7ec3\u6682\u505c"
+    },
+    {
+      "id": "pause",
+      "col": 2,
+      "label": "\u6682\u505c\u6210\u529f",
+      "share": 0.0067,
+      "detail": "\u8bad\u7ec3\u6682\u505c\uff08\u5c3e\u90e8\uff09"
+    },
+    {
+      "id": "paralysis_only",
+      "col": 2,
+      "label": "\u4ec5\u762b\u75ea",
+      "share": 0.0667,
+      "detail": "\u50f5\u5c40\u4f46\u672a\u89e6\u53d1\u6682\u505c\u4e8b\u4ef6"
+    },
+    {
+      "id": "gov_quiet",
+      "col": 2,
+      "label": "\u6cbb\u7406\u5e73\u6de1",
+      "share": 0.045,
+      "detail": "\u65e0\u6682\u505c/\u7ade\u8d5b\u5178\u578b\u4fe1\u53f7"
+    },
+    {
+      "id": "c10_scare",
+      "col": 3,
+      "label": "C10 \u62c5\u5fe7\u89e6\u53d1",
+      "share": 0.19,
+      "detail": "\u5185\u90e8\u6b3a\u9a97\u4fe1\u53f7"
+    },
+    {
+      "id": "no_c10",
+      "col": 3,
+      "label": "\u65e0 C10 \u6050\u614c",
+      "share": 0.81,
+      "detail": "\u76d1\u7763\u4fdd\u6301\u5b89\u9759"
+    },
+    {
+      "id": "doom",
+      "col": 4,
+      "label": "\u672b\u65e5\uff08~18%\uff09",
+      "share": 0.1783,
+      "region": "doom",
+      "color": "#f28b82"
+    },
+    {
+      "id": "utopia",
+      "col": 4,
+      "label": "\u7e41\u8363\uff08~12%\uff09",
+      "share": 0.1183,
+      "region": "utopia",
+      "color": "#81c995"
+    },
+    {
+      "id": "friction",
+      "col": 4,
+      "label": "\u6469\u64e6\uff08~64%\uff09",
+      "share": 0.64,
+      "region": "friction",
+      "color": "#fdd663"
+    },
+    {
+      "id": "severe",
+      "col": 4,
+      "label": "\u4e25\u91cd\uff08~6%\uff09",
+      "share": 0.0633,
+      "region": "severe",
+      "color": "#c58af9"
+    }
+  ],
+  "links": [
+    {
+      "from": "start",
+      "to": "high_spine",
+      "share": 0.8983
+    },
+    {
+      "from": "no_c10",
+      "to": "friction",
+      "share": 0.635
+    },
+    {
+      "from": "race_paralysis",
+      "to": "no_c10",
+      "share": 0.4383
+    },
+    {
+      "from": "high_spine",
+      "to": "race_paralysis",
+      "share": 0.405
+    },
+    {
+      "from": "high_spine",
+      "to": "race",
+      "share": 0.3883
+    },
+    {
+      "from": "race",
+      "to": "no_c10",
+      "share": 0.2783
+    },
+    {
+      "from": "c10_scare",
+      "to": "doom",
+      "share": 0.1717
+    },
+    {
+      "from": "no_c10",
+      "to": "utopia",
+      "share": 0.1117
+    },
+    {
+      "from": "race",
+      "to": "c10_scare",
+      "share": 0.11
+    },
+    {
+      "from": "start",
+      "to": "mid_spine",
+      "share": 0.0967
+    },
+    {
+      "from": "mid_spine",
+      "to": "race_paralysis",
+      "share": 0.0883
+    },
+    {
+      "from": "high_spine",
+      "to": "paralysis_only",
+      "share": 0.06
+    },
+    {
+      "from": "paralysis_only",
+      "to": "no_c10",
+      "share": 0.0567
+    },
+    {
+      "from": "no_c10",
+      "to": "severe",
+      "share": 0.0567
+    },
+    {
+      "from": "race_paralysis",
+      "to": "c10_scare",
+      "share": 0.055
+    },
+    {
+      "from": "high_spine",
+      "to": "gov_quiet",
+      "share": 0.045
+    },
+    {
+      "from": "gov_quiet",
+      "to": "no_c10",
+      "share": 0.03
+    },
+    {
+      "from": "gov_quiet",
+      "to": "c10_scare",
+      "share": 0.015
+    },
+    {
+      "from": "paralysis_only",
+      "to": "c10_scare",
+      "share": 0.01
+    },
+    {
+      "from": "c10_scare",
+      "to": "utopia",
+      "share": 0.0067
+    },
+    {
+      "from": "pause",
+      "to": "no_c10",
+      "share": 0.0067
+    },
+    {
+      "from": "c10_scare",
+      "to": "severe",
+      "share": 0.0067
+    },
+    {
+      "from": "mid_spine",
+      "to": "paralysis_only",
+      "share": 0.0067
+    },
+    {
+      "from": "no_c10",
+      "to": "doom",
+      "share": 0.0067
+    },
+    {
+      "from": "c10_scare",
+      "to": "friction",
+      "share": 0.005
+    },
+    {
+      "from": "start",
+      "to": "low_spine",
+      "share": 0.005
+    },
+    {
+      "from": "low_spine",
+      "to": "pause",
+      "share": 0.005
+    }
+  ],
+  "top_paths": [
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "no_c10",
+        "friction"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b+\u762b\u75ea",
+        "\u65e0 C10 \u6050\u614c",
+        "\u6469\u64e6\uff08~64%\uff09"
+      ],
+      "share": 0.2917,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race",
+        "no_c10",
+        "friction"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b\u7ee7\u7eed",
+        "\u65e0 C10 \u6050\u614c",
+        "\u6469\u64e6\uff08~64%\uff09"
+      ],
+      "share": 0.18,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race",
+        "c10_scare",
+        "doom"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b\u7ee7\u7eed",
+        "C10 \u62c5\u5fe7\u89e6\u53d1",
+        "\u672b\u65e5\uff08~18%\uff09"
+      ],
+      "share": 0.1017,
+      "region": "doom"
+    },
+    {
+      "stages": [
+        "mid_spine",
+        "race_paralysis",
+        "no_c10",
+        "friction"
+      ],
+      "labels": [
+        "\u6b62\u4e8e C5\u2013C7",
+        "\u7ade\u8d5b+\u762b\u75ea",
+        "\u65e0 C10 \u6050\u614c",
+        "\u6469\u64e6\uff08~64%\uff09"
+      ],
+      "share": 0.085,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race",
+        "no_c10",
+        "utopia"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b\u7ee7\u7eed",
+        "\u65e0 C10 \u6050\u614c",
+        "\u7e41\u8363\uff08~12%\uff09"
+      ],
+      "share": 0.08,
+      "region": "utopia"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "paralysis_only",
+        "no_c10",
+        "friction"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u4ec5\u762b\u75ea",
+        "\u65e0 C10 \u6050\u614c",
+        "\u6469\u64e6\uff08~64%\uff09"
+      ],
+      "share": 0.0483,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "c10_scare",
+        "doom"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b+\u762b\u75ea",
+        "C10 \u62c5\u5fe7\u89e6\u53d1",
+        "\u672b\u65e5\uff08~18%\uff09"
+      ],
+      "share": 0.0467,
+      "region": "doom"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "no_c10",
+        "severe"
+      ],
+      "labels": [
+        "\u8fbe C8\u2013C9",
+        "\u7ade\u8d5b+\u762b\u75ea",
+        "\u65e0 C10 \u6050\u614c",
+        "\u4e25\u91cd\uff08~6%\uff09"
+      ],
+      "share": 0.0283,
+      "region": "severe"
+    }
+  ],
+  "region_colors": {
+    "doom": "#f28b82",
+    "utopia": "#81c995",
+    "friction": "#fdd663",
+    "severe": "#c58af9"
+  }
+}

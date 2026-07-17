@@ -9,9 +9,16 @@ import { fileURLToPath } from "node:url";
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.resolve(__dirname, "..");
 const outDir = path.join(root, "web", "exports");
-const outFile = path.join(outDir, "branching-timeline.png");
+
+const langIdx = process.argv.indexOf("--lang");
+const lang = langIdx >= 0 ? process.argv[langIdx + 1] || "en" : "en";
+const outFile =
+  lang === "zh"
+    ? path.join(outDir, "branching-timeline-zh.png")
+    : path.join(outDir, "branching-timeline.png");
+
 const port = process.env.PORT || "8799";
-const url = `http://127.0.0.1:${port}/export-branching.html`;
+const url = `http://127.0.0.1:${port}/export-branching.html?lang=${lang}`;
 
 await mkdir(outDir, { recursive: true });
 
