@@ -182,6 +182,23 @@ employment_coupling:
 # the required events remain the binding constraints, which is intentional: this
 # model's own research (node_u2_distribution_evidence_rationale.md) frames GDP
 # growth itself as the modal case and *distribution* as the rare, hard part.
+
+# Added 2026-07-16: human_autonomy_index had zero continuous coupling -- see the
+# inline comment in capability.py::step_capability for the full diagnosis (this
+# silently made 3 of doom_whimper's 4 paths unreachable, collapsing that terminal
+# from ~15% to ~1.5-1.8%). [GUESS] on magnitude, mechanism grounded in Christiano
+# "What Failure Looks Like" (2018) -- gradual autonomy loss as unaligned deployment
+# outpaces institutional oversight, not a single dramatic event. Symmetric erosion/
+# protection scale (0.0003 each) so a "modal" run (moderate deployment_pressure,
+# moderate alignment_trust/governance) roughly holds steady, a "bad" run (high
+# deployment_pressure, low alignment_trust, low governance_capacity, full
+# deployment) can erode autonomy by ~1.0+ over 15 years (i.e. reach the
+# doom_whimper thresholds), and a "good" run (trustworthy AI, strong governance)
+# drifts autonomy up rather than down.
+autonomy_erosion:
+  daily_erosion_scale: 0.0003
+  daily_protection_scale: 0.0003
+
 gdp_growth_coupling:
   baseline_annual_growth: 0.022
   tech_level_accel_scale: 0.012

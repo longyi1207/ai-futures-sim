@@ -25,6 +25,9 @@ KEY_VARS = [
     "bio_risk_pressure",
     "alignment_trust",
     "employment_stress",
+    "human_autonomy_index",
+    "distribution_regime",
+    "inequality_index",
     "internal_capability",
     "ci_level",
     "gdp_index",
@@ -39,6 +42,10 @@ NOTABLE_MISSES = [
     "ev_prod_interp_halt",
     "ev_us_paralysis_s2",
     "ev_deceptive_deploy_at_scale",
+    "ev_state_revenue_measures",
+    "ev_swf_enacted",
+    "ev_reskilling_fails_absorb_c4",
+    "ev_labor_ai_mobilization",
 ]
 
 

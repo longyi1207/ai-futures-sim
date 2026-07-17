@@ -1,5 +1,39 @@
 # Changelog
 
+## 2026-07-16 (cont. 7) — human_autonomy_index coupling; doom_whimper recovered
+
+Found while preparing a 3-seed headline re-run for blog publication: the new
+headline (doom ~3.3%, down from the published ~17%) looked suspicious on its own,
+so before publishing it the terminal composition was checked against the old post's
+own numbers. The published blog states `doom_whimper` was ~15% of all runs (the
+dominant doom pathway); the new run showed 1.5-1.8% — a 10x collapse.
+
+Root cause: same missing-continuous-mechanism bug as gdp_index/inequality_index/
+employment_stress, this time on `human_autonomy_index`. It only ever moved via
+discrete event deltas and empirically never dropped below ~0.53 across 800 runs.
+3 of `doom_whimper`'s 4 horizon_default paths require autonomy <=0.32/0.40/0.48 --
+structurally unreachable the same way `friction_surveillance`'s autonomy band was
+before today's other fixes (see "cont. 5"), just not caught yet because "never
+observed below 0.53" doesn't fail a mathematical-impossibility check the way
+gdp_index<1.45 did.
+
+- Added `autonomy_erosion` to `capability_dynamics.yaml`/`capability.py` --
+  continuous erosion scaled by `tech_level * deployment_pressure * (1 -
+  alignment_trust)`, offset by continuous protection scaled by `tech_level *
+  governance_capacity`. Mechanism grounded in Christiano's "What Failure Looks
+  Like" (2018) -- gradual loss of human oversight as deployment outpaces
+  trustworthy alignment, which the blog post already cites as its reference case
+  for the friction/whimper modal path but which the model couldn't actually
+  produce a mechanism for. `[GUESS]` on magnitude.
+- **Result** (n=800, seed=42): `doom_whimper` 1.5-1.8% -> **4.9%**;
+  `friction_surveillance` 0.1% -> **1.2%** (same autonomy-band fix helps both).
+  `human_autonomy_index` can now reach 0.000 in the worst scenarios (previously
+  floor ~0.53). Region mix: doom 7.1%, severe 5.9%, friction 67.8%, utopia 19.2%.
+- Full test suite (44 tests) green. This was caught specifically *because* the
+  headline number was being prepared for public publication and got a sanity
+  check against the previously-published figures before going out -- the kind of
+  check that doesn't happen for routine internal dev runs.
+
 ## 2026-07-16 (cont. 6) — verified economics citations via web search
 
 All citations added in this session's capability_dynamics.yaml comments were

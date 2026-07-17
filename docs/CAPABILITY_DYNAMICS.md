@@ -177,6 +177,34 @@ analogue to wartime R&D acceleration (Manhattan Project, radar, jet engines all
 would add a matching sustained capability-growth penalty (mirroring the GDP drag
 terms above) if the owner wants "war actually stops the race" modeled instead.
 
+## Autonomy erosion: `human_autonomy_index`
+
+Found while preparing a headline number for publication: `human_autonomy_index`
+had the same missing-continuous-mechanism bug as `gdp_index`/`inequality_index`/
+`employment_stress` originally did — only discrete event deltas, never observed
+below ~0.53 across 800 runs. This silently made 3 of `doom_whimper`'s 4
+`horizon_default` paths (needing autonomy ≤0.32/0.40/0.48) unreachable, collapsing
+that terminal from the published blog's ~15% down to ~1.5-1.8% with nothing
+flagging it — "never observed that low" doesn't trip a mathematical-impossibility
+check the way `gdp_index < 1.45` did, so it took a manual before/after comparison
+against previously-published numbers to catch.
+
+`autonomy_erosion` (`config/capability_dynamics.yaml`) adds continuous erosion
+scaled by `tech_level * deployment_pressure * (1 - alignment_trust)`, offset by
+continuous protection scaled by `tech_level * governance_capacity`. This is the
+mechanism Christiano's *What Failure Looks Like* (2018) describes — gradual loss
+of human oversight as deployment outpaces trustworthy alignment — which the blog
+post already cites as the reference case for its friction/whimper modal path, but
+which the model had no actual mechanism for until now. `[GUESS]` on magnitude
+(0.0003 for both erosion and protection scale, symmetric so a "modal" run roughly
+holds autonomy steady, a "bad" run — high deployment pressure, low trust, weak
+governance, full deployment — can erode it by 1.0+ over 15 years, a "good" run
+drifts it upward).
+
+**Result** (n=800, seed=42): `doom_whimper` 1.5-1.8% → **4.9%**;
+`friction_surveillance` (same autonomy band) 0.1% → **1.2%**. Region mix: doom
+7.1%, severe 5.9%, friction 67.8%, utopia 19.2%.
+
 ## Calibration
 
 Tune `base_daily_growth` (currently **0.00136**) + `calendar_rsi` anchors so spine **P(by deadline)** tracks AI-2027 targets — **not** per-milestone `p_cumulative` or `regime_multipliers`.

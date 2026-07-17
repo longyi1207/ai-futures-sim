@@ -1,4 +1,4 @@
-# Events index (57 events)
+# Events index (61 events)
 
 Canonical: [`config/events.yaml`](../config/events.yaml). Spine: [`config/spine.yaml`](../config/spine.yaml). Evidence: [`docs/evidence/`](evidence/).
 
@@ -63,6 +63,10 @@ Canonical: [`config/events.yaml`](../config/events.yaml). Spine: [`config/spine.
 | 55 | `ev_embodied_rsi_first` | capability |
 | 56 | `ev_india_sovereign_ai_stack` | geopolitics |
 | 57 | `ev_gulf_compute_sovereignty` | geopolitics |
+| 58 | `ev_alignment_salience_early` | alignment |
+| 59 | `ev_state_revenue_measures` | utopia |
+| 60 | `ev_labor_ai_mobilization` | society |
+| 61 | `ev_reskilling_fails_absorb_c4` | society |
 
 ## Spine milestones (7)
 

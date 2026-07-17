@@ -4,7 +4,7 @@ Joint **Monte Carlo simulator** for AI-related futures (2026–2050): capability
 
 Companion to the public forecast on [longyi.blog](https://longyi.blog/writing/my-ai-futures-forecast) and the on-site [evidence index](https://longyi.blog/writing/futures-evidence-index). Every event `p_cumulative` in `config/events.yaml` traces to a Claim / Why / Evidence page.
 
-**Blog headline (emergent, not hand-tuned):** ~17% doom · ~13% utopia · ~65% friction · ~5% severe (3 seeds × 400 runs).
+**Blog headline (emergent, not hand-tuned):** ~7% doom · ~18% utopia · ~69% friction · ~6% severe (3 seeds × 400 runs). Full methodology and limitations: [`TECHNICAL_REPORT.pdf`](TECHNICAL_REPORT.pdf).
 
 ---
 
@@ -43,7 +43,7 @@ capability_dynamics.yaml   latent internal_capability + RSI anchors
         ↓
 spine.yaml                 threshold crossings sp_c1…sp_c9 (+ legibility)
         ↓
-events.yaml                57 stochastic plot events (p_cumulative from evidence)
+events.yaml                61 stochastic plot events (p_cumulative from evidence)
         ↓
 society_hazard.yaml        employment_stress, governance, salience → hazard mods
         ↓
@@ -123,7 +123,7 @@ Regenerate after config edits — see [`docs/TRY_IT.md`](docs/TRY_IT.md).
 | [`docs/VARIABLES.md`](docs/VARIABLES.md) | State variables glossary |
 | [`docs/PROBABILITY_MODEL.md`](docs/PROBABILITY_MODEL.md) | `p_cumulative` semantics |
 | [`docs/SPINE.md`](docs/SPINE.md) | Capability milestones |
-| [`docs/EVENTS_INDEX.md`](docs/EVENTS_INDEX.md) | All 57 plot events |
+| [`docs/EVENTS_INDEX.md`](docs/EVENTS_INDEX.md) | All 61 plot events |
 | `python scripts/export_dag.py` | Event graph JSON + Mermaid |
 
 ---

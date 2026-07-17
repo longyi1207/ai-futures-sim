@@ -1,34 +1,34 @@
 {
   "meta": {
-    "runs": 400,
+    "runs": 600,
     "seed": 42,
     "lang": "en",
     "title": "Branching paths from joint Monte Carlo",
     "subtitle": "Ribbon width = share of simulated runs \u00b7 not independent scenario weights"
   },
   "regions": {
-    "doom": 0.045,
-    "severe": 0.0475,
-    "friction": 0.8575,
-    "utopia": 0.05
+    "doom": 0.06666666666666667,
+    "severe": 0.06166666666666667,
+    "friction": 0.6716666666666666,
+    "utopia": 0.2
   },
   "terminals": {
-    "friction_ghost_gdp_no_transfer": 0.7575,
-    "friction_governance_paralysis": 0.09,
-    "severe_cyber_cascade": 0.0475,
-    "utopia_modest_welfare": 0.0325,
-    "doom_whimper": 0.0225,
-    "doom_extinction_misalign": 0.0175,
-    "utopia_symbiosis": 0.0175,
-    "friction_pause_stall": 0.01
+    "friction_managed_non_utopia": 0.21,
+    "friction_ghost_gdp_no_transfer": 0.195,
+    "utopia_modest_welfare": 0.115,
+    "friction_governance_paralysis": 0.10833333333333334,
+    "friction_labor_backlash": 0.085,
+    "utopia_golden_age": 0.06333333333333334,
+    "severe_cyber_cascade": 0.06166666666666667,
+    "friction_modal": 0.05333333333333334
   },
   "path_buckets": {
-    "c9 no whistle chain": 0.5725,
-    "paralysis mid-ladder": 0.09,
-    "pause stall": 0.01,
-    "full alignment chain": 0.1975,
-    "stops before c5": 0.01,
-    "full spine c1\u2192c9": 0.895
+    "c9 no whistle chain": 0.5516666666666666,
+    "paralysis mid-ladder": 0.11,
+    "pause stall": 0.005,
+    "full alignment chain": 0.18833333333333332,
+    "stops before c5": 0.0033333333333333335,
+    "full spine c1\u2192c9": 0.885
   },
   "columns": [
     {
@@ -63,107 +63,107 @@
       "col": 0,
       "label": "Joint MC start",
       "share": 1.0,
-      "detail": "400 runs, one world each"
+      "detail": "600 runs, one world each"
     },
     {
       "id": "high_spine",
       "col": 1,
       "label": "C8\u2013C9 reached",
-      "share": 0.9,
+      "share": 0.885,
       "detail": "Full capability ladder"
     },
     {
       "id": "mid_spine",
       "col": 1,
       "label": "Stops at C5\u2013C7",
-      "share": 0.09,
+      "share": 0.1117,
       "detail": "Mid-ladder plateau"
     },
     {
       "id": "low_spine",
       "col": 1,
       "label": "Stops at C2\u2013C4",
-      "share": 0.01,
+      "share": 0.0033,
       "detail": "Early stall"
     },
     {
       "id": "race_paralysis",
       "col": 2,
       "label": "Race + paralysis",
-      "share": 0.51,
+      "share": 0.515,
       "detail": "No pause \u00b7 federal gridlock"
     },
     {
       "id": "race",
       "col": 2,
       "label": "Race continues",
-      "share": 0.38,
+      "share": 0.395,
       "detail": "No federal pause"
     },
     {
       "id": "pause",
       "col": 2,
       "label": "Pause succeeds",
-      "share": 0.01,
+      "share": 0.005,
       "detail": "Training halt (tail)"
     },
     {
       "id": "paralysis_only",
       "col": 2,
       "label": "Paralysis only",
-      "share": 0.0475,
+      "share": 0.0467,
       "detail": "Gridlock without pause event"
     },
     {
       "id": "gov_quiet",
       "col": 2,
       "label": "Quiet governance",
-      "share": 0.0525,
+      "share": 0.0383,
       "detail": "Neither pause nor race signature"
     },
     {
       "id": "c10_scare",
       "col": 3,
       "label": "C10 concern fires",
-      "share": 0.3225,
+      "share": 0.335,
       "detail": "Internal deception flag"
     },
     {
       "id": "no_c10",
       "col": 3,
       "label": "No C10 scare",
-      "share": 0.6775,
+      "share": 0.665,
       "detail": "Oversight stays quiet"
     },
     {
       "id": "doom",
       "col": 4,
-      "label": "Doom (~4%)",
-      "share": 0.045,
+      "label": "Doom (~7%)",
+      "share": 0.0667,
       "region": "doom",
       "color": "#f28b82"
     },
     {
       "id": "utopia",
       "col": 4,
-      "label": "Utopia (~5%)",
-      "share": 0.05,
+      "label": "Utopia (~20%)",
+      "share": 0.2,
       "region": "utopia",
       "color": "#81c995"
     },
     {
       "id": "friction",
       "col": 4,
-      "label": "Friction (~86%)",
-      "share": 0.8575,
+      "label": "Friction (~67%)",
+      "share": 0.6717,
       "region": "friction",
       "color": "#fdd663"
     },
     {
       "id": "severe",
       "col": 4,
-      "label": "Severe (~5%)",
-      "share": 0.0475,
+      "label": "Severe (~6%)",
+      "share": 0.0617,
       "region": "severe",
       "color": "#c58af9"
     }
@@ -172,136 +172,121 @@
     {
       "from": "start",
       "to": "high_spine",
-      "share": 0.9
+      "share": 0.885
     },
     {
       "from": "no_c10",
       "to": "friction",
-      "share": 0.6025
+      "share": 0.4533
     },
     {
       "from": "high_spine",
       "to": "race_paralysis",
-      "share": 0.4275
+      "share": 0.4083
     },
     {
       "from": "high_spine",
       "to": "race",
-      "share": 0.38
+      "share": 0.395
     },
     {
       "from": "race_paralysis",
       "to": "no_c10",
-      "share": 0.37
+      "share": 0.3567
+    },
+    {
+      "from": "race",
+      "to": "no_c10",
+      "share": 0.2517
     },
     {
       "from": "c10_scare",
       "to": "friction",
-      "share": 0.255
-    },
-    {
-      "from": "race",
-      "to": "no_c10",
-      "share": 0.23
-    },
-    {
-      "from": "race",
-      "to": "c10_scare",
-      "share": 0.15
+      "share": 0.2183
     },
     {
       "from": "race_paralysis",
       "to": "c10_scare",
-      "share": 0.14
+      "share": 0.1583
+    },
+    {
+      "from": "no_c10",
+      "to": "utopia",
+      "share": 0.1517
+    },
+    {
+      "from": "race",
+      "to": "c10_scare",
+      "share": 0.1433
     },
     {
       "from": "start",
       "to": "mid_spine",
-      "share": 0.09
+      "share": 0.1117
     },
     {
       "from": "mid_spine",
       "to": "race_paralysis",
-      "share": 0.0825
+      "share": 0.1067
+    },
+    {
+      "from": "c10_scare",
+      "to": "doom",
+      "share": 0.05
+    },
+    {
+      "from": "c10_scare",
+      "to": "utopia",
+      "share": 0.0483
+    },
+    {
+      "from": "no_c10",
+      "to": "severe",
+      "share": 0.0433
+    },
+    {
+      "from": "high_spine",
+      "to": "paralysis_only",
+      "share": 0.0433
     },
     {
       "from": "high_spine",
       "to": "gov_quiet",
-      "share": 0.0525
+      "share": 0.0383
     },
     {
-      "from": "high_spine",
-      "to": "paralysis_only",
-      "share": 0.04
+      "from": "paralysis_only",
+      "to": "no_c10",
+      "share": 0.03
+    },
+    {
+      "from": "gov_quiet",
+      "to": "no_c10",
+      "share": 0.0217
     },
     {
       "from": "c10_scare",
+      "to": "severe",
+      "share": 0.0183
+    },
+    {
+      "from": "paralysis_only",
+      "to": "c10_scare",
+      "share": 0.0167
+    },
+    {
+      "from": "no_c10",
       "to": "doom",
-      "share": 0.04
-    },
-    {
-      "from": "no_c10",
-      "to": "severe",
-      "share": 0.035
-    },
-    {
-      "from": "gov_quiet",
-      "to": "no_c10",
-      "share": 0.035
-    },
-    {
-      "from": "no_c10",
-      "to": "utopia",
-      "share": 0.035
-    },
-    {
-      "from": "paralysis_only",
-      "to": "no_c10",
-      "share": 0.0325
+      "share": 0.0167
     },
     {
       "from": "gov_quiet",
       "to": "c10_scare",
-      "share": 0.0175
-    },
-    {
-      "from": "paralysis_only",
-      "to": "c10_scare",
-      "share": 0.015
-    },
-    {
-      "from": "c10_scare",
-      "to": "utopia",
-      "share": 0.015
-    },
-    {
-      "from": "c10_scare",
-      "to": "severe",
-      "share": 0.0125
-    },
-    {
-      "from": "start",
-      "to": "low_spine",
-      "share": 0.01
-    },
-    {
-      "from": "low_spine",
-      "to": "pause",
-      "share": 0.01
+      "share": 0.0167
     },
     {
       "from": "pause",
       "to": "no_c10",
-      "share": 0.01
-    },
-    {
-      "from": "mid_spine",
-      "to": "paralysis_only",
-      "share": 0.0075
-    },
-    {
-      "from": "no_c10",
-      "to": "doom",
       "share": 0.005
     }
   ],
@@ -317,9 +302,9 @@
         "C8\u2013C9 reached",
         "Race + paralysis",
         "No C10 scare",
-        "Friction (~86%)"
+        "Friction (~67%)"
       ],
-      "share": 0.2575,
+      "share": 0.1717,
       "region": "friction"
     },
     {
@@ -333,41 +318,9 @@
         "C8\u2013C9 reached",
         "Race continues",
         "No C10 scare",
-        "Friction (~86%)"
+        "Friction (~67%)"
       ],
-      "share": 0.1925,
-      "region": "friction"
-    },
-    {
-      "stages": [
-        "high_spine",
-        "race",
-        "c10_scare",
-        "friction"
-      ],
-      "labels": [
-        "C8\u2013C9 reached",
-        "Race continues",
-        "C10 concern fires",
-        "Friction (~86%)"
-      ],
-      "share": 0.1175,
-      "region": "friction"
-    },
-    {
-      "stages": [
-        "high_spine",
-        "race_paralysis",
-        "c10_scare",
-        "friction"
-      ],
-      "labels": [
-        "C8\u2013C9 reached",
-        "Race + paralysis",
-        "C10 concern fires",
-        "Friction (~86%)"
-      ],
-      "share": 0.11,
+      "share": 0.135,
       "region": "friction"
     },
     {
@@ -381,41 +334,9 @@
         "Stops at C5\u2013C7",
         "Race + paralysis",
         "No C10 scare",
-        "Friction (~86%)"
+        "Friction (~67%)"
       ],
-      "share": 0.0825,
-      "region": "friction"
-    },
-    {
-      "stages": [
-        "high_spine",
-        "gov_quiet",
-        "no_c10",
-        "friction"
-      ],
-      "labels": [
-        "C8\u2013C9 reached",
-        "Quiet governance",
-        "No C10 scare",
-        "Friction (~86%)"
-      ],
-      "share": 0.03,
-      "region": "friction"
-    },
-    {
-      "stages": [
-        "high_spine",
-        "paralysis_only",
-        "no_c10",
-        "friction"
-      ],
-      "labels": [
-        "C8\u2013C9 reached",
-        "Paralysis only",
-        "No C10 scare",
-        "Friction (~86%)"
-      ],
-      "share": 0.0225,
+      "share": 0.105,
       "region": "friction"
     },
     {
@@ -423,15 +344,79 @@
         "high_spine",
         "race",
         "c10_scare",
-        "doom"
+        "friction"
       ],
       "labels": [
         "C8\u2013C9 reached",
         "Race continues",
         "C10 concern fires",
-        "Doom (~4%)"
+        "Friction (~67%)"
       ],
-      "share": 0.0225,
+      "share": 0.0983,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "c10_scare",
+        "friction"
+      ],
+      "labels": [
+        "C8\u2013C9 reached",
+        "Race + paralysis",
+        "C10 concern fires",
+        "Friction (~67%)"
+      ],
+      "share": 0.0933,
+      "region": "friction"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race",
+        "no_c10",
+        "utopia"
+      ],
+      "labels": [
+        "C8\u2013C9 reached",
+        "Race continues",
+        "No C10 scare",
+        "Utopia (~20%)"
+      ],
+      "share": 0.0867,
+      "region": "utopia"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "no_c10",
+        "utopia"
+      ],
+      "labels": [
+        "C8\u2013C9 reached",
+        "Race + paralysis",
+        "No C10 scare",
+        "Utopia (~20%)"
+      ],
+      "share": 0.0517,
+      "region": "utopia"
+    },
+    {
+      "stages": [
+        "high_spine",
+        "race_paralysis",
+        "c10_scare",
+        "doom"
+      ],
+      "labels": [
+        "C8\u2013C9 reached",
+        "Race + paralysis",
+        "C10 concern fires",
+        "Doom (~7%)"
+      ],
+      "share": 0.0333,
       "region": "doom"
     }
   ],

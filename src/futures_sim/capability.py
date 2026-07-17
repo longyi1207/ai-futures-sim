@@ -246,6 +246,28 @@ def step_capability(
             clamp=(0.0, 1.0),
         )
 
+    # human_autonomy_index had the same missing-mechanism bug as gdp_index/
+    # inequality_index/employment_stress originally did: only discrete event
+    # deltas, no continuous drift -- empirically never dropped below ~0.53 across
+    # 800 runs. This silently made 3 of doom_whimper's 4 horizon_default paths
+    # (needing autonomy <=0.32/0.40/0.48) structurally unreachable, collapsing
+    # doom_whimper from ~15% (documented blog headline) to ~1.5-1.8% with no
+    # terminal-reachability test catching it (autonomy staying high isn't
+    # "impossible" the way gdp_index<1.45 was, just empirically never observed).
+    # This is exactly the mechanism Christiano's "What Failure Looks Like" (cited
+    # in the blog post as the friction/whimper reference case) describes: gradual
+    # loss of human oversight as deployment outpaces trustworthy alignment, offset
+    # by institutions actively maintaining control. Not gated behind a capability
+    # threshold like the others -- scaled continuously by tech_level instead, so
+    # it activates gracefully as deployment ramps up rather than switching on at a
+    # fixed point.
+    auto = dyn.get("autonomy_erosion") or {}
+    erosion_scale = float(auto.get("daily_erosion_scale", 0.0))
+    protection_scale = float(auto.get("daily_protection_scale", 0.0))
+    erosion = erosion_scale * state.tech_level * state.deployment_pressure * (1.0 - state.alignment_trust)
+    protection = protection_scale * state.tech_level * state.governance_capacity
+    state.apply_delta("human_autonomy_index", protection - erosion, clamp=(0.0, 1.0))
+
     gdp = dyn.get("gdp_growth_coupling") or {}
     baseline_annual = float(gdp.get("baseline_annual_growth", 0.022))
     accel_scale = float(gdp.get("tech_level_accel_scale", 0.0))
