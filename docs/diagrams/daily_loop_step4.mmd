@@ -1,0 +1,4 @@
+flowchart LR
+    A["Filter candidates<br/>eligible_ids()"] --> B["Adjust hazard<br/>daily_hazard() uses Fig.4 STEP1 latents:<br/>h_adj = h_base · exp(Σ sensitivity·z)"]
+    B --> C["Rank by h_adj<br/>keep top 12<br/>max_eligible_checks_per_day<br/>← cluster mood can move this cutoff"]
+    C --> D["Bernoulli-sample each<br/>keep hits, cap at 2<br/>max_fires_per_day"]

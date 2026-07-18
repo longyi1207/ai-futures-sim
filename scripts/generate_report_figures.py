@@ -41,46 +41,135 @@ REGION_COLORS = {
 }
 
 
+TERMINAL_LABELS = {
+    "doom_extinction_misalign": "Extinction (misalign)",
+    "doom_extinction_bio": "Extinction (bio)",
+    "doom_whimper": "Whimper",
+    "severe_cyber_cascade": "Cyber cascade",
+    "friction_managed_non_utopia": "Managed, non-utopia",
+    "friction_ghost_gdp_no_transfer": "Ghost GDP, no transfer",
+    "friction_governance_paralysis": "Governance paralysis",
+    "friction_labor_backlash": "Labor backlash",
+    "friction_modal": "Modal",
+    "friction_surveillance": "Surveillance",
+    "friction_pause_stall": "Pause stall",
+    "utopia_modest_welfare": "Modest welfare",
+    "utopia_golden_age": "Golden age",
+    "utopia_symbiosis": "Symbiosis",
+    "utopia_radical_abundance": "Radical abundance",
+}
+
+
+def _shade(hex_color: str, factor: float) -> tuple[float, float, float]:
+    """factor 1.0 = base color; >1.0 lightens toward white."""
+    import matplotlib.colors as mcolors
+
+    r, g, b = mcolors.to_rgb(hex_color)
+    clip = lambda x: min(1.0, max(0.0, x))
+    return (
+        clip(r + (1 - r) * (factor - 1)),
+        clip(g + (1 - g) * (factor - 1)),
+        clip(b + (1 - b) * (factor - 1)),
+    )
+
+
 def fig_regions() -> None:
-    """Headline four-region split, seed-averaged (§7.1)."""
-    data = json.loads((ROOT / "outputs" / "runs" / "seed_sweep.json").read_text())
-    per_seed = data["seeds"]
+    """Two-level sunburst: region (inner) -> terminal (outer). §7.1.
+
+    Inner ring uses the 3-seed headline average; outer ring uses the
+    per-terminal breakdown at seed 42, n=600 (the same run already cited
+    as "Top terminals (n=600, seed 42)" in the report text) rescaled onto
+    each region's headline share, so the two rings are internally
+    consistent and both trace to real run output.
+    """
+    seed_sweep = json.loads((ROOT / "outputs" / "runs" / "seed_sweep.json").read_text())
+    per_seed = seed_sweep["seeds"]
     order = ["doom", "utopia", "friction", "severe"]
-    means = {
+    region_means = {
         o: sum(s["regions"][o] for s in per_seed) / len(per_seed) for o in order
     }
-    labels = [o.capitalize() for o in order]
-    values = [means[o] * 100 if means[o] <= 1 else means[o] for o in order]
 
-    fig, ax = plt.subplots(figsize=(6.4, 2.6), dpi=200)
-    colors = [REGION_COLORS[l] for l in labels]
-    bars = ax.barh(labels, values, color=colors, height=0.6, edgecolor="none")
-    ax.invert_yaxis()
-    ax.set_xlim(0, max(values) * 1.22)
-    ax.set_xlabel("Share of simulated runs (%)", fontsize=9)
-    ax.tick_params(labelsize=10)
-    for spine in ("top", "right"):
-        ax.spines[spine].set_visible(False)
-    ax.spines["left"].set_visible(False)
-    ax.grid(axis="x", color="#ddd", linewidth=0.5, zorder=0)
-    ax.set_axisbelow(True)
-    for bar, v in zip(bars, values):
+    calib = json.loads((ROOT / "outputs" / "runs" / "calibration_summary.json").read_text())
+    terminals_raw = calib["terminals"]  # seed 42, n=600, sums to 1.0
+    regions_raw = calib["regions"]
+
+    # Rescale each terminal's seed-42 share onto the 3-seed headline region
+    # total, so outer-ring wedges sum exactly to their parent inner wedge.
+    by_region: dict[str, list[tuple[str, float]]] = {o: [] for o in order}
+    for term, share in terminals_raw.items():
+        region = next(o for o in order if term.startswith(o) or (o == "severe" and term.startswith("severe")))
+        by_region[region].append((term, share))
+    for o in order:
+        raw_total = regions_raw[o]
+        scale = region_means[o] / raw_total if raw_total else 0.0
+        by_region[o] = [(t, s * scale) for t, s in by_region[o]]
+        by_region[o].sort(key=lambda x: -x[1])
+
+    inner_labels = [o.capitalize() for o in order]
+    inner_values = [region_means[o] * 100 for o in order]
+    inner_colors = [REGION_COLORS[l] for l in inner_labels]
+
+    outer_values: list[float] = []
+    outer_colors: list[tuple] = []
+    outer_labels: list[str] = []
+    for o, label in zip(order, inner_labels):
+        terms = by_region[o]
+        n = len(terms)
+        for i, (term, share) in enumerate(terms):
+            outer_values.append(share * 100)
+            # Darkest for the largest sub-terminal, lightening toward the tail.
+            factor = 1.0 + (i / max(n - 1, 1)) * 1.1
+            outer_colors.append(_shade(REGION_COLORS[label], factor))
+            outer_labels.append(TERMINAL_LABELS.get(term, term))
+
+    fig, ax = plt.subplots(figsize=(7.2, 7.2), dpi=200)
+
+    ax.pie(
+        inner_values,
+        radius=0.62,
+        colors=inner_colors,
+        wedgeprops=dict(width=0.62, edgecolor="white", linewidth=1.5),
+        labels=[f"{l}\n{v:.1f}%" for l, v in zip(inner_labels, inner_values)],
+        labeldistance=0.62,
+        textprops=dict(fontsize=9.5, fontweight="bold", color="white", ha="center"),
+    )
+
+    wedges, _ = ax.pie(
+        outer_values,
+        radius=1.0,
+        colors=outer_colors,
+        wedgeprops=dict(width=0.38, edgecolor="white", linewidth=1.0),
+    )
+    # Only label outer wedges above a legibility threshold; small tail
+    # terminals stay visible as unlabeled slivers rather than cluttered text.
+    for wedge, val, label in zip(wedges, outer_values, outer_labels):
+        if val < 2.2:
+            continue
+        angle = (wedge.theta1 + wedge.theta2) / 2
+        import numpy as np
+
+        x = 0.82 * np.cos(np.radians(angle))
+        y = 0.82 * np.sin(np.radians(angle))
+        rot = angle + 180 if 90 < angle < 270 else angle
         ax.text(
-            v + max(values) * 0.02,
-            bar.get_y() + bar.get_height() / 2,
-            f"{v:.1f}%",
+            x,
+            y,
+            f"{label}\n{val:.1f}%",
+            ha="center",
             va="center",
-            fontsize=9.5,
-            fontweight="bold",
-            color="#222",
+            fontsize=7.2,
+            color="#1a1a1a",
+            rotation=rot,
+            rotation_mode="anchor",
         )
+
+    ax.set(aspect="equal")
     fig.suptitle(
-        "Emergent outcome-region distribution (3 seeds × 400 runs)",
+        "Emergent outcome-region distribution, by terminal\n"
+        "(inner: 3-seed headline; outer: terminal breakdown, seed 42 n=600)",
         fontsize=10.5,
         fontweight="bold",
-        x=0.02,
-        ha="left",
-        y=1.02,
+        y=0.99,
     )
     fig.tight_layout()
     fig.savefig(OUT_DIR / "fig1_regions.png", bbox_inches="tight")

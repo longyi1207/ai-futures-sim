@@ -1,0 +1,17 @@
+flowchart LR
+    Start(["New day"]) --> S1["STEP 1<br/>Cluster latents step<br/>step_latents()"]
+    S1 --> S2["STEP 2<br/>Capability growth + drift<br/>step_capability()"]
+    S2 --> C1{"Check<br/>terminals"}
+    C1 -- no hit --> S3["STEP 3<br/>Spine check<br/>_fire_spine_thresholds()"]
+    C1 -- hit --> End1(["Run ends"])
+    S3 --> D1{"New tier<br/>today?"}
+    D1 -- no --> S4["STEP 4<br/>Sample events<br/>(expanded in Fig. 5)"]
+    D1 -- yes --> C2{"Check<br/>terminals"}
+    C2 -- no hit --> S4
+    C2 -- hit --> End2(["Run ends"])
+    S4 --> D2{"How many<br/>fired?"}
+    D2 -- 0 --> S6["Record snapshot<br/>advance to next day"]
+    D2 -- "1+" --> S5["STEP 5<br/>Apply event effects<br/>catalog.fire()"]
+    S5 --> C3{"Check<br/>terminals"}
+    C3 -- no hit --> S6
+    C3 -- hit --> End3(["Run ends"])
