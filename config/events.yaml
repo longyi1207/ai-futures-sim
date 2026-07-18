@@ -890,6 +890,19 @@ events:
         clamp:
         - 0
         - 1
+      # Added 2026-07-17: this event's own Claim ("equilibrium under pressure
+      # persists ... continued release ... no post-incident licensing regime")
+      # is definitionally about open-weights norm strength, but was never wired
+      # to open_weights_regime (a distinct variable from china_open_weight_strategy
+      # above, per docs/VARIABLES.md), leaving that variable permanently frozen
+      # at its initial value with zero events able to move it. [GUESS] on
+      # magnitude, mirrored from this event's own china_open_weight_strategy
+      # delta above (same event, comparable "regime strength" semantics).
+      open_weights_regime:
+        delta: 0.20
+        clamp:
+        - 0
+        - 1
     modify_hazard:
       ev_tier3_path_open:
         multiply: 1.15
@@ -908,6 +921,21 @@ events:
     add_vars:
       bio_risk_pressure:
         delta: -0.1
+        clamp:
+        - 0
+        - 1
+      # Added 2026-07-17: this event's own evidence doc
+      # (docs/evidence/ev_open_weights_tamper_response.md, YAML-mapping table)
+      # already specified "on_fire.set_vars.open_weights_regime: -0.3, crackdown
+      # tightens access -- consistent" -- researched but never actually
+      # implemented in this file. Using that pre-researched magnitude (as an
+      # add_vars delta, matching how every other regime-strength variable in
+      # this codebase is actually wired; the doc's "set_vars" label appears to
+      # be shorthand, not literal, since set_vars takes an absolute value and
+      # -0.3 is not a valid absolute value for a 0-1 variable) rather than a
+      # fresh guess.
+      open_weights_regime:
+        delta: -0.3
         clamp:
         - 0
         - 1

@@ -64,7 +64,7 @@ ITAR on specific munitions — item-level control, not category prohibition. Fab
 | Field | Value | Evidence vs YAML |
 |-------|-------|------------------|
 | `schedule.p_cumulative` | **0.20** | Within 0.18–0.22 band — **aligned** |
-| `on_fire.set_vars.open_weights_regime` | −0.3 | Crackdown tightens access — consistent |
+| `on_fire.add_vars.open_weights_regime` | −0.3 | Crackdown tightens access — consistent. Wired 2026-07-17: this row was already specified here but had never actually been implemented in `events.yaml`; implemented as `add_vars.delta` (the field this table originally labeled `set_vars` doesn't fit — `set_vars` takes an absolute value, and −0.3 isn't a valid absolute value for a 0–1 variable) |
 | `on_fire.modify_hazard.ev_tier3_release_attempt` | ×0.8 | Mitigates bio tail — plausible |
 | `modify_hazard` (incoming) | after `ev_open_weights_equilibrium` | Narrative coupling — correct |
 | `requires_unlock` | false (equilibrium modifies hazard) | Policy response can follow misuse headline |

@@ -174,7 +174,17 @@ class SimEngine:
         """Slow exogenous drift — capability dynamics handle RSI; this is residual."""
         drift = self.config["variables"].get("daily_drift", {})
         for name, delta in drift.items():
-            if name in {"tech_level", "deployment_pressure"}:
+            # tech_level and deployment_pressure already have their own dedicated
+            # mechanisms elsewhere (capability.py) and are excluded here for that
+            # reason. frontier_capex_index has the same situation (gdp_capex_coupling
+            # in capability.py, correctly clamped to (0.5, 3.0)) but was missing from
+            # this list -- found 2026-07-17 via the sensitivity sweep: this loop's
+            # default clamp=(0.0, 1.0) doesn't fit frontier_capex_index's real (0.5,
+            # 3.0) range, so it silently clamped the variable back to exactly 1.0
+            # every day, canceling out its dedicated mechanism entirely (confirmed
+            # empirically: frontier_capex_index == 1.000 in 150/150 sampled runs
+            # despite gdp_index reaching up to 2.0).
+            if name in {"tech_level", "deployment_pressure", "frontier_capex_index"}:
                 continue
             clamp = (0.0, 1.0) if name not in {"gdp_index", "ai_rd_multiplier"} else None
             state.apply_delta(name, float(delta), clamp=clamp)

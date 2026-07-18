@@ -56,6 +56,7 @@ Encryption export controls (1990s) — narrowed over time, never banned open cry
 | `schedule` | 2027-01-01 → 2029-12-31 | Extended vs 2028 ban-horizon |
 | `p_cumulative` | **0.45** | **[CALIBRATE]** — composite of 0.88 ban-absence × release persistence × no licensing |
 | `on_fire` | `bio_risk_pressure` +0.08; tamper hazard modifier | Open-weight misuse channel |
+| `on_fire.add_vars.open_weights_regime` | +0.20 `[GUESS]` | Added 2026-07-17 — this event's own Claim ("equilibrium ... persists ... continued release") is definitionally about open-weights norm strength but was never wired to the `open_weights_regime` variable (distinct from `china_open_weight_strategy` above); magnitude mirrored from this event's own `china_open_weight_strategy` delta, not independently sourced |
 | `modify_hazard` | weight_theft ×1.15 | Diffusion enables theft tail |
 
 **Calibration:** Joint with `ev_open_weights_tamper_response` (0.20) — not mutex; tamper is post-equilibrium-break path.

@@ -4,7 +4,7 @@
 
 model: continuous_threshold_v1
 
-base_daily_growth: 0.00136
+base_daily_growth: 0.00104
 multiplier_exponent: 1.0
 carrying_capacity: 11.0
 max_multiplier_in_growth: 55.0
@@ -16,28 +16,76 @@ calendar_rsi:
     - { date: "2026-06-01", multiplier: 1.36 }   # Agent-1 / ~C2
     - { date: "2027-06-01", multiplier: 3.5 }   # pre Agent-2
     - { date: "2028-06-01", multiplier: 7.8 }   # Agent-2 / ~C5 bridge
-    - { date: "2028-10-01", multiplier: 8.4 }   # late-2028 capability ramp
-    - { date: "2029-01-01", multiplier: 11.0 }
-    - { date: "2030-06-01", multiplier: 50.0 }  # superhuman researcher / ~C9
+    - { date: "2028-10-01", multiplier: 7.5 }   # late-2028 capability ramp
+    - { date: "2029-01-01", multiplier: 10.5 }
+    - { date: "2030-06-01", multiplier: 26.0 }  # superhuman researcher / ~C9
 
 inputs:
   frontier_capex_index:
     scale: 0.32
     reference: 1.0
+  # Added 2026-07-17: the 7 entries below had no explicit `reference`, so
+  # _input_factor() fell back to its default of 1.0 -- but unlike
+  # frontier_capex_index (a multiplier-like quantity legitimately clamped up to
+  # 3.0), these are all 0-1-bounded indices, and every event that touches them
+  # carries clamp:[0,1] (checked against config/events.yaml). max(0, val/1.0 - 1)
+  # was therefore not "empirically near zero" but mathematically guaranteed to be
+  # exactly zero for the lifetime of any run -- these 7 parameters had zero
+  # possible effect on model output regardless of `scale`, confirmed by the
+  # sensitivity sweep in docs/CALIBRATION.md (all seven scored exactly 0.0%).
+  # Fix: reference each variable's own initial value (config/variables.yaml,
+  # already-elicited numbers, not new judgment calls) so the term activates
+  # when a driver has risen *from where this run started* rather than gating on
+  # an unreachable constant. Two of the seven stayed inert even after this fix,
+  # for two separate, now-diagnosed reasons -- see docs/CALIBRATION.md:
+  # open_weights_regime was untouched by any event (fixed 2026-07-17 by wiring
+  # ev_open_weights_equilibrium/ev_open_weights_tamper_response, see
+  # events.yaml); frontier_lab_polarization could only ever be lowered below
+  # its own reference by the two events that touch it, so the excess-only gate
+  # could never fire either direction that mattered -- see its own entry below
+  # for the evidence-grounded fix.
   deployment_pressure:
     scale: 0.22
+    reference: 0.32
   china_frontier_parity:
     scale: 0.18
+    reference: 0.25
   us_china_race_index:
     scale: 0.16
+    reference: 0.30
   compute_concentration:
     scale: 0.14
+    reference: 0.68
   eu_regulatory_bind:
     scale: -0.08
+    reference: 0.10
   open_weights_regime:
     scale: 0.09
+    reference: 0.45
+  # frontier_lab_polarization: the only two events that touch it
+  # (ev_compute_triopoly_lock, ev_singleton_lab_dominance) both *lower* it from
+  # its initial 0.55 (consolidation), so an excess-only gate could never
+  # respond to it. Researched 2026-07-17 rather than left inert or flipped on
+  # guesswork: Aghion, Bloom, Blundell, Griffith & Howitt (2005, QJE 120(2),
+  # "Competition and Innovation: An Inverted-U Relationship") find neck-and-neck
+  # competitors innovate faster specifically to escape their rivals (the
+  # "escape-competition effect") -- supports scale staying positive (more
+  # polarization/more real competitors -> faster growth), not flipped. Bueno de
+  # Mesquita, Dziuda & Polborn (2026, NBER w35276) is the AI-specific and more
+  # direct case: more competing labs -> each devotes a larger resource share to
+  # speed over safety; fewer/consolidated labs face less pressure to prioritize
+  # speed. Both support a genuinely *two-sided* relationship, not merely
+  # "no bonus below baseline" -- consolidation should measurably dampen the
+  # race-driven growth term, not just fail to add to it. `symmetric: true`
+  # removes the max(0, ...) floor for this one input only (see
+  # capability.py::_input_factor); `scale` magnitude is unchanged from the
+  # original (never cited) 0.08 -- the citations support direction and
+  # functional form here, not a specific magnitude, which remains a judgment
+  # call like the rest of this block.
   frontier_lab_polarization:
     scale: 0.08
+    reference: 0.55
+    symmetric: true
 
 gdp_funding:
   scale: 0.14

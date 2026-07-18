@@ -1,5 +1,129 @@
 # Changelog
 
+## 2026-07-17 (cont. 5) — spine recalibration round 2 (final); identifiability investigation closed
+
+Following the `frontier_capex_index` fix below, which sped growth up again, re-ran the same
+iterative recalibration process (3 more `n=200` probes on top of round 1's 5).
+
+- **Final config:** `base_daily_growth` 0.00110→**0.00104**; `calendar_rsi` 2030-06-01 anchor
+  32.0→**26.0** (2028-10 and 2029-01 anchors unchanged from round 1).
+- **Result** (n=600 confirmation): **7/7 absolute spine-deadline targets pass** — the best
+  calibration state this project has had. Only 1/5 conditional targets pass (`P(sp_c5|sp_c2)`),
+  down from round 1's 2/5. This is a disclosed trade-off, not an oversight: probing found the
+  absolute/conditional tension is structural given the current 2-knob parameterization, not
+  something a better probe would resolve — see `docs/CALIBRATION.md`.
+- **Final headline** (n=400×3 seeds): doom **6.2% ± 0.1%**, utopia **20.8% ± 2.3%**, friction
+  **66.4% ± 2.5%**, severe **6.7% ± 0.4%** — vs. this morning's pre-fix baseline of
+  7.1%/18.0%/68.5%/6.4%.
+- **Identifiability investigation closed:** started today with 7 of 22 capability-growth
+  parameters completely inert; ends with **zero** inert, all 22 showing measurable sensitivity.
+  Full test suite (44 tests) green throughout every step.
+
+## 2026-07-17 (cont. 4) — `frontier_capex_index` drift-clamp bug found and fixed
+
+Unexpected finding while re-running the sensitivity sweep after the previous fix:
+`input.frontier_capex_index.scale` — the one `input.*` term that had never been inert — dropped
+to exactly 0.0%. Direct sampling (150 isolated runs) found `frontier_capex_index` frozen at
+*exactly* 1.000 in 100% of runs, despite `gdp_index` ranging up to 2.0 in the same sample.
+
+- **Root cause:** `engine.py::_drift_variables()` applies a generic daily drift to several
+  variables with a default `clamp=(0.0, 1.0)` for anything not explicitly excluded.
+  `tech_level`/`deployment_pressure` were already excluded because they have dedicated,
+  differently-clamped mechanisms elsewhere — `frontier_capex_index` has the identical
+  situation (`gdp_capex_coupling`, correctly clamped to `(0.5, 3.0)`) but was missing from the
+  exclusion list, so its own mechanism's small upward nudge was clamped back to exactly 1.0
+  every single day.
+- **Fix:** added `frontier_capex_index` to the exclusion set (`engine.py`).
+- **Result:** post-fix, 97% of 150 sampled runs show values above 1.0 (median 1.26, max 1.71).
+  Sensitivity: 0.0%→25.0%.
+- Full test suite green. This is the fourth engine-defect class found this session, and the
+  second found purely because fixing a previous bug made an unrelated parameter's absence of
+  effect newly conspicuous.
+
+## 2026-07-17 (cont. 3) — spine recalibration round 1
+
+The reference-value fix (below) and the `frontier_lab_polarization`/`open_weights_regime` fix
+(below) both gave previously-dead parameters real growth-accelerating effect, pushing spine
+timing further from the AI-2027 targets each time. Iteratively recalibrated
+`base_daily_growth` and the late `calendar_rsi` anchors against `scripts/calibration_check.py`
+(5 `n=200` probes, `n=600` confirmation).
+
+- **Config:** `base_daily_growth` 0.00136→0.00110; `calendar_rsi` late anchors
+  2028-10: 8.4→7.5, 2029-01: 11.0→10.5, 2030-06: 50.0→32.0.
+- **Result:** 5/7 absolute deadline targets pass (sp_c8/sp_c9 ~10-12pp over); 2/5 conditional
+  targets pass (`P(sp_c5|sp_c2)`, `P(sp_c7|sp_c6)`). Best balance found across 5 probes between
+  absolute-deadline compliance and conditional-progression compliance, which trade off against
+  each other given the available parameterization — see `docs/CALIBRATION.md`.
+- Superseded by round 2 (above) after the `frontier_capex_index` fix required further
+  recalibration.
+
+## 2026-07-17 (cont. 2) — `frontier_lab_polarization` and `open_weights_regime` fixed (evidence-grounded, not guessed)
+
+The 2 of 7 dead `input.*.scale` parameters the previous fix couldn't reach needed different,
+research-backed fixes rather than another reference-value tweak.
+
+- **`open_weights_regime`:** no event touched it at all. Found that
+  `ev_open_weights_equilibrium`/`ev_open_weights_tamper_response` were the thematically-correct
+  pair but only moved `bio_risk_pressure`/`china_open_weight_strategy` (a distinct variable).
+  The tamper-response event's own evidence doc already specified an `open_weights_regime: -0.3`
+  delta in its YAML-mapping table — researched but never implemented. Wired both events in:
+  `ev_open_weights_equilibrium` +0.20 `[GUESS]`, `ev_open_weights_tamper_response` -0.3
+  (pre-existing documented figure).
+- **`frontier_lab_polarization`:** the only two events touching it both lowered it below
+  reference, so the excess-only gate could never fire. Researched the market-structure/
+  innovation-speed relationship rather than guessing a fix: Aghion, Bloom, Blundell, Griffith &
+  Howitt (2005, *QJE*) on neck-and-neck competitive innovation, and Bueno de Mesquita, Dziuda &
+  Polborn (2026, NBER w35276) on AI-lab-specific competition/safety-speed trade-offs — both
+  support a genuinely two-sided relationship. Added `symmetric: true` to `_input_factor()`
+  (`capability.py`), applied only to this one input, removing the `max(0, ...)` floor so
+  consolidation can now dampen growth. `scale` magnitude (0.08) left unchanged — citations
+  support direction and functional form, not a number.
+- **Result** (n=60 sweep): `frontier_lab_polarization` 0.0%→31.7%, `open_weights_regime`
+  0.0%→18.3%–20.0% (varies slightly by run). All tests pass.
+- Consequence: sped growth up again, requiring the recalibration in "cont. 3" above.
+
+## 2026-07-17 — dead `input.*.scale` parameters fixed; headline moved, spine-timing miss sharpened
+
+Found while writing up the technical report's parameter-identifiability section: seven
+of `_growth_factor()`'s 22 capability-growth parameters (the `input.*.scale` terms
+gating on `deployment_pressure`, `china_frontier_parity`, `us_china_race_index`,
+`compute_concentration`, `eu_regulatory_bind`, `open_weights_regime`,
+`frontier_lab_polarization`) scored exactly 0.0% sensitivity in the OAT sweep. Traced
+the cause: none had an explicit `reference` in `capability_dynamics.yaml`, so
+`_input_factor()` fell back to its default of 1.0 -- but all seven are 0-1-bounded
+indices, and every event delta touching them (`config/events.yaml`) carries
+`clamp: [0, 1]`. `max(0, val/1.0 - 1)` was not "empirically near zero" but
+mathematically guaranteed to be exactly zero for the lifetime of any run.
+
+- **Fix** (`config/capability_dynamics.yaml`): gave each of the seven an explicit
+  `reference` equal to its own initial value from `config/variables.yaml`
+  (already-elicited numbers, not new judgment calls) instead of an unreachable
+  constant.
+- **Result** (`n=60` OAT sweep, seed 42): 5 of 7 now show real sensitivity
+  (`deployment_pressure` 20.0%, `china_frontier_parity`/`eu_regulatory_bind` 18.3%,
+  `compute_concentration`/`us_china_race_index` 13.3%). The remaining 2 are inert for
+  distinct, now-diagnosed reasons: `open_weights_regime` is never touched by any event
+  (frozen at its initial value regardless of `reference`); `frontier_lab_polarization`
+  is only ever `set_vars` *below* its initial value by the two events that touch it, so
+  it can fall from reference but never exceed it -- the "excess above baseline" gate
+  can't fire either direction that matters. Top-3 dominant-parameter scores dropped
+  (`multiplier_exponent` 161.7%->121.7%, `carrying_capacity` 98.3%->71.7%,
+  `base_daily_growth` 95.0%->70.0%) since variance now has more places to go.
+- **Headline moved**: 3-seed re-run (n=400 each) gives doom 8.1% (+1.0pp), utopia 16.2%
+  (-1.8pp), friction 68.6% (+0.1pp), severe 7.1% (+0.7pp) vs. the previous
+  7.1/18.0/68.5/6.4.
+- **Side effect, not incidental**: giving 5 net-growth-positive terms real effect for
+  the first time pushed absolute capability timing further from the AI-2027-derived
+  calendar -- `sp_c5_by_deadline` moved from ~80-90% to ~90-95% against a 65% target,
+  and every milestone deadline check now fails (previously most, not all). Read as
+  evidence that `base_daily_growth`/`calendar_rsi` need a fresh calibration pass against
+  an engine where these terms are live, not the one they were tuned against -- that
+  recalibration is **not** done as part of this fix, and is now the more pressing open
+  item (`docs/CALIBRATION.md`, `docs/TECHNICAL_REPORT.md` §9).
+- Full test suite (44 tests) green throughout. `scripts/generate_report_figures.py`
+  updated to color sensitivity-chart bars by measured score rather than a hardcoded
+  parameter-name list, so this class of staleness can't recur silently.
+
 ## 2026-07-16 (cont. 7) — human_autonomy_index coupling; doom_whimper recovered
 
 Found while preparing a 3-seed headline re-run for blog publication: the new

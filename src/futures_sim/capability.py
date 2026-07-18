@@ -48,7 +48,17 @@ def _input_factor(state: WorldState, name: str, spec: dict[str, Any]) -> float:
     scale = float(spec.get("scale", 0.0))
     val = state.get(name)
     if ref > 0:
-        return 1.0 + scale * max(0.0, val / ref - 1.0)
+        excess = val / ref - 1.0
+        # Default is excess-only (bonus above reference, no penalty below) --
+        # correct for most of these inputs, where we have no evidence a shortfall
+        # below baseline should actively drag growth rather than just withhold a
+        # bonus. `symmetric: true` opts a specific input out of that floor when
+        # there's a direct evidentiary case for a two-sided effect (see
+        # frontier_lab_polarization in capability_dynamics.yaml for the one
+        # current instance and its citations).
+        if not spec.get("symmetric", False):
+            excess = max(0.0, excess)
+        return 1.0 + scale * excess
     return 1.0 + scale * val
 
 

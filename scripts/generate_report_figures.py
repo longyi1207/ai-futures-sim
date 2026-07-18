@@ -94,24 +94,18 @@ def fig_sensitivity() -> None:
     rows = [(p["parameter"], p["sensitivity_score"] * 100) for p in data["params"]]
     rows.sort(key=lambda x: x[1])
 
-    inert = {
-        "input.deployment_pressure.scale",
-        "input.china_frontier_parity.scale",
-        "input.us_china_race_index.scale",
-        "input.compute_concentration.scale",
-        "input.eu_regulatory_bind.scale",
-        "input.open_weights_regime.scale",
-        "input.frontier_lab_polarization.scale",
-    }
-    top3 = {"multiplier_exponent", "carrying_capacity", "base_daily_growth"}
-
+    # Data-driven, not a hardcoded name list: "inert" = measured exactly 0.0% in
+    # this run, "top3" = the 3 highest scores. Whatever set that turns out to be
+    # this run is what gets colored -- avoids the coloring silently going stale
+    # the way the old hardcoded 7-name inert set did after the 2026-07-17 fix.
+    top3_names = {name for name, _ in rows[-3:]}
     labels = [name for name, _ in rows]
     values = [v for _, v in rows]
     colors = []
-    for name in labels:
-        if name in top3:
+    for name, v in rows:
+        if name in top3_names:
             colors.append("#8a2e2e")
-        elif name in inert:
+        elif v == 0.0:
             colors.append("#aaaaaa")
         else:
             colors.append("#4a6fa5")
@@ -139,10 +133,12 @@ def fig_sensitivity() -> None:
         )
     from matplotlib.patches import Patch
 
+    n_inert = sum(1 for _, v in rows if v == 0.0)
+    n_secondary = len(rows) - 3 - n_inert
     legend_handles = [
         Patch(color="#8a2e2e", label="Top-3 dominant parameters"),
-        Patch(color="#4a6fa5", label="Secondary (4–15)"),
-        Patch(color="#aaaaaa", label="Structurally inert (0.0%, 7 params)"),
+        Patch(color="#4a6fa5", label=f"Secondary (n={n_secondary})"),
+        Patch(color="#aaaaaa", label=f"Structurally inert (0.0%, n={n_inert})"),
     ]
     ax.legend(handles=legend_handles, loc="lower right", fontsize=7.5, frameon=False)
     fig.suptitle(
